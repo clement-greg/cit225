@@ -1,0 +1,6 @@
+SQL> 
+SQL> -- Query the table names as defined in STEP 5
+SQL> -- PUT YOUR SQL BELOW HERE FOR STEP 5
+SQL> 
+SQL> -- Close the log file
+SQL> SPOOL OFF
