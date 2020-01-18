@@ -42,8 +42,12 @@ SPOOL apply_oracle_lab3.txt
 -- --------------------------------------------------------
 
 -- Insert ALTER statement #1.
+ALTER TABLE SYSTEM_USER_LAB 
+DISABLE CONSTRAINT fk_system_user_lab_3;
 
 -- Insert ALTER statement #2.
+ALTER TABLE SYSTEM_USER_LAB 
+DISABLE CONSTRAINT fk_system_user_lab_4;
 
 
 COL table_name       FORMAT A14  HEADING "Table Name"
@@ -79,8 +83,12 @@ ORDER BY CASE
 -- --------------------------------------------------------
 
 -- Insert ALTER statement #1.
+ALTER TABLE SYSTEM_USER_LAB
+MODIFY (system_user_group_id  VARCHAR2(10) NULL);
 
 -- Insert ALTER statement #2.
+ALTER TABLE SYSTEM_USER_LAB
+MODIFY (system_user_type  VARCHAR2(10) NULL);
 
 
 COL table_name       FORMAT A14  HEADING "Table Name"
@@ -114,10 +122,19 @@ ORDER BY CASE
 --  -------
 --  Insert partial data set for preseeded system_user.
 -- --------------------------------------------------------
+INSERT INTO SYSTEM_USER_TABLE
+  (SYSTEM_USER_LAB_ID, SYSTEM_USER_NAME, SYSTEM_USER_GROUP_ID, SYSTEM_USER_TYPE, FIRST_NAME, MIDDLE_NAME, LAST_NAME,
+    CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+VALUES 
+  (1, 'SYSADMIN', NULL, NULL, '', '', '', 1, CURRENT_DATE, 1, CURRENT_DATE);
 
 -- Insert ALTER statement #1.
+ALTER TABLE COMMON_LOOKUP_LAB 
+DISABLE CONSTRAINT fk_clookup_lab_1;
 
 -- Insert ALTER statement #2.
+ALTER TABLE COMMON_LOOKUP_LAB 
+DISABLE CONSTRAINT fk_clookup_lab_2;
 
 
 -- --------------------------------------------------------
@@ -162,6 +179,11 @@ ORDER BY CASE
 --  -------
 --  Insert data set for preseeded common_lookup table.
 -- --------------------------------------------------------
+INSERT INTO COMMON_LOOKUP_LAB
+  (ID, Context, Type, Meaning)
+VALUES
+  (1, 'SYSTEM_USER_LAB', 'SYSTEM_ADMIN', 'System Administrator');
+
 
 
 -- --------------------------------------------------------
