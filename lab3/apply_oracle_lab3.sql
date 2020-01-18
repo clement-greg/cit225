@@ -140,9 +140,10 @@ VALUES
 ALTER TABLE common_lookup_lab 
 DISABLE CONSTRAINT fk_clookup_lab_1;
 
--- Insert ALTER statement #2.
 ALTER TABLE common_lookup_lab 
 DISABLE CONSTRAINT fk_clookup_lab_2;
+
+-- Insert ALTER statement #2.
 
 
 COL table_name       FORMAT A14  HEADING "Table Name"
@@ -431,7 +432,13 @@ ORDER BY CASE
 --  Alter the table to add not null constraints.
 -- --------------------------------------------------------
 
+
 -- Insert ALTER statement #1.
+ALTER TABLE common_lookup_lab
+  MODIFY (system_user_group_id  NUMBER  CONSTRAINT nn_system_user_2 NOT NULL);
+
+ALTER TABLE common_lookup_lab
+  MODIFY (system_user_type      NUMBER  CONSTRAINT nn_system_user_3 NOT NULL);
 
 -- Insert ALTER statement #2.
 
@@ -466,9 +473,77 @@ ORDER BY CASE
 -- --------------------------------------------------------
 --  Step #11
 --  --------
---  Insert rows in the system_user table with subqueries.
+--  Insert rows in the system_user_lab table with subqueries.
 -- --------------------------------------------------------
+INSERT INTO system_user_lab
+( system_user_id
+, system_user_name
+, system_user_group_id
+, system_user_type
+, first_name
+, middle_name
+, last_name
+, created_by
+, creation_date
+, last_updated_by
+, last_update_date)
+VALUES
+( system_user_s1.NEXTVAL                          -- system_user_id
+,'DBA1'                                           -- system_user_name
+,(SELECT   common_lookup_id
+  FROM     common_lookup_lab
+  WHERE    common_lookup_context = 'SYSTEM_USER'
+  AND      common_lookup_type = 'DBA')            -- system_user_group_id            
+,(SELECT   common_lookup_id
+  FROM     common_lookup_lab
+  WHERE    common_lookup_context = 'SYSTEM_USER'
+  AND      common_lookup_type = 'SYSTEM_GROUP')   -- system_user_type
+,'Phineas'
+,'Taylor'
+,'Barnum'
+,(SELECT   system_user_id
+  FROM     system_user_lab
+  WHERE    system_user_name = 'SYSADMIN')         -- created_by
+, SYSDATE                                         -- creation_date
+,(SELECT   system_user_id
+  FROM     system_user_lab
+  WHERE    system_user_name = 'SYSADMIN')         -- last_updated_by
+, SYSDATE                                         -- last_update_date
+);
 
+INSERT INTO system_user_lab
+( system_user_id
+, system_user_name
+, system_user_group_id
+, system_user_type
+, first_name
+, last_name
+, created_by
+, creation_date
+, last_updated_by
+, last_update_date)
+VALUES
+( system_user_s1.NEXTVAL                          -- system_user_id
+,'DBA2'                                           -- system_user_name
+,(SELECT   common_lookup_id
+  FROM     common_lookup_lab
+  WHERE    common_lookup_context = 'SYSTEM_USER'
+  AND      common_lookup_type = 'DBA')            -- system_user_group_id            
+,(SELECT   common_lookup_id
+  FROM     common_lookup_lab
+  WHERE    common_lookup_context = 'SYSTEM_USER'
+  AND      common_lookup_type = 'SYSTEM_GROUP')   -- system_user_type
+,'Phileas'
+,'Fogg'
+,(SELECT   system_user_id
+  FROM     system_user_lab
+  WHERE    system_user_name = 'SYSADMIN')         -- created_by
+, SYSDATE                                         -- creation_date
+,(SELECT   system_user_id
+  FROM     system_user_lab
+  WHERE    system_user_name = 'SYSADMIN')         -- last_updated_by
+, SYSDATE                                         -- last_update_date
+);
 
 -- --------------------------------------------------------
 --  Step #12
