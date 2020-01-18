@@ -1,0 +1,716 @@
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #1
+SQL> --  -------
+SQL> --  Disable foreign key constraints dependencies.
+SQL> -- --------------------------------------------------------
+SQL> 
+SQL> -- Insert ALTER statement #1.
+SQL> ALTER TABLE SYSTEM_USER_LAB
+  2  DISABLE CONSTRAINT fk_system_user_lab_3;
+
+Table altered.
+
+SQL> 
+SQL> -- Insert ALTER statement #2.
+SQL> ALTER TABLE SYSTEM_USER_LAB
+  2  DISABLE CONSTRAINT fk_system_user_lab_4;
+
+Table altered.
+
+SQL> 
+SQL> 
+SQL> COL table_name	  FORMAT A14  HEADING "Table Name"
+SQL> COL constraint_name  FORMAT A24  HEADING "Constraint Name"
+SQL> COL constraint_type  FORMAT A12  HEADING "Constraint Type"
+SQL> COL status 	  FORMAT A8   HEADING "Status"
+SQL> SELECT   table_name
+  2  ,	      constraint_name
+  3  ,	      CASE
+  4  		WHEN constraint_type = 'R'	  THEN 'FOREIGN KEY'
+  5  		WHEN constraint_type = 'P'	  THEN 'PRIMARY KEY'
+  6  		WHEN constraint_type = 'U'	  THEN 'UNIQUE'
+  7  		WHEN constraint_type = 'C' AND	REGEXP_LIKE(constraint_name,'^.*nn.*$','i')
+  8  		THEN 'NOT NULL'
+  9  		ELSE 'CHECK'
+ 10  	      END constraint_type
+ 11  ,	      status
+ 12  FROM     user_constraints
+ 13  WHERE    table_name = 'SYSTEM_USER_LAB'
+ 14  ORDER BY CASE
+ 15  		WHEN constraint_type = 'PRIMARY KEY' THEN 1
+ 16  		WHEN constraint_type = 'NOT NULL'    THEN 2
+ 17  		WHEN constraint_type = 'CHECK'	     THEN 3
+ 18  		WHEN constraint_type = 'UNIQUE'      THEN 4
+ 19  		WHEN constraint_type = 'FOREIGN KEY' THEN 5
+ 20  	      END
+ 21  ,	      constraint_name;
+
+Table Name     Constraint Name          Constraint T Status                     
+-------------- ------------------------ ------------ --------                   
+SYSTEM_USER_LA PK_SYSTEM_USER_LAB_1     PRIMARY KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_1     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_2     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_3     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_4     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_5     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_6     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_7     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_1     FOREIGN KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_2     FOREIGN KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_3     FOREIGN KEY  DISABLED                   
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_4     FOREIGN KEY  DISABLED                   
+B                                                                               
+                                                                                
+
+12 rows selected.
+
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #2
+SQL> --  -------
+SQL> --  Alter the table to remove not null constraints.
+SQL> -- --------------------------------------------------------
+SQL> 
+SQL> -- Insert ALTER statement #1.
+SQL> ALTER TABLE SYSTEM_USER_LAB
+  2  MODIFY (system_user_group_id  NUMBER NULL);
+
+Table altered.
+
+SQL> 
+SQL> -- Insert ALTER statement #2.
+SQL> ALTER TABLE SYSTEM_USER_LAB
+  2  MODIFY (system_user_type  NUMBER NULL);
+
+Table altered.
+
+SQL> 
+SQL> 
+SQL> COL table_name	  FORMAT A14  HEADING "Table Name"
+SQL> COL constraint_name  FORMAT A24  HEADING "Constraint Name"
+SQL> COL constraint_type  FORMAT A12  HEADING "Constraint Type"
+SQL> COL status 	  FORMAT A8   HEADING "Status"
+SQL> SELECT   table_name
+  2  ,	      constraint_name
+  3  ,	      CASE
+  4  		WHEN constraint_type = 'R'	  THEN 'FOREIGN KEY'
+  5  		WHEN constraint_type = 'P'	  THEN 'PRIMARY KEY'
+  6  		WHEN constraint_type = 'U'	  THEN 'UNIQUE'
+  7  		WHEN constraint_type = 'C' AND	REGEXP_LIKE(constraint_name,'^.*nn.*$','i')
+  8  		THEN 'NOT NULL'
+  9  		ELSE 'CHECK'
+ 10  	      END constraint_type
+ 11  ,	      status
+ 12  FROM     user_constraints
+ 13  WHERE    table_name = 'SYSTEM_USER_LAB'
+ 14  ORDER BY CASE
+ 15  		WHEN constraint_type = 'PRIMARY KEY' THEN 1
+ 16  		WHEN constraint_type = 'NOT NULL'    THEN 2
+ 17  		WHEN constraint_type = 'CHECK'	     THEN 3
+ 18  		WHEN constraint_type = 'UNIQUE'      THEN 4
+ 19  		WHEN constraint_type = 'FOREIGN KEY' THEN 5
+ 20  	      END
+ 21  ,	      constraint_name;
+
+Table Name     Constraint Name          Constraint T Status                     
+-------------- ------------------------ ------------ --------                   
+SYSTEM_USER_LA PK_SYSTEM_USER_LAB_1     PRIMARY KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_1     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_4     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_5     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_6     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_7     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_1     FOREIGN KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_2     FOREIGN KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_3     FOREIGN KEY  DISABLED                   
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_4     FOREIGN KEY  DISABLED                   
+B                                                                               
+                                                                                
+
+10 rows selected.
+
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #3
+SQL> --  -------
+SQL> --  Insert partial data set for preseeded system_user.
+SQL> -- --------------------------------------------------------
+SQL> INSERT INTO SYSTEM_USER_LAB
+  2    (SYSTEM_USER_LAB_ID, SYSTEM_USER_NAME, SYSTEM_USER_GROUP_ID, SYSTEM_USER_TYPE, FIRST_NAME, MIDDLE_NAME, LAST_NAME,
+  3  	 CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  4  VALUES
+  5    (1, 'SYSADMIN', NULL, NULL, '', '', '', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (SYSTEM_USER_LAB_ID, SYSTEM_USER_NAME, SYSTEM_USER_GROUP_ID, SYSTEM_USER_TYPE, FIRST_NAME, MIDDLE_NAME, LAST_NAME,
+   *
+ERROR at line 2:
+ORA-00904: "SYSTEM_USER_LAB_ID": invalid identifier 
+
+
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #4
+SQL> --  -------
+SQL> --  Disable foreign key constraints dependencies.
+SQL> -- --------------------------------------------------------
+SQL> -- Insert ALTER statement #1.
+SQL> ALTER TABLE COMMON_LOOKUP_LAB
+  2  DISABLE CONSTRAINT fk_clookup_lab_1;
+
+Table altered.
+
+SQL> 
+SQL> -- Insert ALTER statement #2.
+SQL> ALTER TABLE COMMON_LOOKUP_LAB
+  2  DISABLE CONSTRAINT fk_clookup_lab_2;
+
+Table altered.
+
+SQL> 
+SQL> 
+SQL> COL table_name	  FORMAT A14  HEADING "Table Name"
+SQL> COL constraint_name  FORMAT A24  HEADING "Constraint Name"
+SQL> COL constraint_type  FORMAT A12  HEADING "Constraint Type"
+SQL> COL status 	  FORMAT A8   HEADING "Status"
+SQL> SELECT   table_name
+  2  ,	      constraint_name
+  3  ,	      CASE
+  4  		WHEN constraint_type = 'R'	  THEN 'FOREIGN KEY'
+  5  		WHEN constraint_type = 'P'	  THEN 'PRIMARY KEY'
+  6  		WHEN constraint_type = 'U'	  THEN 'UNIQUE'
+  7  		WHEN constraint_type = 'C' AND	REGEXP_LIKE(constraint_name,'^.*nn.*$','i')
+  8  		THEN 'NOT NULL'
+  9  		ELSE 'CHECK'
+ 10  	      END constraint_type
+ 11  ,	      status
+ 12  FROM     user_constraints
+ 13  WHERE    table_name = 'COMMON_LOOKUP_LAB'
+ 14  ORDER BY CASE
+ 15  		WHEN constraint_type = 'PRIMARY KEY' THEN 1
+ 16  		WHEN constraint_type = 'NOT NULL'    THEN 2
+ 17  		WHEN constraint_type = 'CHECK'	     THEN 3
+ 18  		WHEN constraint_type = 'UNIQUE'      THEN 4
+ 19  		WHEN constraint_type = 'FOREIGN KEY' THEN 5
+ 20  	      END
+ 21  ,	      constraint_name;
+
+Table Name     Constraint Name          Constraint T Status                     
+-------------- ------------------------ ------------ --------                   
+COMMON_LOOKUP_ PK_CLOOKUP_LAB_1         PRIMARY KEY  ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_1         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_2         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_3         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_4         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_5         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_6         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_7         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ FK_CLOOKUP_LAB_1         FOREIGN KEY  DISABLED                   
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ FK_CLOOKUP_LAB_2         FOREIGN KEY  DISABLED                   
+LAB                                                                             
+                                                                                
+
+10 rows selected.
+
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #5
+SQL> --  -------
+SQL> --  Insert data set for preseeded common_lookup table.
+SQL> -- --------------------------------------------------------
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (1, 'SYSTEM_USER_LAB', 'SYSTEM_ADMIN', 'System Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (2, 'SYSTEM_USER_LAB', 'DBA', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (3, 'SYSTEM_USER_LAB', 'SYSTEM_GROUP', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (4, 'SYSTEM_USER_LAB', 'COST_CENTER', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (5, 'SYSTEM_USER_LAB', 'INDIVIDUAL', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (1001, 'CONTACT_LAB', 'EMPLOYEE', 'Employee', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (1002, 'CONTACT_LAB', 'CUSTOMER', 'Customer', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (1003, 'MEMBER_LAB', 'INDIVIDUAL', 'Individual Membership', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (1004, 'MEMBER_LAB', 'GROUP', 'Group Membership', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (1005, 'MEMBER_LAB', 'DISCOVER_CARD', 'Discover Card', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (1006, 'MEMBER_LAB', 'MASTER_CARD', 'Master Card', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (1007, 'MEMBER_LAB', 'VISA_CARD', 'Visa Card', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO COMMON_LOOKUP_LAB
+  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+  3  VALUES
+  4    (1008, 'MULTIPLE', 'HOME', 'Home', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+1 row created.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #6
+SQL> --  -------
+SQL> --  Display the preseeded values in the common_lookup table.
+SQL> -- --------------------------------------------------------
+SQL> 
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #7
+SQL> --  -------
+SQL> --  Write two queries using the COMMON_LOOKUP table:
+SQL> --  --------------------------------------------------
+SQL> --   One finds the primary key values for the
+SQL> --   SYSTEM_USER_GROUP_ID in the COMMON_LOOKUP table.
+SQL> --   Another finds the primary key values for the
+SQL> --   SYSTEM_USER_TYPE in the COMMON_LOOKUP table.
+SQL> --  --------------------------------------------------
+SQL> --  Both queries use the COMMON_LOOKUP_CONTEXT and
+SQL> --  COMMON_LOOKUP_TYPE columns.
+SQL> -- --------------------------------------------------------
+SQL> 
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #8
+SQL> --  -------
+SQL> --  Update the SYSTEM_USER_GROUP_ID and SYSTEM_USER_TYPE
+SQL> --  columns in the SYSTEM_USER table.
+SQL> -- --------------------------------------------------------
+SQL> 
+SQL> -- Insert the UPDATE statement for the SYSTEM_USER_GROUP_ID here.
+SQL> 
+SQL> 
+SQL> -- Display results.
+SQL> SET NULL '<Null>'
+SQL> COL system_user_lab_id    FORMAT 999999  HEADING "System|User|ID #"
+SQL> COL system_user_name      FORMAT A10     HEADING "System|User|Name"
+SQL> COL system_user_group_id  FORMAT 999999  HEADING "System|User|Group|ID #"
+SQL> COL system_user_type      FORMAT 999999  HEADING "System|User|Type"
+SQL> SELECT   system_user_lab_id
+  2  ,	      system_user_name
+  3  ,	      system_user_group_id
+  4  ,	      system_user_type
+  5  FROM     system_user_lab
+  6  WHERE    system_user_lab_id = 1;
+WHERE    system_user_lab_id = 1
+         *
+ERROR at line 6:
+ORA-00904: "SYSTEM_USER_LAB_ID": invalid identifier 
+
+
+SQL> 
+SQL> -- Insert the UPDATE statement for the SYSTEM_USER_TYPE here.
+SQL> 
+SQL> 
+SQL> -- Display results.
+SQL> SET NULL '<Null>'
+SQL> COL system_user_lab_id    FORMAT 999999  HEADING "System|User|ID #"
+SQL> COL system_user_name      FORMAT A10     HEADING "System|User|Name"
+SQL> COL system_user_group_id  FORMAT 999999  HEADING "System|User|Group|ID #"
+SQL> COL system_user_type      FORMAT 999999  HEADING "System|User|Type"
+SQL> SELECT   system_user_lab_id
+  2  ,	      system_user_name
+  3  ,	      system_user_group_id
+  4  ,	      system_user_type
+  5  FROM     system_user_lab
+  6  WHERE    system_user_lab_id = 1;
+WHERE    system_user_lab_id = 1
+         *
+ERROR at line 6:
+ORA-00904: "SYSTEM_USER_LAB_ID": invalid identifier 
+
+
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #9
+SQL> --  --------
+SQL> --  Enable foreign key constraints dependencies.
+SQL> -- --------------------------------------------------------
+SQL> 
+SQL> -- Insert ALTER statement #1.
+SQL> 
+SQL> -- Insert ALTER statement #2.
+SQL> 
+SQL> 
+SQL> -- Display system_user table constraints.
+SQL> COL table_name	  FORMAT A14  HEADING "Table Name"
+SQL> COL constraint_name  FORMAT A24  HEADING "Constraint Name"
+SQL> COL constraint_type  FORMAT A12  HEADING "Constraint Type"
+SQL> COL status 	  FORMAT A8   HEADING "Status"
+SQL> SELECT   table_name
+  2  ,	      constraint_name
+  3  ,	      CASE
+  4  		WHEN constraint_type = 'R'	  THEN 'FOREIGN KEY'
+  5  		WHEN constraint_type = 'P'	  THEN 'PRIMARY KEY'
+  6  		WHEN constraint_type = 'U'	  THEN 'UNIQUE'
+  7  		WHEN constraint_type = 'C' AND	REGEXP_LIKE(constraint_name,'^.*nn.*$','i')
+  8  		THEN 'NOT NULL'
+  9  		ELSE 'CHECK'
+ 10  	      END constraint_type
+ 11  ,	      status
+ 12  FROM     user_constraints
+ 13  WHERE    table_name = 'SYSTEM_USER_LAB'
+ 14  ORDER BY CASE
+ 15  		WHEN constraint_type = 'PRIMARY KEY' THEN 1
+ 16  		WHEN constraint_type = 'NOT NULL'    THEN 2
+ 17  		WHEN constraint_type = 'CHECK'	     THEN 3
+ 18  		WHEN constraint_type = 'UNIQUE'      THEN 4
+ 19  		WHEN constraint_type = 'FOREIGN KEY' THEN 5
+ 20  	      END
+ 21  ,	      constraint_name;
+
+Table Name     Constraint Name          Constraint T Status                     
+-------------- ------------------------ ------------ --------                   
+SYSTEM_USER_LA PK_SYSTEM_USER_LAB_1     PRIMARY KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_1     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_4     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_5     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_6     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_7     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_1     FOREIGN KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_2     FOREIGN KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_3     FOREIGN KEY  DISABLED                   
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_4     FOREIGN KEY  DISABLED                   
+B                                                                               
+                                                                                
+
+10 rows selected.
+
+SQL> 
+SQL> -- Insert ALTER statement #3.
+SQL> 
+SQL> -- Insert ALTER statement #4.
+SQL> 
+SQL> 
+SQL> -- Display system_user table constraints.
+SQL> COL table_name	  FORMAT A14  HEADING "Table Name"
+SQL> COL constraint_name  FORMAT A24  HEADING "Constraint Name"
+SQL> COL constraint_type  FORMAT A12  HEADING "Constraint Type"
+SQL> COL status 	  FORMAT A8   HEADING "Status"
+SQL> SELECT   table_name
+  2  ,	      constraint_name
+  3  ,	      CASE
+  4  		WHEN constraint_type = 'R'	  THEN 'FOREIGN KEY'
+  5  		WHEN constraint_type = 'P'	  THEN 'PRIMARY KEY'
+  6  		WHEN constraint_type = 'U'	  THEN 'UNIQUE'
+  7  		WHEN constraint_type = 'C' AND	REGEXP_LIKE(constraint_name,'^.*nn.*$','i')
+  8  		THEN 'NOT NULL'
+  9  		ELSE 'CHECK'
+ 10  	      END constraint_type
+ 11  ,	      status
+ 12  FROM     user_constraints
+ 13  WHERE    table_name = 'COMMON_LOOKUP_LAB'
+ 14  ORDER BY CASE
+ 15  		WHEN constraint_type = 'PRIMARY KEY' THEN 1
+ 16  		WHEN constraint_type = 'NOT NULL'    THEN 2
+ 17  		WHEN constraint_type = 'CHECK'	     THEN 3
+ 18  		WHEN constraint_type = 'UNIQUE'      THEN 4
+ 19  		WHEN constraint_type = 'FOREIGN KEY' THEN 5
+ 20  	      END
+ 21  ,	      constraint_name;
+
+Table Name     Constraint Name          Constraint T Status                     
+-------------- ------------------------ ------------ --------                   
+COMMON_LOOKUP_ PK_CLOOKUP_LAB_1         PRIMARY KEY  ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_1         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_2         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_3         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_4         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_5         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_6         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ NN_CLOOKUP_LAB_7         NOT NULL     ENABLED                    
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ FK_CLOOKUP_LAB_1         FOREIGN KEY  DISABLED                   
+LAB                                                                             
+                                                                                
+COMMON_LOOKUP_ FK_CLOOKUP_LAB_2         FOREIGN KEY  DISABLED                   
+LAB                                                                             
+                                                                                
+
+10 rows selected.
+
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #10
+SQL> --  --------
+SQL> --  Alter the table to add not null constraints.
+SQL> -- --------------------------------------------------------
+SQL> 
+SQL> -- Insert ALTER statement #1.
+SQL> 
+SQL> -- Insert ALTER statement #2.
+SQL> 
+SQL> 
+SQL> -- Display system_user table constraints.
+SQL> COL table_name	  FORMAT A14  HEADING "Table Name"
+SQL> COL constraint_name  FORMAT A24  HEADING "Constraint Name"
+SQL> COL constraint_type  FORMAT A12  HEADING "Constraint Type"
+SQL> COL status 	  FORMAT A8   HEADING "Status"
+SQL> SELECT   table_name
+  2  ,	      constraint_name
+  3  ,	      CASE
+  4  		WHEN constraint_type = 'R'	  THEN 'FOREIGN KEY'
+  5  		WHEN constraint_type = 'P'	  THEN 'PRIMARY KEY'
+  6  		WHEN constraint_type = 'U'	  THEN 'UNIQUE'
+  7  		WHEN constraint_type = 'C' AND	REGEXP_LIKE(constraint_name,'^.*nn.*$','i')
+  8  		THEN 'NOT NULL'
+  9  		ELSE 'CHECK'
+ 10  	      END constraint_type
+ 11  ,	      status
+ 12  FROM     user_constraints
+ 13  WHERE    table_name = 'SYSTEM_USER_LAB'
+ 14  ORDER BY CASE
+ 15  		WHEN constraint_type = 'PRIMARY KEY' THEN 1
+ 16  		WHEN constraint_type = 'NOT NULL'    THEN 2
+ 17  		WHEN constraint_type = 'CHECK'	     THEN 3
+ 18  		WHEN constraint_type = 'UNIQUE'      THEN 4
+ 19  		WHEN constraint_type = 'FOREIGN KEY' THEN 5
+ 20  	      END
+ 21  ,	      constraint_name;
+
+Table Name     Constraint Name          Constraint T Status                     
+-------------- ------------------------ ------------ --------                   
+SYSTEM_USER_LA PK_SYSTEM_USER_LAB_1     PRIMARY KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_1     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_4     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_5     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_6     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_7     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_1     FOREIGN KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_2     FOREIGN KEY  ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_3     FOREIGN KEY  DISABLED                   
+B                                                                               
+                                                                                
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_4     FOREIGN KEY  DISABLED                   
+B                                                                               
+                                                                                
+
+10 rows selected.
+
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #11
+SQL> --  --------
+SQL> --  Insert rows in the system_user table with subqueries.
+SQL> -- --------------------------------------------------------
+SQL> 
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #12
+SQL> --  --------
+SQL> --  Display inserted rows from the system_user table.
+SQL> -- --------------------------------------------------------
+SQL> SET NULL '<Null>'
+SQL> COL system_user_lab_id    FORMAT  9999
+SQL> COL system_user_group_id  FORMAT  9999
+SQL> COL system_user_type      FORMAT  9999
+SQL> COL system_user_name      FORMAT  A10
+SQL> COL full_user_name        FORMAT  A30
+SQL> SELECT   system_user_lab_id
+  2  ,	      system_user_group_id
+  3  ,	      system_user_type
+  4  ,	      system_user_name
+  5  ,	      CASE
+  6  		WHEN last_name IS NOT NULL THEN
+  7  		  last_name || ', ' || first_name || ' ' || middle_name
+  8  	      END AS full_user_name
+  9  FROM     system_user_lab;
+SELECT   system_user_lab_id
+         *
+ERROR at line 1:
+ORA-00904: "SYSTEM_USER_LAB_ID": invalid identifier 
+
+
+SQL> 
+SQL> -- Commit changes.
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> SPOOL OFF
