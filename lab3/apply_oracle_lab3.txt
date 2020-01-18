@@ -6,14 +6,14 @@ SQL> --  Disable foreign key constraints dependencies.
 SQL> -- --------------------------------------------------------
 SQL> 
 SQL> -- Insert ALTER statement #1.
-SQL> ALTER TABLE SYSTEM_USER_LAB
+SQL> ALTER TABLE system_user_lab
   2  DISABLE CONSTRAINT fk_system_user_lab_3;
 
 Table altered.
 
 SQL> 
 SQL> -- Insert ALTER statement #2.
-SQL> ALTER TABLE SYSTEM_USER_LAB
+SQL> ALTER TABLE system_user_lab
   2  DISABLE CONSTRAINT fk_system_user_lab_4;
 
 Table altered.
@@ -176,16 +176,13 @@ SQL> --  Step #3
 SQL> --  -------
 SQL> --  Insert partial data set for preseeded system_user.
 SQL> -- --------------------------------------------------------
-SQL> INSERT INTO SYSTEM_USER_LAB
-  2    (SYSTEM_USER_LAB_ID, SYSTEM_USER_NAME, SYSTEM_USER_GROUP_ID, SYSTEM_USER_TYPE, FIRST_NAME, MIDDLE_NAME, LAST_NAME,
-  3  	 CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO system_user_lab
+  2    (system_user_id, system_user_name, system_user_group_id, system_user_type, first_name, middle_name, last_name,
+  3  	 created_by, creation_date, last_updated_by, last_update_date)
   4  VALUES
-  5    (1, 'SYSADMIN', NULL, NULL, '', '', '', 1, CURRENT_DATE, 1, CURRENT_DATE);
-  (SYSTEM_USER_LAB_ID, SYSTEM_USER_NAME, SYSTEM_USER_GROUP_ID, SYSTEM_USER_TYPE, FIRST_NAME, MIDDLE_NAME, LAST_NAME,
-   *
-ERROR at line 2:
-ORA-00904: "SYSTEM_USER_LAB_ID": invalid identifier 
+  5    (1, 'SYSADMIN', NULL, NULL, '', '', '', 1, SYSDATE, 1, SYSDATE);
 
+1 row created.
 
 SQL> 
 SQL> 
@@ -197,18 +194,19 @@ SQL> --  -------
 SQL> --  Disable foreign key constraints dependencies.
 SQL> -- --------------------------------------------------------
 SQL> -- Insert ALTER statement #1.
-SQL> ALTER TABLE COMMON_LOOKUP_LAB
+SQL> ALTER TABLE common_lookup_lab
   2  DISABLE CONSTRAINT fk_clookup_lab_1;
 
 Table altered.
 
 SQL> 
-SQL> -- Insert ALTER statement #2.
-SQL> ALTER TABLE COMMON_LOOKUP_LAB
+SQL> ALTER TABLE common_lookup_lab
   2  DISABLE CONSTRAINT fk_clookup_lab_2;
 
 Table altered.
 
+SQL> 
+SQL> -- Insert ALTER statement #2.
 SQL> 
 SQL> 
 SQL> COL table_name	  FORMAT A14  HEADING "Table Name"
@@ -278,106 +276,162 @@ SQL> --  Step #5
 SQL> --  -------
 SQL> --  Insert data set for preseeded common_lookup table.
 SQL> -- --------------------------------------------------------
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (1, 'SYSTEM_USER_LAB', 'SYSTEM_ADMIN', 'System Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (1, 'SYSTEM_USER_LAB', 'SYSTEM_ADMIN', 'System Administrator', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (2, 'SYSTEM_USER_LAB', 'DBA', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (2, 'SYSTEM_USER_LAB', 'DBA', 'Database Administrator', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (3, 'SYSTEM_USER_LAB', 'SYSTEM_GROUP', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (3, 'SYSTEM_USER_LAB', 'SYSTEM_GROUP', 'Database Administrator', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (4, 'SYSTEM_USER_LAB', 'COST_CENTER', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (4, 'SYSTEM_USER_LAB', 'COST_CENTER', 'Database Administrator', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (5, 'SYSTEM_USER_LAB', 'INDIVIDUAL', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (5, 'SYSTEM_USER_LAB', 'INDIVIDUAL', 'Database Administrator', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (1001, 'CONTACT_LAB', 'EMPLOYEE', 'Employee', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (1001, 'CONTACT_LAB', 'EMPLOYEE', 'Employee', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (1002, 'CONTACT_LAB', 'CUSTOMER', 'Customer', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (1002, 'CONTACT_LAB', 'CUSTOMER', 'Customer', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (1003, 'MEMBER_LAB', 'INDIVIDUAL', 'Individual Membership', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (1003, 'MEMBER_LAB', 'INDIVIDUAL', 'Individual Membership', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (1004, 'MEMBER_LAB', 'GROUP', 'Group Membership', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (1004, 'MEMBER_LAB', 'GROUP', 'Group Membership', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (1005, 'MEMBER_LAB', 'DISCOVER_CARD', 'Discover Card', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (1005, 'MEMBER_LAB', 'DISCOVER_CARD', 'Discover Card', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (1006, 'MEMBER_LAB', 'MASTER_CARD', 'Master Card', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (1006, 'MEMBER_LAB', 'MASTER_CARD', 'Master Card', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (1007, 'MEMBER_LAB', 'VISA_CARD', 'Visa Card', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (1007, 'MEMBER_LAB', 'VISA_CARD', 'Visa Card', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
 SQL> 
-SQL> INSERT INTO COMMON_LOOKUP_LAB
-  2    (COMMON_LOOKUP_ID, COMMON_LOOKUP_CONTEXT, COMMON_LOOKUP_TYPE, COMMON_LOOKUP_MEANING, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY, LAST_UPDATE_DATE)
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
   3  VALUES
-  4    (1008, 'MULTIPLE', 'HOME', 'Home', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  4    (1008, 'MULTIPLE', 'HOME', 'Home', 1, SYSDATE, 1, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (1009, 'MULTIPLE', 'WORK', 'Work', 1, SYSDATE, 1, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (1010, 'ITEM_LAB', 'DVD_FULL_SCREEN', 'DVD: Full Screen', 1, SYSDATE, 1, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (1011, 'ITEM_LAB', 'DVD_WIDE_SCREEN', 'DVD: Wide Screen', 1, SYSDATE, 1, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (1012, 'ITEM_LAB', 'NINTENDO_GAMECUBE', 'Nintendo Gamecube', 1, SYSDATE, 1, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (1013, 'ITEM_LAB', 'PLAYSTATION2', 'Playstation2', 1, SYSDATE, 1, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (1014, 'ITEM_LAB', 'XBOX', 'XBox', 1, SYSDATE, 1, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO common_lookup_lab
+  2    (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (1015, 'ITEM_LAB', 'BLU-RAY', 'Blu-ray', 1, SYSDATE, 1, SYSDATE);
 
 1 row created.
 
@@ -389,7 +443,41 @@ SQL> --  Step #6
 SQL> --  -------
 SQL> --  Display the preseeded values in the common_lookup table.
 SQL> -- --------------------------------------------------------
-SQL> 
+SQL> COL common_lookup_id	FORMAT	9999
+SQL> COL common_lookup_context	FORMAT A22
+SQL> COL common_lookup_type	FORMAT A18
+SQL> SELECT   common_lookup_id
+  2  ,	      common_lookup_context
+  3  ,	      common_lookup_type
+  4  FROM     common_lookup_lab;
+
+MEMBER                                                                          
+LOOKUP                        Common                                            
+  ID # COMMON_LOOKUP_CONTEXT  Lookup Type                                       
+------ ---------------------- ------------------                                
+     1 SYSTEM_USER_LAB        SYSTEM_ADMIN                                      
+     2 SYSTEM_USER_LAB        DBA                                               
+     3 SYSTEM_USER_LAB        SYSTEM_GROUP                                      
+     4 SYSTEM_USER_LAB        COST_CENTER                                       
+     5 SYSTEM_USER_LAB        INDIVIDUAL                                        
+  1001 CONTACT_LAB            EMPLOYEE                                          
+  1002 CONTACT_LAB            CUSTOMER                                          
+  1003 MEMBER_LAB             INDIVIDUAL                                        
+  1004 MEMBER_LAB             GROUP                                             
+  1005 MEMBER_LAB             DISCOVER_CARD                                     
+  1006 MEMBER_LAB             MASTER_CARD                                       
+  1007 MEMBER_LAB             VISA_CARD                                         
+  1008 MULTIPLE               HOME                                              
+  1009 MULTIPLE               WORK                                              
+  1010 ITEM_LAB               DVD_FULL_SCREEN                                   
+  1011 ITEM_LAB               DVD_WIDE_SCREEN                                   
+  1012 ITEM_LAB               NINTENDO_GAMECUBE                                 
+  1013 ITEM_LAB               PLAYSTATION2                                      
+  1014 ITEM_LAB               XBOX                                              
+  1015 ITEM_LAB               BLU-RAY                                           
+
+20 rows selected.
+
 SQL> 
 SQL> -- --------------------------------------------------------
 SQL> --  Step #7
@@ -404,6 +492,27 @@ SQL> --  --------------------------------------------------
 SQL> --  Both queries use the COMMON_LOOKUP_CONTEXT and
 SQL> --  COMMON_LOOKUP_TYPE columns.
 SQL> -- --------------------------------------------------------
+SQL> SELECT common_lookup_id FROM common_lookup_lab WHERE common_lookup_context = 'SYSTEM_USER_LAB' AND common_lookup_type = 'SYSTEM_GROUP';
+
+MEMBER                                                                          
+LOOKUP                                                                          
+  ID #                                                                          
+------                                                                          
+     3                                                                          
+
+1 row selected.
+
+SQL> 
+SQL> SELECT common_lookup_id FROM common_lookup_lab WHERE common_lookup_context = 'SYSTEM_USER_LAB' AND common_lookup_type = 'SYSTEM_ADMIN';
+
+MEMBER                                                                          
+LOOKUP                                                                          
+  ID #                                                                          
+------                                                                          
+     1                                                                          
+
+1 row selected.
+
 SQL> 
 SQL> 
 SQL> -- --------------------------------------------------------
@@ -414,25 +523,41 @@ SQL> --  columns in the SYSTEM_USER table.
 SQL> -- --------------------------------------------------------
 SQL> 
 SQL> -- Insert the UPDATE statement for the SYSTEM_USER_GROUP_ID here.
+SQL> UPDATE system_user_lab SET system_user_group_id =
+  2    (SELECT common_lookup_id FROM common_lookup_lab WHERE common_lookup_context = 'SYSTEM_USER_LAB' AND common_lookup_type = 'SYSTEM_GROUP');
+
+1 row updated.
+
+SQL> 
+SQL> UPDATE system_user_lab SET system_user_type =
+  2    (SELECT common_lookup_id FROM common_lookup_lab WHERE common_lookup_context = 'SYSTEM_USER_LAB' AND common_lookup_type = 'SYSTEM_GROUP');
+
+1 row updated.
+
+SQL> 
 SQL> 
 SQL> 
 SQL> -- Display results.
 SQL> SET NULL '<Null>'
-SQL> COL system_user_lab_id    FORMAT 999999  HEADING "System|User|ID #"
+SQL> COL system_user_id    FORMAT 999999  HEADING "System|User|ID #"
 SQL> COL system_user_name      FORMAT A10     HEADING "System|User|Name"
 SQL> COL system_user_group_id  FORMAT 999999  HEADING "System|User|Group|ID #"
 SQL> COL system_user_type      FORMAT 999999  HEADING "System|User|Type"
-SQL> SELECT   system_user_lab_id
+SQL> SELECT   system_user_id
   2  ,	      system_user_name
   3  ,	      system_user_group_id
   4  ,	      system_user_type
   5  FROM     system_user_lab
-  6  WHERE    system_user_lab_id = 1;
-WHERE    system_user_lab_id = 1
-         *
-ERROR at line 6:
-ORA-00904: "SYSTEM_USER_LAB_ID": invalid identifier 
+  6  WHERE    system_user_id = 1;
 
+                    System                                                      
+ System System        User  System                                              
+   User User         Group    User                                              
+   ID # Name          ID #    Type                                              
+------- ---------- ------- -------                                              
+      1 SYSADMIN         3       3                                              
+
+1 row selected.
 
 SQL> 
 SQL> -- Insert the UPDATE statement for the SYSTEM_USER_TYPE here.
@@ -440,21 +565,25 @@ SQL>
 SQL> 
 SQL> -- Display results.
 SQL> SET NULL '<Null>'
-SQL> COL system_user_lab_id    FORMAT 999999  HEADING "System|User|ID #"
+SQL> COL system_user_id    FORMAT 999999  HEADING "System|User|ID #"
 SQL> COL system_user_name      FORMAT A10     HEADING "System|User|Name"
 SQL> COL system_user_group_id  FORMAT 999999  HEADING "System|User|Group|ID #"
 SQL> COL system_user_type      FORMAT 999999  HEADING "System|User|Type"
-SQL> SELECT   system_user_lab_id
+SQL> SELECT   system_user_id
   2  ,	      system_user_name
   3  ,	      system_user_group_id
   4  ,	      system_user_type
   5  FROM     system_user_lab
-  6  WHERE    system_user_lab_id = 1;
-WHERE    system_user_lab_id = 1
-         *
-ERROR at line 6:
-ORA-00904: "SYSTEM_USER_LAB_ID": invalid identifier 
+  6  WHERE    system_user_id = 1;
 
+                    System                                                      
+ System System        User  System                                              
+   User User         Group    User                                              
+   ID # Name          ID #    Type                                              
+------- ---------- ------- -------                                              
+      1 SYSADMIN         3       3                                              
+
+1 row selected.
 
 SQL> 
 SQL> -- --------------------------------------------------------
@@ -464,8 +593,18 @@ SQL> --  Enable foreign key constraints dependencies.
 SQL> -- --------------------------------------------------------
 SQL> 
 SQL> -- Insert ALTER statement #1.
+SQL> ALTER TABLE system_user_lab
+  2  ENABLE CONSTRAINT fk_system_user_lab_3;
+
+Table altered.
+
 SQL> 
 SQL> -- Insert ALTER statement #2.
+SQL> ALTER TABLE system_user_lab
+  2  ENABLE CONSTRAINT fk_system_user_lab_4;
+
+Table altered.
+
 SQL> 
 SQL> 
 SQL> -- Display system_user table constraints.
@@ -521,20 +660,29 @@ B
 SYSTEM_USER_LA FK_SYSTEM_USER_LAB_2     FOREIGN KEY  ENABLED                    
 B                                                                               
                                                                                 
-SYSTEM_USER_LA FK_SYSTEM_USER_LAB_3     FOREIGN KEY  DISABLED                   
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_3     FOREIGN KEY  ENABLED                    
 B                                                                               
                                                                                 
-SYSTEM_USER_LA FK_SYSTEM_USER_LAB_4     FOREIGN KEY  DISABLED                   
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_4     FOREIGN KEY  ENABLED                    
 B                                                                               
                                                                                 
 
 10 rows selected.
 
 SQL> 
-SQL> -- Insert ALTER statement #3.
+SQL> -- Insert ALTER statement #1.
+SQL> ALTER TABLE common_lookup_lab
+  2  ENABLE CONSTRAINT fk_clookup_lab_1;
+
+Table altered.
+
 SQL> 
-SQL> -- Insert ALTER statement #4.
-SQL> 
+SQL> -- Insert ALTER statement #2.
+SQL> ALTER TABLE common_lookup_lab
+  2  ENABLE CONSTRAINT fk_clookup_lab_2;
+
+Table altered.
+
 SQL> 
 SQL> -- Display system_user table constraints.
 SQL> COL table_name	  FORMAT A14  HEADING "Table Name"
@@ -589,10 +737,10 @@ LAB
 COMMON_LOOKUP_ NN_CLOOKUP_LAB_7         NOT NULL     ENABLED                    
 LAB                                                                             
                                                                                 
-COMMON_LOOKUP_ FK_CLOOKUP_LAB_1         FOREIGN KEY  DISABLED                   
+COMMON_LOOKUP_ FK_CLOOKUP_LAB_1         FOREIGN KEY  ENABLED                    
 LAB                                                                             
                                                                                 
-COMMON_LOOKUP_ FK_CLOOKUP_LAB_2         FOREIGN KEY  DISABLED                   
+COMMON_LOOKUP_ FK_CLOOKUP_LAB_2         FOREIGN KEY  ENABLED                    
 LAB                                                                             
                                                                                 
 
@@ -605,9 +753,20 @@ SQL> --  --------
 SQL> --  Alter the table to add not null constraints.
 SQL> -- --------------------------------------------------------
 SQL> 
+SQL> 
 SQL> -- Insert ALTER statement #1.
+SQL> ALTER TABLE system_user_lab
+  2    MODIFY (system_user_group_id  NUMBER  CONSTRAINT nn_system_user_lab_2 NOT NULL);
+
+Table altered.
+
 SQL> 
 SQL> -- Insert ALTER statement #2.
+SQL> ALTER TABLE system_user_lab
+  2    MODIFY (system_user_type      NUMBER  CONSTRAINT nn_system_user_lab_3 NOT NULL);
+
+Table altered.
+
 SQL> 
 SQL> 
 SQL> -- Display system_user table constraints.
@@ -645,6 +804,12 @@ B
 SYSTEM_USER_LA NN_SYSTEM_USER_LAB_1     NOT NULL     ENABLED                    
 B                                                                               
                                                                                 
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_2     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
+SYSTEM_USER_LA NN_SYSTEM_USER_LAB_3     NOT NULL     ENABLED                    
+B                                                                               
+                                                                                
 SYSTEM_USER_LA NN_SYSTEM_USER_LAB_4     NOT NULL     ENABLED                    
 B                                                                               
                                                                                 
@@ -663,22 +828,96 @@ B
 SYSTEM_USER_LA FK_SYSTEM_USER_LAB_2     FOREIGN KEY  ENABLED                    
 B                                                                               
                                                                                 
-SYSTEM_USER_LA FK_SYSTEM_USER_LAB_3     FOREIGN KEY  DISABLED                   
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_3     FOREIGN KEY  ENABLED                    
 B                                                                               
                                                                                 
-SYSTEM_USER_LA FK_SYSTEM_USER_LAB_4     FOREIGN KEY  DISABLED                   
+SYSTEM_USER_LA FK_SYSTEM_USER_LAB_4     FOREIGN KEY  ENABLED                    
 B                                                                               
                                                                                 
 
-10 rows selected.
+12 rows selected.
 
 SQL> 
 SQL> -- --------------------------------------------------------
 SQL> --  Step #11
 SQL> --  --------
-SQL> --  Insert rows in the system_user table with subqueries.
+SQL> --  Insert rows in the system_user_lab table with subqueries.
 SQL> -- --------------------------------------------------------
+SQL> INSERT INTO system_user_lab
+  2  ( system_user_id
+  3  , system_user_name
+  4  , system_user_group_id
+  5  , system_user_type
+  6  , first_name
+  7  , middle_name
+  8  , last_name
+  9  , created_by
+ 10  , creation_date
+ 11  , last_updated_by
+ 12  , last_update_date)
+ 13  VALUES
+ 14  ( system_user_s1.NEXTVAL			       -- system_user_id
+ 15  ,'DBA1'					       -- system_user_name
+ 16  ,(SELECT	common_lookup_id
+ 17    FROM	common_lookup_lab
+ 18    WHERE	common_lookup_context = 'SYSTEM_USER_LAB'
+ 19    AND	common_lookup_type = 'DBA')	       -- system_user_group_id
+ 20  ,(SELECT	common_lookup_id
+ 21    FROM	common_lookup_lab
+ 22    WHERE	common_lookup_context = 'SYSTEM_USER_LAB'
+ 23    AND	common_lookup_type = 'SYSTEM_GROUP')   -- system_user_type
+ 24  ,'Phineas'
+ 25  ,'Taylor'
+ 26  ,'Barnum'
+ 27  ,(SELECT	system_user_id
+ 28    FROM	system_user_lab
+ 29    WHERE	system_user_name = 'SYSADMIN')	       -- created_by
+ 30  , SYSDATE					       -- creation_date
+ 31  ,(SELECT	system_user_id
+ 32    FROM	system_user_lab
+ 33    WHERE	system_user_name = 'SYSADMIN')	       -- last_updated_by
+ 34  , SYSDATE					       -- last_update_date
+ 35  );
+
+1 row created.
+
 SQL> 
+SQL> INSERT INTO system_user_lab
+  2  ( system_user_id
+  3  , system_user_name
+  4  , system_user_group_id
+  5  , system_user_type
+  6  , first_name
+  7  , last_name
+  8  , created_by
+  9  , creation_date
+ 10  , last_updated_by
+ 11  , last_update_date)
+ 12  VALUES
+ 13  ( system_user_s1.NEXTVAL			       -- system_user_id
+ 14  ,'DBA2'					       -- system_user_name
+ 15  ,(SELECT	common_lookup_id
+ 16    FROM	common_lookup_lab
+ 17    WHERE	common_lookup_context = 'SYSTEM_USER_LAB'
+ 18    AND	common_lookup_type = 'DBA')	       -- system_user_group_id
+ 19  ,(SELECT	common_lookup_id
+ 20    FROM	common_lookup_lab
+ 21    WHERE	common_lookup_context = 'SYSTEM_USER_LAB'
+ 22    AND	common_lookup_type = 'SYSTEM_GROUP')   -- system_user_type
+ 23  ,'Phileas'
+ 24  ,'Fogg'
+ 25  ,(SELECT	system_user_id
+ 26    FROM	system_user_lab
+ 27    WHERE	system_user_name = 'SYSADMIN')	       -- created_by
+ 28  , SYSDATE					       -- creation_date
+ 29  ,(SELECT	system_user_id
+ 30    FROM	system_user_lab
+ 31    WHERE	system_user_name = 'SYSADMIN')	       -- last_updated_by
+ 32  , SYSDATE					       -- last_update_date
+ 33  );
+
+1 row created.
+
 SQL> 
 SQL> -- --------------------------------------------------------
 SQL> --  Step #12
@@ -686,12 +925,12 @@ SQL> --  --------
 SQL> --  Display inserted rows from the system_user table.
 SQL> -- --------------------------------------------------------
 SQL> SET NULL '<Null>'
-SQL> COL system_user_lab_id    FORMAT  9999
+SQL> COL system_user_id    FORMAT  9999
 SQL> COL system_user_group_id  FORMAT  9999
 SQL> COL system_user_type      FORMAT  9999
 SQL> COL system_user_name      FORMAT  A10
 SQL> COL full_user_name        FORMAT  A30
-SQL> SELECT   system_user_lab_id
+SQL> SELECT   system_user_id
   2  ,	      system_user_group_id
   3  ,	      system_user_type
   4  ,	      system_user_name
@@ -700,11 +939,17 @@ SQL> SELECT   system_user_lab_id
   7  		  last_name || ', ' || first_name || ' ' || middle_name
   8  	      END AS full_user_name
   9  FROM     system_user_lab;
-SELECT   system_user_lab_id
-         *
-ERROR at line 1:
-ORA-00904: "SYSTEM_USER_LAB_ID": invalid identifier 
 
+       System                                                                   
+System   User System System                                                     
+  User  Group   User User                                                       
+  ID #   ID #   Type Name       FULL_USER_NAME                                  
+------ ------ ------ ---------- ------------------------------                  
+     1      3      3 SYSADMIN   <Null>                                          
+  1005      2      3 DBA1       Barnum, Phineas Taylor                          
+  1006      2      3 DBA2       Fogg, Phileas                                   
+
+3 rows selected.
 
 SQL> 
 SQL> -- Commit changes.

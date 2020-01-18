@@ -126,7 +126,7 @@ INSERT INTO system_user_lab
   (system_user_id, system_user_name, system_user_group_id, system_user_type, first_name, middle_name, last_name,
     created_by, creation_date, last_updated_by, last_update_date)
 VALUES 
-  (1, 'SYSADMIN', NULL, NULL, '', '', '', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1, 'SYSADMIN', NULL, NULL, '', '', '', 1, SYSDATE, 1, SYSDATE);
 
 
 
@@ -180,102 +180,102 @@ ORDER BY CASE
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1, 'SYSTEM_USER_LAB', 'SYSTEM_ADMIN', 'System Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1, 'SYSTEM_USER_LAB', 'SYSTEM_ADMIN', 'System Administrator', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (2, 'SYSTEM_USER_LAB', 'DBA', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (2, 'SYSTEM_USER_LAB', 'DBA', 'Database Administrator', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (3, 'SYSTEM_USER_LAB', 'SYSTEM_GROUP', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (3, 'SYSTEM_USER_LAB', 'SYSTEM_GROUP', 'Database Administrator', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (4, 'SYSTEM_USER_LAB', 'COST_CENTER', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (4, 'SYSTEM_USER_LAB', 'COST_CENTER', 'Database Administrator', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (5, 'SYSTEM_USER_LAB', 'INDIVIDUAL', 'Database Administrator', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (5, 'SYSTEM_USER_LAB', 'INDIVIDUAL', 'Database Administrator', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1001, 'CONTACT_LAB', 'EMPLOYEE', 'Employee', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1001, 'CONTACT_LAB', 'EMPLOYEE', 'Employee', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1002, 'CONTACT_LAB', 'CUSTOMER', 'Customer', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1002, 'CONTACT_LAB', 'CUSTOMER', 'Customer', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1003, 'MEMBER_LAB', 'INDIVIDUAL', 'Individual Membership', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1003, 'MEMBER_LAB', 'INDIVIDUAL', 'Individual Membership', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1004, 'MEMBER_LAB', 'GROUP', 'Group Membership', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1004, 'MEMBER_LAB', 'GROUP', 'Group Membership', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1005, 'MEMBER_LAB', 'DISCOVER_CARD', 'Discover Card', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1005, 'MEMBER_LAB', 'DISCOVER_CARD', 'Discover Card', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1006, 'MEMBER_LAB', 'MASTER_CARD', 'Master Card', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1006, 'MEMBER_LAB', 'MASTER_CARD', 'Master Card', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1007, 'MEMBER_LAB', 'VISA_CARD', 'Visa Card', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1007, 'MEMBER_LAB', 'VISA_CARD', 'Visa Card', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1008, 'MULTIPLE', 'HOME', 'Home', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1008, 'MULTIPLE', 'HOME', 'Home', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1009, 'MULTIPLE', 'WORK', 'Work', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1009, 'MULTIPLE', 'WORK', 'Work', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1010, 'ITEM_LAB', 'DVD_FULL_SCREEN', 'DVD: Full Screen', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1010, 'ITEM_LAB', 'DVD_FULL_SCREEN', 'DVD: Full Screen', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1011, 'ITEM_LAB', 'DVD_WIDE_SCREEN', 'DVD: Wide Screen', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1011, 'ITEM_LAB', 'DVD_WIDE_SCREEN', 'DVD: Wide Screen', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1012, 'ITEM_LAB', 'NINTENDO_GAMECUBE', 'Nintendo Gamecube', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1012, 'ITEM_LAB', 'NINTENDO_GAMECUBE', 'Nintendo Gamecube', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1013, 'ITEM_LAB', 'PLAYSTATION2', 'Playstation2', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1013, 'ITEM_LAB', 'PLAYSTATION2', 'Playstation2', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1014, 'ITEM_LAB', 'XBOX', 'XBox', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1014, 'ITEM_LAB', 'XBOX', 'XBox', 1, SYSDATE, 1, SYSDATE);
 
 INSERT INTO common_lookup_lab
   (common_lookup_id, common_lookup_context, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date)
 VALUES
-  (1015, 'ITEM_LAB', 'BLU-RAY', 'Blu-ray', 1, CURRENT_DATE, 1, CURRENT_DATE);
+  (1015, 'ITEM_LAB', 'BLU-RAY', 'Blu-ray', 1, SYSDATE, 1, SYSDATE);
 
 
 
@@ -284,7 +284,13 @@ VALUES
 --  -------
 --  Display the preseeded values in the common_lookup table.
 -- --------------------------------------------------------
-
+COL common_lookup_id       FORMAT  9999
+COL common_lookup_context  FORMAT A22
+COL common_lookup_type     FORMAT A18
+SELECT   common_lookup_id
+,        common_lookup_context
+,        common_lookup_type
+FROM     common_lookup_lab;
 
 -- --------------------------------------------------------
 --  Step #7
@@ -322,32 +328,32 @@ UPDATE system_user_lab SET system_user_type =
 
 -- Display results.
 SET NULL '<Null>'
-COL system_user_lab_id    FORMAT 999999  HEADING "System|User|ID #"
+COL system_user_id    FORMAT 999999  HEADING "System|User|ID #"
 COL system_user_name      FORMAT A10     HEADING "System|User|Name"
 COL system_user_group_id  FORMAT 999999  HEADING "System|User|Group|ID #"
 COL system_user_type      FORMAT 999999  HEADING "System|User|Type"
-SELECT   system_user_lab_id
+SELECT   system_user_id
 ,        system_user_name
 ,        system_user_group_id
 ,        system_user_type
 FROM     system_user_lab
-WHERE    system_user_lab_id = 1;
+WHERE    system_user_id = 1;
 
 -- Insert the UPDATE statement for the SYSTEM_USER_TYPE here.
 
 
 -- Display results.
 SET NULL '<Null>'
-COL system_user_lab_id    FORMAT 999999  HEADING "System|User|ID #"
+COL system_user_id    FORMAT 999999  HEADING "System|User|ID #"
 COL system_user_name      FORMAT A10     HEADING "System|User|Name"
 COL system_user_group_id  FORMAT 999999  HEADING "System|User|Group|ID #"
 COL system_user_type      FORMAT 999999  HEADING "System|User|Type"
-SELECT   system_user_lab_id
+SELECT   system_user_id
 ,        system_user_name
 ,        system_user_group_id
 ,        system_user_type
 FROM     system_user_lab
-WHERE    system_user_lab_id = 1;
+WHERE    system_user_id = 1;
 
 -- --------------------------------------------------------
 --  Step #9
@@ -434,13 +440,12 @@ ORDER BY CASE
 
 
 -- Insert ALTER statement #1.
-ALTER TABLE common_lookup_lab
-  MODIFY (system_user_group_id  NUMBER  CONSTRAINT nn_system_user_2 NOT NULL);
-
-ALTER TABLE common_lookup_lab
-  MODIFY (system_user_type      NUMBER  CONSTRAINT nn_system_user_3 NOT NULL);
+ALTER TABLE system_user_lab
+  MODIFY (system_user_group_id  NUMBER  CONSTRAINT nn_system_user_lab_2 NOT NULL);
 
 -- Insert ALTER statement #2.
+ALTER TABLE system_user_lab
+  MODIFY (system_user_type      NUMBER  CONSTRAINT nn_system_user_lab_3 NOT NULL);
 
 
 -- Display system_user table constraints.
@@ -492,11 +497,11 @@ VALUES
 ,'DBA1'                                           -- system_user_name
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
-  WHERE    common_lookup_context = 'SYSTEM_USER'
+  WHERE    common_lookup_context = 'SYSTEM_USER_LAB'
   AND      common_lookup_type = 'DBA')            -- system_user_group_id            
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
-  WHERE    common_lookup_context = 'SYSTEM_USER'
+  WHERE    common_lookup_context = 'SYSTEM_USER_LAB'
   AND      common_lookup_type = 'SYSTEM_GROUP')   -- system_user_type
 ,'Phineas'
 ,'Taylor'
@@ -527,11 +532,11 @@ VALUES
 ,'DBA2'                                           -- system_user_name
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
-  WHERE    common_lookup_context = 'SYSTEM_USER'
+  WHERE    common_lookup_context = 'SYSTEM_USER_LAB'
   AND      common_lookup_type = 'DBA')            -- system_user_group_id            
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
-  WHERE    common_lookup_context = 'SYSTEM_USER'
+  WHERE    common_lookup_context = 'SYSTEM_USER_LAB'
   AND      common_lookup_type = 'SYSTEM_GROUP')   -- system_user_type
 ,'Phileas'
 ,'Fogg'
@@ -551,12 +556,12 @@ VALUES
 --  Display inserted rows from the system_user table.
 -- --------------------------------------------------------
 SET NULL '<Null>'
-COL system_user_lab_id    FORMAT  9999
+COL system_user_id    FORMAT  9999
 COL system_user_group_id  FORMAT  9999
 COL system_user_type      FORMAT  9999
 COL system_user_name      FORMAT  A10
 COL full_user_name        FORMAT  A30
-SELECT   system_user_lab_id
+SELECT   system_user_id
 ,        system_user_group_id
 ,        system_user_type
 ,        system_user_name
