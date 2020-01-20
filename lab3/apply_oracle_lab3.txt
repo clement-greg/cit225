@@ -530,7 +530,7 @@ SQL> UPDATE system_user_lab SET system_user_group_id =
 
 SQL> 
 SQL> UPDATE system_user_lab SET system_user_type =
-  2    (SELECT common_lookup_id FROM common_lookup_lab WHERE common_lookup_context = 'SYSTEM_USER_LAB' AND common_lookup_type = 'SYSTEM_GROUP');
+  2    (SELECT common_lookup_id FROM common_lookup_lab WHERE common_lookup_context = 'SYSTEM_USER_LAB' AND common_lookup_type = 'SYSTEM_ADMIN');
 
 1 row updated.
 
@@ -555,7 +555,7 @@ SQL> SELECT   system_user_id
    User User         Group    User                                              
    ID # Name          ID #    Type                                              
 ------- ---------- ------- -------                                              
-      1 SYSADMIN         3       3                                              
+      1 SYSADMIN         3       1                                              
 
 1 row selected.
 
@@ -581,7 +581,7 @@ SQL> SELECT   system_user_id
    User User         Group    User                                              
    ID # Name          ID #    Type                                              
 ------- ---------- ------- -------                                              
-      1 SYSADMIN         3       3                                              
+      1 SYSADMIN         3       1                                              
 
 1 row selected.
 
@@ -945,7 +945,7 @@ System   User System System
   User  Group   User User                                                       
   ID #   ID #   Type Name       FULL_USER_NAME                                  
 ------ ------ ------ ---------- ------------------------------                  
-     1      3      3 SYSADMIN   <Null>                                          
+     1      3      1 SYSADMIN   <Null>                                          
   1005      2      3 DBA1       Barnum, Phineas Taylor                          
   1006      2      3 DBA2       Fogg, Phileas                                   
 

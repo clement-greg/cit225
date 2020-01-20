@@ -319,10 +319,8 @@ SELECT common_lookup_id FROM common_lookup_lab WHERE common_lookup_context = 'SY
 
 -- Insert the UPDATE statement for the SYSTEM_USER_GROUP_ID here.
 UPDATE system_user_lab SET system_user_group_id = 
-  (SELECT common_lookup_id FROM common_lookup_lab WHERE common_lookup_context = 'SYSTEM_USER_LAB' AND common_lookup_type = 'SYSTEM_GROUP');
-
-UPDATE system_user_lab SET system_user_type = 
-  (SELECT common_lookup_id FROM common_lookup_lab WHERE common_lookup_context = 'SYSTEM_USER_LAB' AND common_lookup_type = 'SYSTEM_GROUP');
+  (SELECT common_lookup_id FROM common_lookup_lab WHERE common_lookup_context = 'SYSTEM_USER_LAB' AND common_lookup_type = 'SYSTEM_GROUP')
+WHERE system_user_id = 1;
 
 
 
@@ -340,6 +338,10 @@ FROM     system_user_lab
 WHERE    system_user_id = 1;
 
 -- Insert the UPDATE statement for the SYSTEM_USER_TYPE here.
+
+UPDATE system_user_lab SET system_user_type = 
+  (SELECT common_lookup_id FROM common_lookup_lab WHERE common_lookup_context = 'SYSTEM_USER_LAB' AND common_lookup_type = 'SYSTEM_ADMIN')
+WHERE system_user_id = 1;
 
 
 -- Display results.
