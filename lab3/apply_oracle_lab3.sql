@@ -495,7 +495,7 @@ INSERT INTO system_user_lab
 , last_updated_by
 , last_update_date)
 VALUES
-( system_user_s1.NEXTVAL                          -- system_user_id
+( 1001                          -- system_user_id
 ,'DBA1'                                           -- system_user_name
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -530,7 +530,7 @@ INSERT INTO system_user_lab
 , last_updated_by
 , last_update_date)
 VALUES
-( system_user_s1.NEXTVAL                          -- system_user_id
+( 1002                         -- system_user_id
 ,'DBA2'                                           -- system_user_name
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
