@@ -43,7 +43,11 @@ SELECT  'Step #1' AS "Step Number" FROM dual;
 -- --------------------------------------------------
 --  Step 1: Write the ALTER statement.
 -- --------------------------------------------------
+ALTER TABLE rental_item
+ADD rental_item_type NUMBER;
 
+ALTER TABLE rental_item
+ADD rental_item_price NUMBER;
 
 
 
@@ -94,18 +98,34 @@ BEGIN
   END LOOP;
 END;
 /
-
 -- --------------------------------------------------
 --  Step 1: Write the CREATE TABLE statement.
 -- --------------------------------------------------
-
-
-
+CREATE TABLE price
+(
+  price_id          NUMBER,
+  item_id           NUMBER      CONSTRAINT nn_price_1 NOT NULL,
+  price_type        NUMBER      CONSTRAINT nn_price_2 NOT NULL,
+  active_flag       VARCHAR(1)  CONSTRAINT nn_price_3 NOT NULL,
+  start_date        DATE        CONSTRAINT nn_price_4 NOT NULL,
+  end_date          DATE,
+  amount            NUMBER      CONSTRAINT nn_price_5 NOT NULL,
+  created_by        NUMBER      CONSTRAINT nn_price_6 NOT NULL,
+  creation_date     DATE        CONSTRAINT nn_price_7 NOT NULL,
+  last_updated_by   NUMBER      CONSTRAINT nn_price_8 NOT NULL,
+  last_update_date  DATE        CONSTRAINT nn_price_9 NOT NULL,
+  CONSTRAINT pk_price_1         PRIMARY KEY(price_id),
+  CONSTRAINT fk_price_1         FOREIGN KEY(item_id) REFERENCES item(item_id),
+  CONSTRAINT fk_price_2         FOREIGN KEY(price_type) REFERENCES common_lookup(common_lookup_id),
+  CONSTRAINT fk_price_3         FOREIGN KEY(created_by) REFERENCES system_user(system_user_id),
+  CONSTRAINT fk_price_4         FOREIGN KEY(last_updated_by) REFERENCES system_user(system_user_id),
+  CONSTRAINT cc_price_1         CHECK(active_flag IN ('Y', 'N'))
+);
 
 -- --------------------------------------------------
 --  Step 2: Write the CREATE SEQUENCE statement.
 -- --------------------------------------------------
-
+CREATE SEQUENCE price_s1 START WITH 1001 NOCACHE;
 
 
 
@@ -162,7 +182,8 @@ AND      uc.constraint_type = 'C';
 -- ----------------------------------------------------------------------
 --  Step #3a: Rename ITEM_RELEASE_DATE Column.
 -- ----------------------------------------------------------------------
-
+ALTER TABLE item
+RENAME COLUMN item_release_date TO release_date;
 
 
 
@@ -190,7 +211,89 @@ ORDER BY 2;
 -- ----------------------------------------------------------------------
 --  Step #3b: Insert three rows in the ITEM table.
 -- ----------------------------------------------------------------------
+INSERT INTO item
+( item_id
+, item_barcode
+, item_type
+, item_title
+, item_subtitle
+, item_rating
+, release_date
+, created_by
+, creation_date
+, last_updated_by
+, last_update_date )
+VALUES
+( item_s1.nextval
+,'9736-05640-5'
+,(SELECT   common_lookup_id
+  FROM     common_lookup
+  WHERE    common_lookup_context = 'ITEM'
+  AND      common_lookup_type = 'DVD_WIDE_SCREEN')
+,'Tron'
+,''
+,'PG'
+,(TRUNC(SYSDATE) - 1)
+, 1001
+, SYSDATE
+, 1001
+, SYSDATE);
 
+INSERT INTO item
+( item_id
+, item_barcode
+, item_type
+, item_title
+, item_subtitle
+, item_rating
+, release_date
+, created_by
+, creation_date
+, last_updated_by
+, last_update_date )
+VALUES
+( item_s1.nextval
+,'9736-05640-6'
+,(SELECT   common_lookup_id
+  FROM     common_lookup
+  WHERE    common_lookup_context = 'ITEM'
+  AND      common_lookup_type = 'DVD_WIDE_SCREEN')
+,'Ender''s Game'
+,''
+,'PG'
+,(TRUNC(SYSDATE) - 2)
+, 1001
+, SYSDATE
+, 1001
+, SYSDATE);
+
+INSERT INTO item
+( item_id
+, item_barcode
+, item_type
+, item_title
+, item_subtitle
+, item_rating
+, release_date
+, created_by
+, creation_date
+, last_updated_by
+, last_update_date )
+VALUES
+( item_s1.nextval
+,'9736-05640-6'
+,(SELECT   common_lookup_id
+  FROM     common_lookup
+  WHERE    common_lookup_context = 'ITEM'
+  AND      common_lookup_type = 'DVD_WIDE_SCREEN')
+,'Elysium'
+,''
+,'PG'
+,(TRUNC(SYSDATE) - 3)
+, 1001
+, SYSDATE
+, 1001
+, SYSDATE);
 
 
 
@@ -211,8 +314,185 @@ WHERE   (SYSDATE - i.release_date) < 31;
 --            STREET_ADDRESS, and TELEPHONE tables.
 -- ----------------------------------------------------------------------
 
+INSERT INTO member
+  (member_id, member_type, account_number, credit_card_number, credit_card_type, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (member_s1.nextval,
+      (SELECT common_lookup_id 
+      FROM common_lookup 
+      WHERE common_lookup.common_lookup_context = 'MEMBER' AND common_lookup.common_lookup_type = 'GROUP'),
+      'US00011',
+      '6011 0000 0000 0078',
+      (SELECT common_lookup_id 
+      FROM common_lookup 
+      WHERE common_lookup.common_lookup_context = 'MEMBER' AND common_lookup.common_lookup_type = 'DISCOVER_CARD'),
+      1,
+      SYSDATE,
+      1,
+      SYSDATE
+  );
 
+INSERT INTO contact
+  (contact_id, member_id, contact_type, first_name, last_name, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (
+    contact_s1.nextval,
+    member_sl.currval,
+    (SELECT common_lookup_id 
+      FROM common_lookup 
+      WHERE common_lookup.common_lookup_context = 'CONTACT' AND common_lookup.common_lookup_type = 'CUSTOMER'),
+    'Harry',
+    'Potter',
+    1,
+    SYSDATE,
+    1,
+    SYSDATE
+  );
 
+INSERT INTO address
+  (address_id, contact_id, address_type, city, state_province, postal_code, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (
+    address_s1.nextval,
+    contact_s1.currval,
+    (SELECT common_lookup_id 
+      FROM common_lookup 
+      WHERE common_lookup.common_lookup_context = 'MULTIPLE' AND common_lookup.common_lookup_type = 'HOME'),
+    'Provo',
+    'UT',
+    '11111',
+    1,
+    SYSDATE,
+    1,
+    SYSDATE
+  );
+
+  INSERT INTO telephone
+    (telephone_id, contact_id, address_id, telephone_type, country_code, area_code, telephone_number, created_by, creation_date, last_updated_by, last_update_date)
+  VALUES
+    (
+      telephone_s1.nextval,
+      contact_s1.currval,
+      address_s1.currval,
+      (SELECT common_lookup_id 
+        FROM common_lookup 
+        WHERE common_lookup.common_lookup_context = 'MULTIPLE' AND common_lookup.common_lookup_type = 'HOME'),
+      '+1',
+      '801',
+      '333-3333',
+      1,
+      SYSDATE,
+      1,
+      SYSDATE
+    );
+
+INSERT INTO contact
+  (contact_id, member_id, contact_type, first_name, last_name, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (
+    contact_s1.nextval,
+    member_sl.currval,
+    (SELECT common_lookup_id 
+      FROM common_lookup 
+      WHERE common_lookup.common_lookup_context = 'CONTACT' AND common_lookup.common_lookup_type = 'CUSTOMER'),
+    'Ginny',
+    'Potter',
+    1,
+    SYSDATE,
+    1,
+    SYSDATE
+  );
+
+INSERT INTO address
+  (address_id, contact_id, address_type, city, state_province, postal_code, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (
+    address_s1.nextval,
+    contact_s1.currval,
+    (SELECT common_lookup_id 
+      FROM common_lookup 
+      WHERE common_lookup.common_lookup_context = 'MULTIPLE' AND common_lookup.common_lookup_type = 'HOME'),
+    'Provo',
+    'UT',
+    '11111',
+    1,
+    SYSDATE,
+    1,
+    SYSDATE
+  );
+
+  INSERT INTO telephone
+    (telephone_id, contact_id, address_id, telephone_type, country_code, area_code, telephone_number, created_by, creation_date, last_updated_by, last_update_date)
+  VALUES
+    (
+      telephone_s1.nextval,
+      contact_s1.currval,
+      address_s1.currval,
+      (SELECT common_lookup_id 
+        FROM common_lookup 
+        WHERE common_lookup.common_lookup_context = 'MULTIPLE' AND common_lookup.common_lookup_type = 'HOME'),
+      '+1',
+      '801',
+      '333-3333',
+      1,
+      SYSDATE,
+      1,
+      SYSDATE
+    );
+INSERT INTO contact
+  (contact_id, member_id, contact_type, first_name, middle_name, last_name, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (
+    contact_s1.nextval,
+    member_sl.currval,
+    (SELECT common_lookup_id 
+      FROM common_lookup 
+      WHERE common_lookup.common_lookup_context = 'CONTACT' AND common_lookup.common_lookup_type = 'CUSTOMER'),
+    'Lily',
+    'Luna',
+    'Potter',
+    1,
+    SYSDATE,
+    1,
+    SYSDATE
+  );
+
+INSERT INTO address
+  (address_id, contact_id, address_type, city, state_province, postal_code, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (
+    address_s1.nextval,
+    contact_s1.currval,
+    (SELECT common_lookup_id 
+      FROM common_lookup 
+      WHERE common_lookup.common_lookup_context = 'MULTIPLE' AND common_lookup.common_lookup_type = 'HOME'),
+    'Provo',
+    'UT',
+    '11111',
+    1,
+    SYSDATE,
+    1,
+    SYSDATE
+  );
+
+  INSERT INTO telephone
+    (telephone_id, contact_id, address_id, telephone_type, country_code, area_code, telephone_number, created_by, creation_date, last_updated_by, last_update_date)
+  VALUES
+    (
+      telephone_s1.nextval,
+      contact_s1.currval,
+      address_s1.currval,
+      (SELECT common_lookup_id 
+        FROM common_lookup 
+        WHERE common_lookup.common_lookup_context = 'MULTIPLE' AND common_lookup.common_lookup_type = 'HOME'),
+      '+1',
+      '801',
+      '333-3333',
+      1,
+      SYSDATE,
+      1,
+      SYSDATE
+    );
 
 -- ----------------------------------------------------------------------
 --  Verification #3c: Verify the three new CONTACTS and their related

@@ -39,20 +39,101 @@ SPOOL apply_oracle_lab5.txt
 -- --------------------------------------------------
 --  Step 1: Write joins with the USING subclause.
 -- --------------------------------------------------
+-- a)
+SELECT member_id as "Member ID #", contact.contact_id as "Contact ID #" FROM Member JOIN Contact 
+    USING (member_id);
 
+-- b)
+SELECT member.member_id AS "Member ID #", 
+    contact.contact_id as "Contact ID #"
+FROM member,contact 
+WHERE member.member_id = contact.member_id;
 
+-- c)
+SELECT contact_id as "Contact ID #", address_id as "Address ID #"
+FROM contact
+JOIN address USING(contact_id);
+
+-- d)
+SELECT contact.contact_id as "Contact ID #", address.address_id as "Adress ID #"
+FROM contact,address
+WHERE contact.contact_id=address.contact_id;
+
+-- e)
+SELECT street_address.street_address_id as "Street Address ID #",
+    address_id as "Address ID #"
+FROM address
+JOIN street_address USING(address_id);
+
+-- f)
+SELECT street_address.street_address_id as "Street Address ID #",
+    address.address_id as "Address ID #"
+FROM address,street_address
+WHERE address.address_id = street_address.address_id;
+
+-- g)
+SELECT address_id as "Address ID #", telephone.telephone_id as "Telephone ID #"
+FROM address JOIN telephone USING(address_id);
+
+-- h)
+SELECT address.address_id as "Address ID #", telephone.telephone_id as "Telephone ID #"
+FROM address,telephone
+WHERE address.address_id = telephone.address_id;
 
 
 -- --------------------------------------------------
 --  Step 2: Write joins with the ON subclause.
 -- --------------------------------------------------
+-- a)
+SELECT contact.contact_id as "System Contact ID #",
+    system_user.system_user_id as "User ID #"
+FROM contact JOIN system_user ON contact.created_by = system_user.system_user_id;
 
+-- b)
+SELECT contact.contact_id as "System Contact ID #",
+    system_user.system_user_id as "User ID #"
+FROM contact,system_user 
+WHERE contact.created_by = system_user.system_user_id;
 
+-- c)
+SELECT contact.contact_id as "System Contact ID #",
+    system_user.system_user_id as "User ID #"
+FROM contact JOIN system_user ON contact.last_updated_by = system_user.system_user_id;
+
+-- d)
+SELECT contact.contact_id as "System Contact ID #",
+    system_user.system_user_id as "User ID #"
+FROM contact, system_user 
+WHERE contact.last_updated_by = system_user.system_user_id;
 
 
 -- --------------------------------------------------
 --  Step 3: Write self joins.
 -- --------------------------------------------------
+-- a)
+SELECT system_user_2.system_user_id as "System User ID #", 
+    system_user_2.created_by as "Created By ID #",
+    system_user_1.system_user_id as "System User ID #"
+FROM system_user  system_user_1
+JOIN system_user system_user_2 ON system_user_1.system_user_id = system_user_2.created_by;
+
+-- b)
+SELECT system_user_2.system_user_id as "System User ID #", 
+    system_user_2.created_by as "Created By ID #",
+    system_user_1.system_user_id as "System User ID #"
+FROM system_user  system_user_1
+JOIN system_user system_user_2 ON system_user_1.system_user_id = system_user_2.last_updated_by;
+
+-- c)
+SELECT system_user.system_user_id as "System User ID #",
+    system_user.system_user_name as "System User Name",
+    created_system_user.system_user_id as "System User ID #",
+    created_system_user.system_user_name as "System User Name",
+    updated_system_user.system_user_id as "System User ID #",
+    updated_system_user.system_user_name as "System User Name"
+FROM system_user
+    JOIN system_user created_system_user ON system_user.created_by = created_system_user.system_user_id
+    JOIN system_user updated_system_user ON system_user.last_updated_by = updated_system_user.system_user_id;
 
 
 
@@ -60,7 +141,13 @@ SPOOL apply_oracle_lab5.txt
 -- --------------------------------------------------
 --  Step 4: Write three table joins.
 -- --------------------------------------------------
-
+SELECT rental.rental_id as "Rental ID #",
+    rental_item.rental_id as "Rental ID #",
+    rental_item.item_id as "Item ID #",
+    item.item_id as "Item ID #"
+FROM rental
+    JOIN rental_item ON rental.rental_id = rental_item.rental_id
+    JOIN item ON rental_item.item_id = item.item_id;
 
 
 
@@ -286,7 +373,7 @@ DECLARE
   end_date   DATE := '31-JAN-15';
 
   /* Declare years. */
-  years      NUMBER := 4;
+  years      NUMBER := 6;
 
 BEGIN
 
@@ -323,7 +410,8 @@ SELECT   d.department_name
 FROM     employee e INNER JOIN department d
 ON       e.department_id = d.department_id INNER JOIN salary s
 ON       e.salary_id = s.salary_id
-WHERE    ... provide the logic and syntax ...
+WHERE    NVL(s.effective_start_date, SYSDATE) >= TRUNC(SYSDATE) - 30 
+    AND NVL(s.effective_start_date, SYSDATE) <= TRUNC(SYSDATE) + 30
 GROUP BY d.department_name
 ORDER BY d.department_name;
 

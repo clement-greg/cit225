@@ -33,7 +33,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'9736-05640-4'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -61,7 +61,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'24543-02392'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -89,7 +89,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'24543-5615'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -117,7 +117,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'24543-05539'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -145,7 +145,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'24543-20309'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -173,7 +173,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'86936-70380'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -200,7 +200,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'91493-06475'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -228,7 +228,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'93155-11810'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -256,7 +256,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'12725-00173'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -284,7 +284,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'45496-96128'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -312,7 +312,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'08888-32214'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -340,7 +340,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'14633-14821'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -368,7 +368,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'10425-29944'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -396,7 +396,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'52919-52057'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -424,7 +424,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'9689-80547-3'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -452,7 +452,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'53939-64103'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -480,7 +480,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'24543-01292'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -508,7 +508,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'43396-60047'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -536,7 +536,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'43396-70603'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -564,7 +564,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'85391-13213'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab
@@ -592,7 +592,7 @@ INSERT INTO item_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( item_s1.nextval
+( item_lab_s1.nextval
 ,'85391-10843'
 ,(SELECT   common_lookup_id
   FROM     common_lookup_lab

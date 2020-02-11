@@ -5,7 +5,7 @@ SQL> -- ------------------------------------------------------------------
 SQL> --  - Insert 21 rows in the ITEM table.
 SQL> -- ------------------------------------------------------------------
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -18,11 +18,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'9736-05640-4'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'DVD_WIDE_SCREEN')
  20  ,'The Hunt for Red October'
  21  ,'Special Collector''s Edition'
@@ -36,7 +36,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -49,11 +49,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'24543-02392'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'DVD_WIDE_SCREEN')
  20  ,'Star Wars I'
  21  ,'Phantom Menace'
@@ -67,7 +67,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -80,11 +80,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'24543-5615'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'DVD_FULL_SCREEN')
  20  ,'Star Wars II'
  21  ,'Attack of the Clones'
@@ -98,7 +98,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -111,11 +111,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'24543-05539'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'DVD_WIDE_SCREEN')
  20  ,'Star Wars II'
  21  ,'Attack of the Clones'
@@ -129,7 +129,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -142,11 +142,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'24543-20309'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'DVD_WIDE_SCREEN')
  20  ,'Star Wars III'
  21  ,'Revenge of the Sith'
@@ -160,7 +160,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -173,11 +173,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'86936-70380'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'DVD_WIDE_SCREEN')
  20  ,'The Chronicles of Narnia'
  21  ,'The Lion, the Witch and the Wardrobe','PG'
@@ -190,7 +190,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -203,11 +203,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'91493-06475'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'XBOX')
  20  ,'RoboCop'
  21  ,''
@@ -221,7 +221,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -234,11 +234,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'93155-11810'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'XBOX')
  20  ,'Pirates of the Caribbean'
  21  ,''
@@ -252,7 +252,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -265,11 +265,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'12725-00173'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'XBOX')
  20  ,'The Chronicles of Narnia'
  21  ,'The Lion, the Witch and the Wardrobe'
@@ -283,7 +283,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -296,11 +296,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'45496-96128'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'NINTENDO_GAMECUBE')
  20  ,'MarioKart'
  21  ,'Double Dash'
@@ -314,7 +314,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -327,11 +327,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'08888-32214'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'PLAYSTATION2')
  20  ,'Splinter Cell'
  21  ,'Chaos Theory'
@@ -345,7 +345,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -358,11 +358,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'14633-14821'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'PLAYSTATION2')
  20  ,'Need for Speed'
  21  ,'Most Wanted'
@@ -376,7 +376,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -389,11 +389,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'10425-29944'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'XBOX')
  20  ,'The DaVinci Code'
  21  ,''
@@ -407,7 +407,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -420,11 +420,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'52919-52057'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'XBOX')
  20  ,'Cars'
  21  ,''
@@ -438,7 +438,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -451,11 +451,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'9689-80547-3'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'BLU-RAY')
  20  ,'Beau Geste'
  21  ,''
@@ -469,7 +469,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -482,11 +482,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'53939-64103'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'BLU-RAY')
  20  ,'I Remember Mama'
  21  ,''
@@ -500,7 +500,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -513,11 +513,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'24543-01292'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'BLU-RAY')
  20  ,'Tora! Tora! Tora!'
  21  ,'The Attack on Pearl Harbor'
@@ -531,7 +531,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -544,11 +544,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'43396-60047'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'BLU-RAY')
  20  ,'A Man for All Seasons'
  21  ,''
@@ -562,7 +562,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -575,11 +575,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'43396-70603'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'BLU-RAY')
  20  ,'Hook'
  21  ,''
@@ -593,7 +593,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -606,11 +606,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'85391-13213'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'BLU-RAY')
  20  ,'Around the World in 80 Days'
  21  ,''
@@ -624,7 +624,7 @@ SQL> INSERT INTO item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO item_lab
+SQL> INSERT INTO item
   2  ( item_id
   3  , item_barcode
   4  , item_type
@@ -637,11 +637,11 @@ SQL> INSERT INTO item_lab
  11  , last_updated_by
  12  , last_update_date )
  13  VALUES
- 14  ( item_lab_s1.nextval
+ 14  ( item_s1.nextval
  15  ,'85391-10843'
  16  ,(SELECT	common_lookup_id
- 17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_context = 'ITEM_LAB'
+ 17    FROM	common_lookup
+ 18    WHERE	common_lookup_context = 'ITEM'
  19    AND	common_lookup_type = 'BLU-RAY')
  20  ,'Camelot'
  21  ,''
@@ -694,29 +694,8 @@ SQL> SELECT   i.item_id
  1019 Blu-ray              Hook                           11-DEC-91             
  1020 Blu-ray              Around the World in 80 Days    04-DEC-92             
  1021 Blu-ray              Camelot                        15-MAY-98             
- 1022 DVD: Wide Screen     The Hunt for Red October       02-MAR-90             
- 1023 DVD: Wide Screen     Star Wars I                    04-MAY-99             
- 1024 DVD: Full Screen     Star Wars II                   16-MAY-02             
- 1025 DVD: Wide Screen     Star Wars II                   16-MAY-02             
- 1026 DVD: Wide Screen     Star Wars III                  19-MAY-05             
- 1027 DVD: Wide Screen     The Chronicles of Narnia       16-MAY-02             
- 1028 XBOX                 RoboCop                        24-JUL-03             
- 1029 XBOX                 Pirates of the Caribbean       30-JUN-03             
- 1030 XBOX                 The Chronicles of Narnia       30-JUN-03             
- 1031 Nintendo Gamecube    MarioKart                      17-NOV-03             
- 1032 Playstation2         Splinter Cell                  08-APR-03             
- 1033 Playstation2         Need for Speed                 15-NOV-04             
- 1034 XBOX                 The DaVinci Code               19-MAY-06             
- 1035 XBOX                 Cars                           28-APR-06             
- 1036 Blu-ray              Beau Geste                     01-MAR-92             
- 1037 Blu-ray              I Remember Mama                05-JAN-98             
- 1038 Blu-ray              Tora! Tora! Tora!              02-NOV-99             
- 1039 Blu-ray              A Man for All Seasons          28-JUN-94             
- 1040 Blu-ray              Hook                           11-DEC-91             
- 1041 Blu-ray              Around the World in 80 Days    04-DEC-92             
- 1042 Blu-ray              Camelot                        15-MAY-98             
 
-42 rows selected.
+21 rows selected.
 
 SQL> 
 SQL> -- Commit changes.

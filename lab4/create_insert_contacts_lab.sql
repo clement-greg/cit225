@@ -62,7 +62,7 @@ BEGIN
   , last_updated_by
   , last_update_date )
   VALUES
-  ( member_s1.NEXTVAL
+  ( member_lab_s1.NEXTVAL
   ,(SELECT   common_lookup_id
     FROM     common_lookup_lab
     WHERE    common_lookup_context = 'MEMBER_LAB'
@@ -81,8 +81,8 @@ BEGIN
   /* Insert into the contact table. */
   INSERT INTO contact_lab
   VALUES
-  ( contact_s1.NEXTVAL
-  , member_s1.CURRVAL
+  ( contact_lab_s1.NEXTVAL
+  , member_lab_s1.CURRVAL
   ,(SELECT   common_lookup_id
     FROM     common_lookup_lab
     WHERE    common_lookup_context = 'CONTACT_LAB'
@@ -98,8 +98,8 @@ BEGIN
   /* Insert into the address table. */
   INSERT INTO address_lab
   VALUES
-  ( address_s1.NEXTVAL
-  , contact_s1.CURRVAL
+  ( address_lab_s1.NEXTVAL
+  , contact_lab_s1.CURRVAL
   ,(SELECT   common_lookup_id
     FROM     common_lookup_lab
     WHERE    common_lookup_context = 'MULTIPLE'
@@ -115,8 +115,8 @@ BEGIN
   /* Insert into the street_address table. */
   INSERT INTO street_address_lab
   VALUES
-  ( street_address_s1.NEXTVAL
-  , address_s1.CURRVAL
+  ( street_address_lab_s1.NEXTVAL
+  , address_lab_s1.CURRVAL
   , pv_street_address
   , pv_created_by
   , pv_creation_date
@@ -126,9 +126,9 @@ BEGIN
   /* Insert into the telephone table. */
   INSERT INTO telephone_lab
   VALUES
-  ( telephone_s1.NEXTVAL                              -- TELEPHONE_ID
-  , contact_s1.CURRVAL                                -- CONTACT_ID
-  , address_s1.CURRVAL                                -- ADDRESS_ID
+  ( telephone_lab_s1.NEXTVAL                              -- TELEPHONE_ID
+  , contact_lab_s1.CURRVAL                                -- CONTACT_ID
+  , address_lab_s1.CURRVAL                                -- ADDRESS_ID
   ,(SELECT   common_lookup_id                         -- ADDRESS_TYPE
     FROM     common_lookup_lab
     WHERE    common_lookup_context = 'MULTIPLE'

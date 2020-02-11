@@ -3,11 +3,11 @@ SQL> -- ------------------------------------------------------------------
 SQL> --   Query to verify seven rows of chained inserts to the five
 SQL> --   dependent tables.
 SQL> -- ------------------------------------------------------------------
-SQL> --    1. MEMBER_LAB
-SQL> --    2. CONTACT_LAB
-SQL> --    3. ADDRESS_LAB
-SQL> --    4. STREET_ADDRESS_LAB
-SQL> --    5. TELEPHONE_LAB
+SQL> --    1. MEMBER
+SQL> --    2. CONTACT
+SQL> --    3. ADDRESS
+SQL> --    4. STREET_ADDRESS
+SQL> --    5. TELEPHONE
 SQL> -- ------------------------------------------------------------------
 SQL> 
 SQL> COL member_id	 FORMAT 9999 HEADING "Acct|ID #"
@@ -25,10 +25,10 @@ SQL> SELECT   m.member_id
   7  ,	      a.city
   8  ,	      a.state_province
   9  ,	      t.country_code || '-(' || t.area_code || ') ' || t.telephone_number AS telephone
- 10  FROM     member_lab m INNER JOIN contact_lab c ON m.member_id = c.member_id INNER JOIN
- 11  	      address_lab a ON c.contact_id = a.contact_id INNER JOIN
- 12  	      street_address_lab sa ON a.address_id = sa.address_id INNER JOIN
- 13  	      telephone_lab t ON c.contact_id = t.contact_id AND a.address_id = t.address_id
+ 10  FROM     member m INNER JOIN contact c ON m.member_id = c.member_id INNER JOIN
+ 11  	      address a ON c.contact_id = a.contact_id INNER JOIN
+ 12  	      street_address sa ON a.address_id = sa.address_id INNER JOIN
+ 13  	      telephone t ON c.contact_id = t.contact_id AND a.address_id = t.address_id
  14  WHERE    last_name IN ('Sweeney','Vizquel','Winn');
 
  Acct Account    Name                                                           
@@ -57,7 +57,7 @@ SQL> SELECT   i.item_id
   2  ,	      cl.common_lookup_meaning
   3  ,	      i.item_title
   4  ,	      i.item_release_date
-  5  FROM     item_lab i INNER JOIN common_lookup_lab cl ON i.item_type = cl.common_lookup_id;
+  5  FROM     item i INNER JOIN common_lookup cl ON i.item_type = cl.common_lookup_id;
 
                                                           Item                  
  Item                                                     Release               
@@ -69,14 +69,14 @@ SQL> SELECT   i.item_id
  1004 DVD: Wide Screen     Star Wars II                   16-MAY-02             
  1005 DVD: Wide Screen     Star Wars III                  19-MAY-05             
  1006 DVD: Wide Screen     The Chronicles of Narnia       16-MAY-02             
- 1007 XBox                 RoboCop                        24-JUL-03             
- 1008 XBox                 Pirates of the Caribbean       30-JUN-03             
- 1009 XBox                 The Chronicles of Narnia       30-JUN-03             
+ 1007 XBOX                 RoboCop                        24-JUL-03             
+ 1008 XBOX                 Pirates of the Caribbean       30-JUN-03             
+ 1009 XBOX                 The Chronicles of Narnia       30-JUN-03             
  1010 Nintendo Gamecube    MarioKart                      17-NOV-03             
  1011 Playstation2         Splinter Cell                  08-APR-03             
  1012 Playstation2         Need for Speed                 15-NOV-04             
- 1013 XBox                 The DaVinci Code               19-MAY-06             
- 1014 XBox                 Cars                           28-APR-06             
+ 1013 XBOX                 The DaVinci Code               19-MAY-06             
+ 1014 XBOX                 Cars                           28-APR-06             
  1015 Blu-ray              Beau Geste                     01-MAR-92             
  1016 Blu-ray              I Remember Mama                05-JAN-98             
  1017 Blu-ray              Tora! Tora! Tora!              02-NOV-99             
@@ -105,13 +105,13 @@ SQL> SELECT   m.account_number
   6  ,	      a.city
   7  ,	      a.state_province
   8  ,	      t.country_code || '-(' || t.area_code || ') ' || t.telephone_number AS telephone
-  9  FROM     member_lab m INNER JOIN contact_lab c ON m.member_id = c.member_id INNER JOIN
- 10  	      address_lab a ON c.contact_id = a.contact_id INNER JOIN
- 11  	      street_address_lab sa ON a.address_id = sa.address_id INNER JOIN
- 12  	      telephone_lab t ON c.contact_id = t.contact_id AND a.address_id = t.address_id
+  9  FROM     member m INNER JOIN contact c ON m.member_id = c.member_id INNER JOIN
+ 10  	      address a ON c.contact_id = a.contact_id INNER JOIN
+ 11  	      street_address sa ON a.address_id = sa.address_id INNER JOIN
+ 12  	      telephone t ON c.contact_id = t.contact_id AND a.address_id = t.address_id
  13  WHERE    m.member_type = (SELECT common_lookup_id
- 14  			       FROM   common_lookup_lab
- 15  			       WHERE  common_lookup_context = 'MEMBER_LAB'
+ 14  			       FROM   common_lookup
+ 15  			       WHERE  common_lookup_context = 'MEMBER'
  16  			       AND    common_lookup_type = 'INDIVIDUAL');
 
 Account    Name                                                                 
@@ -145,10 +145,10 @@ SQL> SELECT   m.member_id
   7  ,	      r.rental_id
   8  ,	      ri.rental_item_id
   9  ,	      i.item_title
- 10  FROM     member_lab m INNER JOIN contact_lab c ON m.member_id = c.member_id INNER JOIN
- 11  	      rental_lab r ON c.contact_id = r.customer_id INNER JOIN
- 12  	      rental_item_lab ri ON r.rental_id = ri.rental_id INNER JOIN
- 13  	      item_lab i ON ri.item_id = i.item_id
+ 10  FROM     member m INNER JOIN contact c ON m.member_id = c.member_id INNER JOIN
+ 11  	      rental r ON c.contact_id = r.customer_id INNER JOIN
+ 12  	      rental_item ri ON r.rental_id = ri.rental_id INNER JOIN
+ 13  	      item i ON ri.item_id = i.item_id
  14  ORDER BY r.rental_id;
 
                                               Rent                              

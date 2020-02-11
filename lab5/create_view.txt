@@ -31,13 +31,8 @@ Member Member Common
   1006      1 INDIVIDUAL                                                        
   1007      1 INDIVIDUAL                                                        
   1008      1 INDIVIDUAL                                                        
-  1012      1 INDIVIDUAL                                                        
-  1013      1 INDIVIDUAL                                                        
-  1014      1 INDIVIDUAL                                                        
-  1015      1 INDIVIDUAL                                                        
-  1016      1 INDIVIDUAL                                                        
 
-13 rows selected.
+8 rows selected.
 
 SQL> 
 SQL> -- --------------------------------------------------------
@@ -86,12 +81,12 @@ SQL> SELECT   cr.full_name
 Name                                                                            
 (Last, First MI)         TITLE                          CHECK_OUT_D RETURN_DATE 
 ------------------------ ------------------------------ ----------- ----------- 
-Winn, Brian              RoboCop                        30-JAN-20   04-FEB-20   
-Winn, Brian              The Hunt for Red October       30-JAN-20   04-FEB-20   
-Vizquel, Oscar           Star Wars I                    30-JAN-20   04-FEB-20   
-Vizquel, Oscar           Star Wars II                   30-JAN-20   04-FEB-20   
-Vizquel, Oscar           Star Wars III                  30-JAN-20   04-FEB-20   
-Sweeney, Ian M           Cars                           30-JAN-20   04-FEB-20   
+Winn, Brian              RoboCop                        04-FEB-20   09-FEB-20   
+Winn, Brian              The Hunt for Red October       04-FEB-20   09-FEB-20   
+Vizquel, Oscar           Star Wars I                    04-FEB-20   09-FEB-20   
+Vizquel, Oscar           Star Wars II                   04-FEB-20   09-FEB-20   
+Vizquel, Oscar           Star Wars III                  04-FEB-20   09-FEB-20   
+Sweeney, Ian M           Cars                           04-FEB-20   09-FEB-20   
 
 6 rows selected.
 

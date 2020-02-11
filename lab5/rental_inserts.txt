@@ -3,7 +3,7 @@ SQL> -- ------------------------------------------------------------------
 SQL> -- Insert 5 records in the RENTAL table.
 SQL> -- ------------------------------------------------------------------
 SQL> 
-SQL> INSERT INTO rental_lab
+SQL> INSERT INTO rental
   2  ( rental_id
   3  , customer_id
   4  , check_out_date
@@ -13,9 +13,9 @@ SQL> INSERT INTO rental_lab
   8  , last_updated_by
   9  , last_update_date )
  10  VALUES
- 11  ( rental_lab_s1.nextval
+ 11  ( rental_s1.nextval
  12  ,(SELECT	contact_id
- 13    FROM	contact_lab
+ 13    FROM	contact
  14    WHERE	last_name = 'Vizquel'
  15    AND	first_name = 'Oscar')
  16  , TRUNC(SYSDATE)
@@ -28,7 +28,7 @@ SQL> INSERT INTO rental_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_lab
+SQL> INSERT INTO rental
   2  ( rental_id
   3  , customer_id
   4  , check_out_date
@@ -38,9 +38,9 @@ SQL> INSERT INTO rental_lab
   8  , last_updated_by
   9  , last_update_date )
  10  VALUES
- 11  ( rental_lab_s1.nextval
+ 11  ( rental_s1.nextval
  12  ,(SELECT	contact_id
- 13    FROM	contact_lab
+ 13    FROM	contact
  14    WHERE	last_name = 'Vizquel'
  15    AND	first_name = 'Doreen')
  16  , TRUNC(SYSDATE)
@@ -53,7 +53,7 @@ SQL> INSERT INTO rental_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_lab
+SQL> INSERT INTO rental
   2  ( rental_id
   3  , customer_id
   4  , check_out_date
@@ -63,9 +63,9 @@ SQL> INSERT INTO rental_lab
   8  , last_updated_by
   9  , last_update_date )
  10  VALUES
- 11  ( rental_lab_s1.nextval
+ 11  ( rental_s1.nextval
  12  ,(SELECT	contact_id
- 13    FROM	contact_lab
+ 13    FROM	contact
  14    WHERE	last_name = 'Sweeney'
  15    AND	first_name = 'Meaghan')
  16  , TRUNC(SYSDATE)
@@ -78,7 +78,7 @@ SQL> INSERT INTO rental_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_lab
+SQL> INSERT INTO rental
   2  ( rental_id
   3  , customer_id
   4  , check_out_date
@@ -88,9 +88,9 @@ SQL> INSERT INTO rental_lab
   8  , last_updated_by
   9  , last_update_date )
  10  VALUES
- 11  ( rental_lab_s1.nextval
+ 11  ( rental_s1.nextval
  12  ,(SELECT	contact_id
- 13    FROM	contact_lab
+ 13    FROM	contact
  14    WHERE	last_name = 'Sweeney'
  15    AND	first_name = 'Ian')
  16  , TRUNC(SYSDATE)
@@ -103,7 +103,7 @@ SQL> INSERT INTO rental_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_lab
+SQL> INSERT INTO rental
   2  ( rental_id
   3  , customer_id
   4  , check_out_date
@@ -113,9 +113,9 @@ SQL> INSERT INTO rental_lab
   8  , last_updated_by
   9  , last_update_date )
  10  VALUES
- 11  ( rental_lab_s1.nextval
+ 11  ( rental_s1.nextval
  12  ,(SELECT	contact_id
- 13    FROM	contact_lab
+ 13    FROM	contact
  14    WHERE	last_name = 'Winn'
  15    AND	first_name = 'Brian')
  16  , TRUNC(SYSDATE)
@@ -132,7 +132,7 @@ SQL> -- ------------------------------------------------------------------
 SQL> -- Insert 9 records in the RENTAL_ITEM table.
 SQL> -- ------------------------------------------------------------------
 SQL> 
-SQL> INSERT INTO rental_item_lab
+SQL> INSERT INTO rental_item
   2  ( rental_item_id
   3  , rental_id
   4  , item_id
@@ -141,16 +141,16 @@ SQL> INSERT INTO rental_item_lab
   7  , last_updated_by
   8  , last_update_date)
   9  VALUES
- 10  ( rental_item_lab_s1.nextval
+ 10  ( rental_item_s1.nextval
  11  ,(SELECT	r.rental_id
- 12    FROM	rental_lab r
- 13    ,	contact_lab c
+ 12    FROM	rental r
+ 13    ,	contact c
  14    WHERE	r.customer_id = c.contact_id
  15    AND	c.last_name = 'Vizquel'
  16    AND	c.first_name = 'Oscar')
  17  ,(SELECT	i.item_id
- 18    FROM	item_lab i
- 19    ,	common_lookup_lab cl
+ 18    FROM	item i
+ 19    ,	common_lookup cl
  20    WHERE	i.item_title = 'Star Wars I'
  21    AND	i.item_subtitle = 'Phantom Menace'
  22    AND	i.item_type = cl.common_lookup_id
@@ -163,7 +163,7 @@ SQL> INSERT INTO rental_item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_item_lab
+SQL> INSERT INTO rental_item
   2  ( rental_item_id
   3  , rental_id
   4  , item_id
@@ -172,14 +172,14 @@ SQL> INSERT INTO rental_item_lab
   7  , last_updated_by
   8  , last_update_date)
   9  VALUES
- 10  ( rental_item_lab_s1.nextval
+ 10  ( rental_item_s1.nextval
  11  ,(SELECT	r.rental_id
- 12    FROM	rental_lab r inner join contact_lab c
+ 12    FROM	rental r inner join contact c
  13    ON	r.customer_id = c.contact_id
  14    WHERE	c.last_name = 'Vizquel'
  15    AND	c.first_name = 'Oscar')
  16  ,(SELECT	d.item_id
- 17    FROM	item_lab d join common_lookup_lab cl
+ 17    FROM	item d join common_lookup cl
  18    ON	d.item_title = 'Star Wars II'
  19    WHERE	d.item_subtitle = 'Attack of the Clones'
  20    AND	d.item_type = cl.common_lookup_id
@@ -192,7 +192,7 @@ SQL> INSERT INTO rental_item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_item_lab
+SQL> INSERT INTO rental_item
   2  ( rental_item_id
   3  , rental_id
   4  , item_id
@@ -201,16 +201,16 @@ SQL> INSERT INTO rental_item_lab
   7  , last_updated_by
   8  , last_update_date)
   9  VALUES
- 10  ( rental_item_lab_s1.nextval
+ 10  ( rental_item_s1.nextval
  11  ,(SELECT	r.rental_id
- 12    FROM	rental_lab r
- 13    ,	contact_lab c
+ 12    FROM	rental r
+ 13    ,	contact c
  14    WHERE	r.customer_id = c.contact_id
  15    AND	c.last_name = 'Vizquel'
  16    AND	c.first_name = 'Oscar')
  17  ,(SELECT	d.item_id
- 18    FROM	item_lab d
- 19    ,	common_lookup_lab cl
+ 18    FROM	item d
+ 19    ,	common_lookup cl
  20    WHERE	d.item_title = 'Star Wars III'
  21    AND	d.item_subtitle = 'Revenge of the Sith'
  22    AND	d.item_type = cl.common_lookup_id
@@ -223,7 +223,7 @@ SQL> INSERT INTO rental_item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_item_lab
+SQL> INSERT INTO rental_item
   2  ( rental_item_id
   3  , rental_id
   4  , item_id
@@ -232,16 +232,16 @@ SQL> INSERT INTO rental_item_lab
   7  , last_updated_by
   8  , last_update_date)
   9  VALUES
- 10  ( rental_item_lab_s1.nextval
+ 10  ( rental_item_s1.nextval
  11  ,(SELECT	r.rental_id
- 12    FROM	rental_lab r
- 13    ,	contact_lab c
+ 12    FROM	rental r
+ 13    ,	contact c
  14    WHERE	r.customer_id = c.contact_id
  15    AND	c.last_name = 'Vizquel'
  16    AND	c.first_name = 'Doreen')
  17  ,(SELECT	d.item_id
- 18    FROM	item_lab d
- 19    ,	common_lookup_lab cl
+ 18    FROM	item d
+ 19    ,	common_lookup cl
  20    WHERE	d.item_title = 'I Remember Mama'
  21    AND	d.item_subtitle IS NULL
  22    AND	d.item_type = cl.common_lookup_id
@@ -254,7 +254,7 @@ SQL> INSERT INTO rental_item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_item_lab
+SQL> INSERT INTO rental_item
   2  ( rental_item_id
   3  , rental_id
   4  , item_id
@@ -263,16 +263,16 @@ SQL> INSERT INTO rental_item_lab
   7  , last_updated_by
   8  , last_update_date)
   9  VALUES
- 10  ( rental_item_lab_s1.nextval
+ 10  ( rental_item_s1.nextval
  11  ,(SELECT	r.rental_id
- 12    FROM	rental_lab r
- 13    ,	contact_lab c
+ 12    FROM	rental r
+ 13    ,	contact c
  14    WHERE	r.customer_id = c.contact_id
  15    AND	c.last_name = 'Vizquel'
  16    AND	c.first_name = 'Doreen')
  17  ,(SELECT	d.item_id
- 18    FROM	item_lab d
- 19    ,	common_lookup_lab cl
+ 18    FROM	item d
+ 19    ,	common_lookup cl
  20    WHERE	d.item_title = 'Camelot'
  21    AND	d.item_subtitle IS NULL
  22    AND	d.item_type = cl.common_lookup_id
@@ -285,7 +285,7 @@ SQL> INSERT INTO rental_item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_item_lab
+SQL> INSERT INTO rental_item
   2  ( rental_item_id
   3  , rental_id
   4  , item_id
@@ -294,16 +294,16 @@ SQL> INSERT INTO rental_item_lab
   7  , last_updated_by
   8  , last_update_date)
   9  VALUES
- 10  ( rental_item_lab_s1.nextval
+ 10  ( rental_item_s1.nextval
  11  ,(SELECT	r.rental_id
- 12    FROM	rental_lab r
- 13    ,	contact_lab c
+ 12    FROM	rental r
+ 13    ,	contact c
  14    WHERE	r.customer_id = c.contact_id
  15    AND	c.last_name = 'Sweeney'
  16    AND	c.first_name = 'Meaghan')
  17  ,(SELECT	d.item_id
- 18    FROM	item_lab d
- 19    ,	common_lookup_lab cl
+ 18    FROM	item d
+ 19    ,	common_lookup cl
  20    WHERE	d.item_title = 'Hook'
  21    AND	d.item_subtitle IS NULL
  22    AND	d.item_type = cl.common_lookup_id
@@ -316,7 +316,7 @@ SQL> INSERT INTO rental_item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_item_lab
+SQL> INSERT INTO rental_item
   2  ( rental_item_id
   3  , rental_id
   4  , item_id
@@ -325,16 +325,16 @@ SQL> INSERT INTO rental_item_lab
   7  , last_updated_by
   8  , last_update_date)
   9  VALUES
- 10  ( rental_item_lab_s1.nextval
+ 10  ( rental_item_s1.nextval
  11  ,(SELECT	r.rental_id
- 12    FROM	rental_lab r
- 13    ,	contact_lab c
+ 12    FROM	rental r
+ 13    ,	contact c
  14    WHERE	r.customer_id = c.contact_id
  15    AND	c.last_name = 'Sweeney'
  16    AND	c.first_name = 'Ian')
  17  ,(SELECT	d.item_id
- 18    FROM	item_lab d
- 19    ,	common_lookup_lab cl
+ 18    FROM	item d
+ 19    ,	common_lookup cl
  20    WHERE	d.item_title = 'Cars'
  21    AND	d.item_subtitle IS NULL
  22    AND	d.item_type = cl.common_lookup_id
@@ -347,7 +347,7 @@ SQL> INSERT INTO rental_item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_item_lab
+SQL> INSERT INTO rental_item
   2  ( rental_item_id
   3  , rental_id
   4  , item_id
@@ -356,16 +356,16 @@ SQL> INSERT INTO rental_item_lab
   7  , last_updated_by
   8  , last_update_date)
   9  VALUES
- 10  ( rental_item_lab_s1.nextval
+ 10  ( rental_item_s1.nextval
  11  ,(SELECT	r.rental_id
- 12    FROM	rental_lab r
- 13    ,	contact_lab c
+ 12    FROM	rental r
+ 13    ,	contact c
  14    WHERE	r.customer_id = c.contact_id
  15    AND	c.last_name = 'Winn'
  16    AND	c.first_name = 'Brian')
  17  ,(SELECT	d.item_id
- 18    FROM	item_lab d
- 19    ,	common_lookup_lab cl
+ 18    FROM	item d
+ 19    ,	common_lookup cl
  20    WHERE	d.item_title = 'RoboCop'
  21    AND	d.item_subtitle IS NULL
  22    AND	d.item_type = cl.common_lookup_id
@@ -378,7 +378,7 @@ SQL> INSERT INTO rental_item_lab
 1 row created.
 
 SQL> 
-SQL> INSERT INTO rental_item_lab
+SQL> INSERT INTO rental_item
   2  ( rental_item_id
   3  , rental_id
   4  , item_id
@@ -387,16 +387,16 @@ SQL> INSERT INTO rental_item_lab
   7  , last_updated_by
   8  , last_update_date)
   9  VALUES
- 10  ( rental_item_lab_s1.nextval
+ 10  ( rental_item_s1.nextval
  11  ,(SELECT	r.rental_id
- 12    FROM	rental_lab r
- 13    ,	contact_lab c
+ 12    FROM	rental r
+ 13    ,	contact c
  14    WHERE	r.customer_id = c.contact_id
  15    AND	c.last_name = 'Winn'
  16    AND	c.first_name = 'Brian')
  17  ,(SELECT	d.item_id
- 18    FROM	item_lab d
- 19    ,	common_lookup_lab cl
+ 18    FROM	item d
+ 19    ,	common_lookup cl
  20    WHERE	d.item_title = 'The Hunt for Red October'
  21    AND	d.item_subtitle = 'Special Collector''s Edition'
  22    AND	d.item_type = cl.common_lookup_id

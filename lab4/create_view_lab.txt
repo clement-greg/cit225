@@ -23,14 +23,14 @@ SQL> SELECT   m.member_id
 Member Member Common                                                            
   ID #      # Lookup Type                                                       
 ------ ------ ------------                                                      
-  1017      2 GROUP                                                             
-  1018      2 GROUP                                                             
-  1019      3 GROUP                                                             
-  1020      1 INDIVIDUAL                                                        
-  1021      1 INDIVIDUAL                                                        
-  1022      1 INDIVIDUAL                                                        
-  1023      1 INDIVIDUAL                                                        
-  1024      1 INDIVIDUAL                                                        
+  1001      2 GROUP                                                             
+  1002      2 GROUP                                                             
+  1003      3 GROUP                                                             
+  1004      1 INDIVIDUAL                                                        
+  1005      1 INDIVIDUAL                                                        
+  1006      1 INDIVIDUAL                                                        
+  1007      1 INDIVIDUAL                                                        
+  1008      1 INDIVIDUAL                                                        
 
 8 rows selected.
 
@@ -81,15 +81,15 @@ SQL> SELECT   cr.full_name
 Name                                                                            
 (Last, First MI)         TITLE                          CHECK_OUT_D RETURN_DATE 
 ------------------------ ------------------------------ ----------- ----------- 
-Winn, Brian              RoboCop                        28-JAN-20   02-FEB-20   
-Winn, Brian              The Hunt for Red October       28-JAN-20   02-FEB-20   
-Vizquel, Doreen          Camelot                        28-JAN-20   02-FEB-20   
-Vizquel, Doreen          I Remember Mama                28-JAN-20   02-FEB-20   
-Vizquel, Oscar           Star Wars I                    28-JAN-20   02-FEB-20   
-Vizquel, Oscar           Star Wars II                   28-JAN-20   02-FEB-20   
-Vizquel, Oscar           Star Wars III                  28-JAN-20   02-FEB-20   
-Sweeney, Ian M           Cars                           28-JAN-20   02-FEB-20   
-Sweeney, Meaghan         Hook                           28-JAN-20   02-FEB-20   
+Winn, Brian              RoboCop                        30-JAN-20   04-FEB-20   
+Winn, Brian              The Hunt for Red October       30-JAN-20   04-FEB-20   
+Vizquel, Doreen          Camelot                        30-JAN-20   04-FEB-20   
+Vizquel, Doreen          I Remember Mama                30-JAN-20   04-FEB-20   
+Vizquel, Oscar           Star Wars I                    30-JAN-20   04-FEB-20   
+Vizquel, Oscar           Star Wars II                   30-JAN-20   04-FEB-20   
+Vizquel, Oscar           Star Wars III                  30-JAN-20   04-FEB-20   
+Sweeney, Ian M           Cars                           30-JAN-20   04-FEB-20   
+Sweeney, Meaghan         Hook                           30-JAN-20   04-FEB-20   
 
 9 rows selected.
 

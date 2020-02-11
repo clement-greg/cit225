@@ -14,7 +14,7 @@ SQL> INSERT INTO member_lab
   9  , last_updated_by
  10  , last_update_date )
  11  VALUES
- 12  ( member_s1.nextval			       -- member_id
+ 12  ( member_lab_s1.nextval				   -- member_id
  13  , NULL					       -- member_type
  14  ,'B293-71445'				       -- account_number
  15  ,'1111-2222-3333-4444'			       -- credit_card_number
@@ -49,8 +49,8 @@ SQL> INSERT INTO contact_lab
   9  , last_updated_by
  10  , last_update_date )
  11  VALUES
- 12  ( contact_s1.nextval			       -- contact_id
- 13  , member_s1.currval			       -- member_id
+ 12  ( contact_lab_s1.nextval				   -- contact_id
+ 13  , member_lab_s1.currval				   -- member_id
  14  ,(SELECT	common_lookup_id
  15    FROM	common_lookup_lab
  16    WHERE	common_lookup_context = 'CONTACT_LAB'
@@ -82,8 +82,8 @@ SQL> INSERT INTO address_lab
  10  , last_updated_by
  11  , last_update_date )
  12  VALUES
- 13  ( address_s1.nextval			       -- address_id
- 14  , contact_s1.currval			       -- contact_id
+ 13  ( address_lab_s1.nextval				   -- address_id
+ 14  , contact_lab_s1.currval				   -- contact_id
  15  ,(SELECT	common_lookup_id
  16    FROM	common_lookup_lab
  17    WHERE	common_lookup_type = 'HOME')	       -- address_type
@@ -112,8 +112,8 @@ SQL> INSERT INTO street_address_lab
   7  , last_updated_by
   8  , last_update_date )
   9   VALUES
- 10  ( street_address_s1.nextval		       -- street_address_id
- 11  , address_s1.currval			       -- address_id
+ 10  ( street_address_lab_s1.nextval			   -- street_address_id
+ 11  , address_lab_s1.currval				   -- address_id
  12  ,'10 El Camino Real'			       -- street_address
  13  ,(SELECT	system_user_id
  14    FROM	system_user_lab
@@ -141,9 +141,9 @@ SQL> INSERT INTO telephone_lab
  11  , last_updated_by
  12  , last_update_date )
  13   VALUES
- 14  ( telephone_s1.nextval			       -- telephone_id
- 15  , address_s1.currval			       -- address_id
- 16  , contact_s1.currval			       -- contact_id
+ 14  ( telephone_lab_s1.nextval 			   -- telephone_id
+ 15  , address_lab_s1.currval				   -- address_id
+ 16  , contact_lab_s1.currval				   -- contact_id
  17  ,(SELECT	common_lookup_id
  18    FROM	common_lookup_lab
  19    WHERE	common_lookup_context = 'MULTIPLE'
@@ -178,8 +178,8 @@ SQL> INSERT INTO contact_lab
   9  , last_updated_by
  10  , last_update_date )
  11  VALUES
- 12  ( contact_s1.nextval			       -- contact_id
- 13  , member_s1.currval			       -- member_id
+ 12  ( contact_lab_s1.nextval				   -- contact_id
+ 13  , member_lab_s1.currval				   -- member_id
  14  ,(SELECT	common_lookup_id
  15    FROM	common_lookup_lab
  16    WHERE	common_lookup_context = 'CONTACT_LAB'
@@ -212,8 +212,8 @@ SQL> INSERT INTO address_lab
  10  , last_updated_by
  11  , last_update_date )
  12  VALUES
- 13  ( address_s1.nextval			       -- address_id
- 14  , contact_s1.currval			       -- contact_id
+ 13  ( address_lab_s1.nextval				   -- address_id
+ 14  , contact_lab_s1.currval				   -- contact_id
  15  ,(SELECT	common_lookup_id
  16    FROM	common_lookup_lab
  17    WHERE	common_lookup_type = 'HOME')	       -- address_type
@@ -242,8 +242,8 @@ SQL> INSERT INTO street_address_lab
   7  , last_updated_by
   8  , last_update_date )
   9   VALUES
- 10  ( street_address_s1.nextval		       -- street_address_id
- 11  , address_s1.currval			       -- address_id
+ 10  ( street_address_lab_s1.nextval			   -- street_address_id
+ 11  , address_lab_s1.currval				   -- address_id
  12  ,'10 El Camino Real'			       -- street_address
  13  ,(SELECT	system_user_id
  14    FROM	system_user_lab
@@ -271,9 +271,9 @@ SQL> INSERT INTO telephone_lab
  11  , last_updated_by
  12  , last_update_date )
  13   VALUES
- 14  ( telephone_s1.nextval			       -- telephone_id
- 15  , address_s1.currval			       -- address_id
- 16  , contact_s1.currval			       -- contact_id
+ 14  ( telephone_lab_s1.nextval 			   -- telephone_id
+ 15  , address_lab_s1.currval				   -- address_id
+ 16  , contact_lab_s1.currval				   -- contact_id
  17  ,(SELECT	common_lookup_id
  18    FROM	common_lookup_lab
  19    WHERE	common_lookup_context = 'MULTIPLE'

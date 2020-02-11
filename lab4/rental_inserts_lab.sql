@@ -37,7 +37,7 @@ INSERT INTO rental_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( rental_s1.nextval
+( rental_lab_s1.nextval
 ,(SELECT   contact_id
   FROM     contact_lab
   WHERE    last_name = 'Vizquel'
@@ -59,7 +59,7 @@ INSERT INTO rental_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( rental_s1.nextval
+( rental_lab_s1.nextval
 ,(SELECT   contact_id
   FROM     contact_lab
   WHERE    last_name = 'Vizquel'
@@ -81,7 +81,7 @@ INSERT INTO rental_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( rental_s1.nextval
+( rental_lab_s1.nextval
 ,(SELECT   contact_id
   FROM     contact_lab
   WHERE    last_name = 'Sweeney'
@@ -103,7 +103,7 @@ INSERT INTO rental_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( rental_s1.nextval
+( rental_lab_s1.nextval
 ,(SELECT   contact_id
   FROM     contact_lab
   WHERE    last_name = 'Sweeney'
@@ -125,7 +125,7 @@ INSERT INTO rental_lab
 , last_updated_by
 , last_update_date )
 VALUES
-( rental_s1.nextval
+( rental_lab_s1.nextval
 ,(SELECT   contact_id
   FROM     contact_lab
   WHERE    last_name = 'Winn'
@@ -150,7 +150,7 @@ INSERT INTO rental_item_lab
 , last_updated_by
 , last_update_date)
 VALUES
-( rental_item_s1.nextval
+( rental_item_lab_s1.nextval
 ,(SELECT   r.rental_id
   FROM     rental_lab r
   ,        contact_lab c
@@ -178,7 +178,7 @@ INSERT INTO rental_item_lab
 , last_updated_by
 , last_update_date)
 VALUES
-( rental_item_s1.nextval
+( rental_item_lab_s1.nextval
 ,(SELECT   r.rental_id
   FROM     rental_lab r inner join contact_lab c
   ON       r.customer_id = c.contact_id
@@ -204,7 +204,7 @@ INSERT INTO rental_item_lab
 , last_updated_by
 , last_update_date)
 VALUES
-( rental_item_s1.nextval
+( rental_item_lab_s1.nextval
 ,(SELECT   r.rental_id
   FROM     rental_lab r
   ,        contact_lab c
@@ -232,7 +232,7 @@ INSERT INTO rental_item_lab
 , last_updated_by
 , last_update_date)
 VALUES
-( rental_item_s1.nextval
+( rental_item_lab_s1.nextval
 ,(SELECT   r.rental_id
   FROM     rental_lab r
   ,        contact_lab c
@@ -260,7 +260,7 @@ INSERT INTO rental_item_lab
 , last_updated_by
 , last_update_date)
 VALUES
-( rental_item_s1.nextval
+( rental_item_lab_s1.nextval
 ,(SELECT   r.rental_id
   FROM     rental_lab r
   ,        contact_lab c
@@ -288,7 +288,7 @@ INSERT INTO rental_item_lab
 , last_updated_by
 , last_update_date)
 VALUES
-( rental_item_s1.nextval
+( rental_item_lab_s1.nextval
 ,(SELECT   r.rental_id
   FROM     rental_lab r
   ,        contact_lab c
@@ -316,7 +316,7 @@ INSERT INTO rental_item_lab
 , last_updated_by
 , last_update_date)
 VALUES
-( rental_item_s1.nextval
+( rental_item_lab_s1.nextval
 ,(SELECT   r.rental_id
   FROM     rental_lab r
   ,        contact_lab c
@@ -344,7 +344,7 @@ INSERT INTO rental_item_lab
 , last_updated_by
 , last_update_date)
 VALUES
-( rental_item_s1.nextval
+( rental_item_lab_s1.nextval
 ,(SELECT   r.rental_id
   FROM     rental_lab r
   ,        contact_lab c
@@ -372,7 +372,7 @@ INSERT INTO rental_item_lab
 , last_updated_by
 , last_update_date)
 VALUES
-( rental_item_s1.nextval
+( rental_item_lab_s1.nextval
 ,(SELECT   r.rental_id
   FROM     rental_lab r
   ,        contact_lab c
