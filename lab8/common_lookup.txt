@@ -1,0 +1,276 @@
+SQL> 
+SQL> -- Set SQL*Plus environmnet variables.
+SQL> SET ECHO ON
+SQL> SET FEEDBACK ON
+SQL> SET NULL '<Null>'
+SQL> SET PAGESIZE 999
+SQL> SET SERVEROUTPUT ON SIZE UNLIMITED
+SQL> 
+SQL> -- ------------------------------------------------------------------
+SQL> --  Create and assign bind variable for table name.
+SQL> -- ------------------------------------------------------------------
+SQL> VARIABLE table_name     VARCHAR2(30)
+SQL> 
+SQL> BEGIN
+SQL>   :table_name := UPPER('common_lookup');
+SQL> END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> --  Verify table name.
+SQL> SELECT :table_name FROM dual;
+
+:TABLE_NAME                                                                     
+--------------------------------                                                
+COMMON_LOOKUP                                                                   
+
+1 row selected.
+
+SQL> 
+SQL> -- ------------------------------------------------------------------
+SQL> --  Conditionally drop table.
+SQL> -- ------------------------------------------------------------------
+SQL> DECLARE
+SQL>   /* Dynamic cursor. */
+SQL>   CURSOR c (cv_object_name VARCHAR2) IS
+SQL> 	 SELECT o.object_type
+SQL> 	 ,	o.object_name
+SQL> 	 FROM	user_objects o
+SQL> 	 WHERE	o.object_name LIKE UPPER(cv_object_name||'%');
+SQL> BEGIN
+SQL>   FOR i IN c(:table_name) LOOP
+SQL> 	 IF i.object_type = 'SEQUENCE' THEN
+SQL> 	   EXECUTE IMMEDIATE 'DROP '||i.object_type||' '||i.object_name;
+SQL> 	 ELSIF i.object_type = 'TABLE' THEN
+SQL> 	   EXECUTE IMMEDIATE 'DROP '||i.object_type||' '||i.object_name||' CASCADE CONSTRAINTS';
+SQL> 	 END IF;
+SQL>   END LOOP;
+SQL> END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> -- Create table.
+SQL> CREATE TABLE common_lookup
+SQL> ( common_lookup_id 	   NUMBER
+SQL> , common_lookup_context	   VARCHAR2(30) CONSTRAINT nn_clookup_1 NOT NULL
+SQL> , common_lookup_type	   VARCHAR2(30) CONSTRAINT nn_clookup_2 NOT NULL
+SQL> , common_lookup_meaning	   VARCHAR2(30) CONSTRAINT nn_clookup_3 NOT NULL
+SQL> , created_by		   NUMBER	CONSTRAINT nn_clookup_4 NOT NULL
+SQL> , creation_date		   DATE 	CONSTRAINT nn_clookup_5 NOT NULL
+SQL> , last_updated_by		   NUMBER	CONSTRAINT nn_clookup_6 NOT NULL
+SQL> , last_update_date 	   DATE 	CONSTRAINT nn_clookup_7 NOT NULL
+SQL> , CONSTRAINT pk_clookup_1	  PRIMARY KEY(common_lookup_id)
+SQL> , CONSTRAINT fk_clookup_1	  FOREIGN KEY(created_by) REFERENCES system_user(system_user_id)
+SQL> , CONSTRAINT fk_clookup_2	  FOREIGN KEY(last_updated_by) REFERENCES system_user(system_user_id));
+
+Table created.
+
+SQL> 
+SQL> -- Display the table organization.
+SQL> SET NULL ''
+SQL> COLUMN table_name	 FORMAT A16
+SQL> COLUMN column_id	 FORMAT 9999
+SQL> COLUMN column_name  FORMAT A22
+SQL> COLUMN data_type	 FORMAT A12
+SQL> SELECT   table_name
+SQL> ,	      column_id
+SQL> ,	      column_name
+SQL> ,	      CASE
+SQL> 		WHEN nullable = 'N' THEN 'NOT NULL'
+SQL> 		ELSE ''
+SQL> 	      END AS nullable
+SQL> ,	      CASE
+SQL> 		WHEN data_type IN ('CHAR','VARCHAR2','NUMBER') THEN
+SQL> 		  data_type||'('||data_length||')'
+SQL> 		ELSE
+SQL> 		  data_type
+SQL> 	      END AS data_type
+SQL> FROM     user_tab_columns
+SQL> WHERE    table_name = :table_name
+SQL> ORDER BY 2;
+
+TABLE NAME       COLUMN_ID COLUMN NAME            NULLABLE DATA_TYPE            
+---------------- --------- ---------------------- -------- ------------         
+COMMON_LOOKUP            1 COMMON_LOOKUP_ID       NOT NULL NUMBER(22)           
+COMMON_LOOKUP            2 COMMON_LOOKUP_CONTEXT  NOT NULL VARCHAR2(30)         
+COMMON_LOOKUP            3 COMMON_LOOKUP_TYPE     NOT NULL VARCHAR2(30)         
+COMMON_LOOKUP            4 COMMON_LOOKUP_MEANING  NOT NULL VARCHAR2(30)         
+COMMON_LOOKUP            5 CREATED_BY             NOT NULL NUMBER(22)           
+COMMON_LOOKUP            6 CREATION_DATE          NOT NULL DATE                 
+COMMON_LOOKUP            7 LAST_UPDATED_BY        NOT NULL NUMBER(22)           
+COMMON_LOOKUP            8 LAST_UPDATE_DATE       NOT NULL DATE                 
+
+8 rows selected.
+
+SQL> 
+SQL> -- Display non-unique constraints.
+SQL> COLUMN constraint_name   FORMAT A22
+SQL> COLUMN search_condition  FORMAT A36
+SQL> COLUMN constraint_type   FORMAT A1
+SQL> SELECT   uc.constraint_name
+SQL> ,	      uc.search_condition
+SQL> ,	      uc.constraint_type
+SQL> FROM     user_constraints uc INNER JOIN user_cons_columns ucc
+SQL> ON       uc.table_name = ucc.table_name
+SQL> AND      uc.constraint_name = ucc.constraint_name
+SQL> WHERE    uc.table_name = :table_name
+SQL> AND      uc.constraint_type IN (UPPER('c'),UPPER('p'))
+SQL> ORDER BY uc.constraint_type DESC
+SQL> ,	      uc.constraint_name;
+
+                                                            C                   
+CONSTRAINT NAME        SEARCH_CONDITION                     T                   
+---------------------- ------------------------------------ -                   
+PK_CLOOKUP_1                                                P                   
+NN_CLOOKUP_1           "COMMON_LOOKUP_CONTEXT" IS NOT NULL  C                   
+NN_CLOOKUP_2           "COMMON_LOOKUP_TYPE" IS NOT NULL     C                   
+NN_CLOOKUP_3           "COMMON_LOOKUP_MEANING" IS NOT NULL  C                   
+NN_CLOOKUP_4           "CREATED_BY" IS NOT NULL             C                   
+NN_CLOOKUP_5           "CREATION_DATE" IS NOT NULL          C                   
+NN_CLOOKUP_6           "LAST_UPDATED_BY" IS NOT NULL        C                   
+NN_CLOOKUP_7           "LAST_UPDATE_DATE" IS NOT NULL       C                   
+
+8 rows selected.
+
+SQL> 
+SQL> -- Display foreign key constraints.
+SQL> COL constraint_source FORMAT A38 HEADING "Constraint Name:| Table.Column"
+SQL> COL references_column FORMAT A40 HEADING "References:| Table.Column"
+SQL> SELECT   uc.constraint_name||CHR(10)
+SQL> ||      '('||ucc1.table_name||'.'||ucc1.column_name||')' constraint_source
+SQL> ,	     'REFERENCES'||CHR(10)
+SQL> ||      '('||ucc2.table_name||'.'||ucc2.column_name||')' references_column
+SQL> FROM     user_constraints uc
+SQL> ,	      user_cons_columns ucc1
+SQL> ,	      user_cons_columns ucc2
+SQL> WHERE    uc.constraint_name = ucc1.constraint_name
+SQL> AND      uc.r_constraint_name = ucc2.constraint_name
+SQL> AND      ucc1.position = ucc2.position -- Correction for multiple column primary keys.
+SQL> AND      uc.constraint_type = 'R'
+SQL> AND      ucc1.table_name = :table_name
+SQL> ORDER BY ucc1.table_name
+SQL> ,	      uc.constraint_name;
+
+Constraint Name:                       References:                              
+ Table.Column                           Table.Column                            
+-------------------------------------- ---------------------------------------- 
+FK_CLOOKUP_1                           REFERENCES                               
+(COMMON_LOOKUP.CREATED_BY)             (SYSTEM_USER.SYSTEM_USER_ID)             
+                                                                                
+FK_CLOOKUP_2                           REFERENCES                               
+(COMMON_LOOKUP.LAST_UPDATED_BY)        (SYSTEM_USER.SYSTEM_USER_ID)             
+                                                                                
+
+2 rows selected.
+
+SQL> 
+SQL> -- Create a non-unique index.
+SQL> CREATE INDEX common_lookup_n1
+SQL>   ON common_lookup(common_lookup_context);
+
+Index created.
+
+SQL> 
+SQL> -- Create a unique index.
+SQL> CREATE UNIQUE INDEX common_lookup_u2
+SQL>   ON common_lookup(common_lookup_context,common_lookup_type);
+
+Index created.
+
+SQL> 
+SQL> -- Display unique and non-unique indexes.
+SQL> COLUMN sequence_name   FORMAT A22 HEADING "Sequence Name"
+SQL> COLUMN column_position FORMAT 999 HEADING "Column|Position"
+SQL> COLUMN column_name     FORMAT A22 HEADING "Column|Name"
+SQL> SELECT   ui.index_name
+SQL> ,	      uic.column_position
+SQL> ,	      uic.column_name
+SQL> FROM     user_indexes ui INNER JOIN user_ind_columns uic
+SQL> ON       ui.index_name = uic.index_name
+SQL> AND      ui.table_name = uic.table_name
+SQL> WHERE    ui.table_name = :table_name
+SQL> ORDER BY ui.index_name
+SQL> ,	      uic.column_position;
+
+                       Column Column                                            
+Index Name           Position Name                                              
+-------------------- -------- ----------------------                            
+COMMON_LOOKUP_N1            1 COMMON_LOOKUP_CONTEXT                             
+COMMON_LOOKUP_U2            1 COMMON_LOOKUP_CONTEXT                             
+COMMON_LOOKUP_U2            2 COMMON_LOOKUP_TYPE                                
+PK_CLOOKUP_1                1 COMMON_LOOKUP_ID                                  
+
+4 rows selected.
+
+SQL> 
+SQL> -- Add a constraint to the SYSTEM_USER table dependent on the COMMON_LOOKUP table.
+SQL> ALTER TABLE system_user
+SQL> ADD CONSTRAINT fk_system_user_3 FOREIGN KEY(system_user_group_id)
+SQL> 	 REFERENCES common_lookup(common_lookup_id);
+
+Table altered.
+
+SQL> 
+SQL> ALTER TABLE system_user
+SQL> ADD CONSTRAINT fk_system_user_4 FOREIGN KEY(system_user_type)
+SQL> 	 REFERENCES common_lookup(common_lookup_id);
+
+Table altered.
+
+SQL> 
+SQL> -- Display foreign key constraints.
+SQL> COL constraint_source FORMAT A38 HEADING "Constraint Name:| Table.Column"
+SQL> COL references_column FORMAT A40 HEADING "References:| Table.Column"
+SQL> SELECT   uc.constraint_name||CHR(10)
+SQL> ||      '('||ucc1.table_name||'.'||ucc1.column_name||')' constraint_source
+SQL> ,	     'REFERENCES'||CHR(10)
+SQL> ||      '('||ucc2.table_name||'.'||ucc2.column_name||')' references_column
+SQL> FROM     user_constraints uc
+SQL> ,	      user_cons_columns ucc1
+SQL> ,	      user_cons_columns ucc2
+SQL> WHERE    uc.constraint_name = ucc1.constraint_name
+SQL> AND      uc.r_constraint_name = ucc2.constraint_name
+SQL> AND      ucc1.position = ucc2.position -- Correction for multiple column primary keys.
+SQL> AND      uc.constraint_type = 'R'
+SQL> AND      ucc1.table_name = :table_name
+SQL> ORDER BY ucc1.table_name
+SQL> ,	      uc.constraint_name;
+
+Constraint Name:                       References:                              
+ Table.Column                           Table.Column                            
+-------------------------------------- ---------------------------------------- 
+FK_CLOOKUP_1                           REFERENCES                               
+(COMMON_LOOKUP.CREATED_BY)             (SYSTEM_USER.SYSTEM_USER_ID)             
+                                                                                
+FK_CLOOKUP_2                           REFERENCES                               
+(COMMON_LOOKUP.LAST_UPDATED_BY)        (SYSTEM_USER.SYSTEM_USER_ID)             
+                                                                                
+
+2 rows selected.
+
+SQL> 
+SQL> -- Create a sequence.
+SQL> CREATE SEQUENCE common_lookup_s1 START WITH 1001;
+
+Sequence created.
+
+SQL> 
+SQL> -- Display sequence.
+SQL> COLUMN sequence_name FORMAT A20 HEADING "Sequence Name"
+SQL> SELECT   sequence_name
+SQL> FROM     user_sequences
+SQL> WHERE    sequence_name = :table_name||'_S1';
+
+Sequence Name                                                                   
+--------------------                                                            
+COMMON_LOOKUP_S1                                                                
+
+1 row selected.
+
+SQL> 
+SQL> -- Close log file.
+SQL> SPOOL OFF

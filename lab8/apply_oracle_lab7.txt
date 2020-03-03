@@ -1,0 +1,333 @@
+SQL> 
+SQL> -- Set the page size.
+SQL> SET ECHO ON
+SQL> SET PAGESIZE 999
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #1 : Add two columns to the RENTAL_ITEM table.
+SQL> -- ----------------------------------------------------------------------
+SQL> SELECT  'Step #1' AS "Step Number" FROM dual;
+
+Step Nu                                                                         
+-------                                                                         
+Step #1                                                                         
+
+1 row selected.
+
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Objective #1: Add the RENTAL_ITEM_PRICE and RENTAL_ITEM_TYPE columns
+SQL> -- 	       to the RENTAL_ITEM table. Both columns should use a
+SQL> -- 	       NUMBER data type in Oracle, and an int unsigned data
+SQL> -- 	       type.
+SQL> -- ----------------------------------------------------------------------
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #1 : Insert new rows to support PRICE table.
+SQL> -- ----------------------------------------------------------------------
+SQL> 
+SQL> INSERT INTO common_lookup
+  2    (common_lookup_id, common_lookup_type, common_lookup_meaning, common_lookup_table, common_lookup_column, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (common_lookup_s1.nextval, 'YES', 'Yes', 'PRICE', 'ACTIVE_FLAG', 1, SYSDATE, 1, SYSDATE);
+INSERT INTO common_lookup
+*
+ERROR at line 1:
+ORA-00001: unique constraint (STUDENT.CLOOKUP_U1) violated 
+
+
+SQL> 
+SQL> INSERT INTO common_lookup
+  2    (common_lookup_id, common_lookup_type, common_lookup_meaning, common_lookup_table, common_lookup_column, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (common_lookup_s1.nextval, 'NO', 'No', 'PRICE', 'ACTIVE_FLAG', 1, SYSDATE, 1, SYSDATE);
+INSERT INTO common_lookup
+*
+ERROR at line 1:
+ORA-00001: unique constraint (STUDENT.CLOOKUP_U1) violated 
+
+
+SQL> 
+SQL> 
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Verification #1: Verify the common_lookup contents.
+SQL> -- ----------------------------------------------------------------------
+SQL> COLUMN common_lookup_table  FORMAT A20 HEADING "COMMON_LOOKUP_TABLE"
+SQL> COLUMN common_lookup_column FORMAT A20 HEADING "COMMON_LOOKUP_COLUMN"
+SQL> COLUMN common_lookup_type	 FORMAT A20 HEADING "COMMON_LOOKUP_TYPE"
+SQL> SELECT   common_lookup_table
+  2  ,	      common_lookup_column
+  3  ,	      common_lookup_type
+  4  FROM     common_lookup
+  5  WHERE    common_lookup_table = 'PRICE'
+  6  AND      common_lookup_column = 'ACTIVE_FLAG'
+  7  ORDER BY 1, 2, 3 DESC;
+
+COMMON_LOOKUP_TABLE  COMMON_LOOKUP_COLUMN COMMON_LOOKUP_TYPE                    
+-------------------- -------------------- --------------------                  
+PRICE                ACTIVE_FLAG          YES                                   
+PRICE                ACTIVE_FLAG          NO                                    
+
+2 rows selected.
+
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #2 : Insert new rows to support PRICE and RENTAL_ITEM table.
+SQL> -- ----------------------------------------------------------------------
+SQL> INSERT INTO common_lookup
+  2    (common_lookup_id, common_lookup_type, common_lookup_meaning, common_lookup_table, common_lookup_column, common_lookup_code, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (common_lookup_s1.nextval, '1-DAY RENTAL', '1-Day Rental', 'PRICE', 'PRICE_TYPE', '1', 1, SYSDATE, 1, SYSDATE);
+INSERT INTO common_lookup
+*
+ERROR at line 1:
+ORA-00001: unique constraint (STUDENT.CLOOKUP_U1) violated 
+
+
+SQL> 
+SQL> INSERT INTO common_lookup
+  2    (common_lookup_id, common_lookup_type, common_lookup_meaning, common_lookup_table, common_lookup_column, common_lookup_code, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (common_lookup_s1.nextval, '3-DAY RENTAL', '3-Day Rental', 'PRICE', 'PRICE_TYPE', '3', 1, SYSDATE, 1, SYSDATE);
+INSERT INTO common_lookup
+*
+ERROR at line 1:
+ORA-00001: unique constraint (STUDENT.CLOOKUP_U1) violated 
+
+
+SQL> 
+SQL> 
+SQL> INSERT INTO common_lookup
+  2    (common_lookup_id, common_lookup_type, common_lookup_meaning, common_lookup_table, common_lookup_column, common_lookup_code, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (common_lookup_s1.nextval, '5-DAY RENTAL', '5-Day Rental', 'PRICE', 'PRICE_TYPE', '5', 1, SYSDATE, 1, SYSDATE);
+INSERT INTO common_lookup
+*
+ERROR at line 1:
+ORA-00001: unique constraint (STUDENT.CLOOKUP_U1) violated 
+
+
+SQL> 
+SQL> 
+SQL> INSERT INTO common_lookup
+  2    (common_lookup_id, common_lookup_type, common_lookup_meaning, common_lookup_table, common_lookup_column, common_lookup_code, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (common_lookup_s1.nextval, '1-DAY RENTAL', '1-Day Rental', 'RENTAL_ITEM', 'RENTAL_ITEM_TYPE', '1', 1, SYSDATE, 1, SYSDATE);
+INSERT INTO common_lookup
+*
+ERROR at line 1:
+ORA-00001: unique constraint (STUDENT.CLOOKUP_U1) violated 
+
+
+SQL> 
+SQL> 
+SQL> 
+SQL> INSERT INTO common_lookup
+  2    (common_lookup_id, common_lookup_type, common_lookup_meaning, common_lookup_table, common_lookup_column, common_lookup_code, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (common_lookup_s1.nextval, '3-DAY RENTAL', '3-Day Rental', 'RENTAL_ITEM', 'RENTAL_ITEM_TYPE', '3', 1, SYSDATE, 1, SYSDATE);
+INSERT INTO common_lookup
+*
+ERROR at line 1:
+ORA-00001: unique constraint (STUDENT.CLOOKUP_U1) violated 
+
+
+SQL> 
+SQL> 
+SQL> INSERT INTO common_lookup
+  2    (common_lookup_id, common_lookup_type, common_lookup_meaning, common_lookup_table, common_lookup_column, common_lookup_code, created_by, creation_date, last_updated_by, last_update_date)
+  3  VALUES
+  4    (common_lookup_s1.nextval, '5-DAY RENTAL', '5-Day Rental', 'RENTAL_ITEM', 'RENTAL_ITEM_TYPE', '5', 1, SYSDATE, 1, SYSDATE);
+INSERT INTO common_lookup
+*
+ERROR at line 1:
+ORA-00001: unique constraint (STUDENT.CLOOKUP_U1) violated 
+
+
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Verification #2: Verify the common_lookup contents.
+SQL> -- ----------------------------------------------------------------------
+SQL> COLUMN common_lookup_table  FORMAT A20 HEADING "COMMON_LOOKUP_TABLE"
+SQL> COLUMN common_lookup_column FORMAT A20 HEADING "COMMON_LOOKUP_COLUMN"
+SQL> COLUMN common_lookup_type	 FORMAT A20 HEADING "COMMON_LOOKUP_TYPE"
+SQL> SELECT   common_lookup_table
+  2  ,	      common_lookup_column
+  3  ,	      common_lookup_type
+  4  FROM     common_lookup
+  5  WHERE    common_lookup_table IN ('PRICE','RENTAL_ITEM')
+  6  AND      common_lookup_column IN ('PRICE_TYPE','RENTAL_ITEM_TYPE')
+  7  ORDER BY 1, 3;
+
+COMMON_LOOKUP_TABLE  COMMON_LOOKUP_COLUMN COMMON_LOOKUP_TYPE                    
+-------------------- -------------------- --------------------                  
+PRICE                PRICE_TYPE           1-DAY RENTAL                          
+PRICE                PRICE_TYPE           3-DAY RENTAL                          
+PRICE                PRICE_TYPE           5-DAY RENTAL                          
+RENTAL_ITEM          RENTAL_ITEM_TYPE     1-DAY RENTAL                          
+RENTAL_ITEM          RENTAL_ITEM_TYPE     3-DAY RENTAL                          
+RENTAL_ITEM          RENTAL_ITEM_TYPE     5-DAY RENTAL                          
+
+6 rows selected.
+
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #3a : Add columns to RENTAL_ITEM table and seed values.
+SQL> -- ----------------------------------------------------------------------
+SQL> COLUMN table_name	 FORMAT A14
+SQL> COLUMN column_id	 FORMAT 9999
+SQL> COLUMN column_name  FORMAT A22
+SQL> COLUMN data_type	 FORMAT A12
+SQL> SELECT   table_name
+  2  ,	      column_id
+  3  ,	      column_name
+  4  ,	      CASE
+  5  		WHEN nullable = 'N' THEN 'NOT NULL'
+  6  		ELSE ''
+  7  	      END AS nullable
+  8  ,	      CASE
+  9  		WHEN data_type IN ('CHAR','VARCHAR2','NUMBER') THEN
+ 10  		  data_type||'('||data_length||')'
+ 11  		ELSE
+ 12  		  data_type
+ 13  	      END AS data_type
+ 14  FROM     user_tab_columns
+ 15  WHERE    table_name = 'RENTAL_ITEM'
+ 16  ORDER BY 2;
+
+                         Column                                                 
+Table Name     COLUMN_ID Name                   NULLABLE DATA_TYPE              
+-------------- --------- ---------------------- -------- ------------           
+RENTAL_ITEM            1 RENTAL_ITEM_ID         NOT NULL NUMBER(22)             
+RENTAL_ITEM            2 RENTAL_ID              NOT NULL NUMBER(22)             
+RENTAL_ITEM            3 ITEM_ID                NOT NULL NUMBER(22)             
+RENTAL_ITEM            4 CREATED_BY             NOT NULL NUMBER(22)             
+RENTAL_ITEM            5 CREATION_DATE          NOT NULL DATE                   
+RENTAL_ITEM            6 LAST_UPDATED_BY        NOT NULL NUMBER(22)             
+RENTAL_ITEM            7 LAST_UPDATE_DATE       NOT NULL DATE                   
+RENTAL_ITEM            8 RENTAL_ITEM_TYPE       NOT NULL NUMBER(22)             
+RENTAL_ITEM            9 RENTAL_ITEM_PRICE               NUMBER(22)             
+
+9 rows selected.
+
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #3a : Update the rental_item table.
+SQL> -- ----------------------------------------------------------------------
+SQL> UPDATE   rental_item ri
+  2  SET      rental_item_type =
+  3  		(SELECT   cl.common_lookup_id
+  4  		 FROM	  common_lookup cl
+  5  		 WHERE	  cl.common_lookup_code =
+  6  		   (SELECT  r.return_date - r.check_out_date
+  7  		    FROM     rental r
+  8  		    WHERE    r.rental_id = ri.rental_id)
+  9  		 AND	  cl.common_lookup_table = 'RENTAL_ITEM'
+ 10  		 AND	  cl.common_lookup_column = 'RENTAL_ITEM_TYPE');
+UPDATE   rental_item ri
+         *
+ERROR at line 1:
+ORA-01013: user requested cancel of current operation 
+
+
+
+SQL> @@apply_oracle_lab8.sql
+SQL> -- ------------------------------------------------------------------
+SQL> --  Program Name:	 apply_oracle_lab8.sql
+SQL> --  Lab Assignment: Lab #8
+SQL> --  Program Author: Michael McLaughlin
+SQL> --  Creation Date:  02-Mar-2018
+SQL> -- ------------------------------------------------------------------
+SQL> -- Instructions:
+SQL> -- ------------------------------------------------------------------
+SQL> -- The two scripts contain spooling commands, which is why there
+SQL> -- isn't a spooling command in this script. When you run this file
+SQL> -- you first connect to the Oracle database with this syntax:
+SQL> --
+SQL> --   sqlplus student/student@xe
+SQL> --
+SQL> -- Then, you call this script with the following syntax:
+SQL> --
+SQL> --   sql> @apply_oracle_lab8.sql
+SQL> --
+SQL> -- ------------------------------------------------------------------
+SQL> 
+SQL> -- Call library files.
+SQL> @/home/student/Data/cit225/oracle/lab7/apply_oracle_lab7.sql
+SQL> 
+SQL> 
+SQL> -- Call library files.
+SQL> @/home/student/Data/cit225/oracle/lab6/apply_oracle_lab6.sql
+SQL> -- ------------------------------------------------------------------
+SQL> --  Program Name:	 apply_oracle_lab6.sql
+SQL> --  Lab Assignment: Lab #6
+SQL> --  Program Author: Michael McLaughlin
+SQL> --  Creation Date:  02-Mar-2018
+SQL> -- ------------------------------------------------------------------
+SQL> -- Instructions:
+SQL> -- ------------------------------------------------------------------
+SQL> -- The two scripts contain spooling commands, which is why there
+SQL> -- isn't a spooling command in this script. When you run this file
+SQL> -- you first connect to the Oracle database with this syntax:
+SQL> --
+SQL> --   sqlplus student/student@xe
+SQL> --
+SQL> -- Then, you call this script with the following syntax:
+SQL> --
+SQL> --   sql> @apply_oracle_lab6.sql
+SQL> --
+SQL> -- ------------------------------------------------------------------
+SQL> 
+SQL> -- Call library files.
+SQL> @/home/student/Data/cit225/oracle/lab5/apply_oracle_lab5.sql
+SQL> -- ------------------------------------------------------------------
+SQL> --  Program Name:	 apply_oracle_lab5.sql
+SQL> --  Lab Assignment: N/A
+SQL> --  Program Author: Michael McLaughlin
+SQL> --  Creation Date:  17-Jan-2018
+SQL> -- ------------------------------------------------------------------
+SQL> --  Change Log:
+SQL> -- ------------------------------------------------------------------
+SQL> --  Change Date	Change Reason
+SQL> -- -------------  ---------------------------------------------------
+SQL> --
+SQL> -- ------------------------------------------------------------------
+SQL> -- This creates tables, sequences, indexes, and constraints necessary
+SQL> -- to begin lesson #5. Demonstrates proper process and syntax.
+SQL> -- ------------------------------------------------------------------
+SQL> -- Instructions:
+SQL> -- ------------------------------------------------------------------
+SQL> -- The two scripts contain spooling commands, which is why there
+SQL> -- isn't a spooling command in this script. When you run this file
+SQL> -- you first connect to the Oracle database with this syntax:
+SQL> --
+SQL> --   sqlplus student/student@xe
+SQL> --
+SQL> -- Then, you call this script with the following syntax:
+SQL> --
+SQL> --   sql> @apply_oracle_lab5.sql
+SQL> --
+SQL> -- ------------------------------------------------------------------
+SQL> 
+SQL> -- Call library files.
+SQL> @/home/student/Data/cit225/oracle/lib1/utility/cleanup_oracle.sql
+SQL> -- ------------------------------------------------------------------
+SQL> --  Program Name:	 cleanup_oracle.sql
+SQL> --  Lab Assignment: N/A
+SQL> --  Program Author: Michael McLaughlin
+SQL> --  Creation Date:  02-Mar-2010
+SQL> -- ------------------------------------------------------------------
+SQL> --  Change Log:
+SQL> -- ------------------------------------------------------------------
+SQL> --  Change Date	Change Reason
+SQL> -- -------------  ---------------------------------------------------
+SQL> --  08-Jun-2014	Update lab for weekly deliverables.
+SQL> --  23-Aug-2018	Update script to work with APEX 18.1.
+SQL> -- ------------------------------------------------------------------
+SQL> -- This creates tables, sequences, indexes, and constraints necessary
+SQL> -- to begin lesson #3. Demonstrates proper process and syntax.
+SQL> -- ------------------------------------------------------------------
+SQL> 
+SQL> -- Open log file.
+SQL> SPOOL cleanup_oracle.txt

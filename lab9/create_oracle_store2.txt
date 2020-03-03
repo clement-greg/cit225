@@ -1,0 +1,62 @@
+SQL> 
+SQL> COLUMN table_name_base	FORMAT A30 HEADING "Base Tables"
+SQL> COLUMN sequence_name_base	FORMAT A30 HEADING "Base Sequences"
+SQL> SELECT   a.table_name_base
+SQL> ,	      b.sequence_name_base
+SQL> FROM    (SELECT   table_name AS table_name_base
+SQL> 	      FROM     user_tables
+SQL> 	      WHERE    table_name IN ('SYSTEM_USER'
+SQL> 				     ,'COMMON_LOOKUP'
+SQL> 				     ,'MEMBER'
+SQL> 				     ,'CONTACT'
+SQL> 				     ,'ADDRESS'
+SQL> 				     ,'STREET_ADDRESS'
+SQL> 				     ,'TELEPHONE'
+SQL> 				     ,'ITEM'
+SQL> 				     ,'RENTAL'
+SQL> 				     ,'RENTAL_ITEM')) a  INNER JOIN
+SQL> 	     (SELECT   sequence_name AS sequence_name_base
+SQL> 	      FROM     user_sequences
+SQL> 	      WHERE    sequence_name IN ('SYSTEM_USER_S1'
+SQL> 					,'COMMON_LOOKUP_S1'
+SQL> 					,'MEMBER_S1'
+SQL> 					,'CONTACT_S1'
+SQL> 					,'ADDRESS_S1'
+SQL> 					,'STREET_ADDRESS_S1'
+SQL> 					,'TELEPHONE_S1'
+SQL> 					,'ITEM_S1'
+SQL> 					,'RENTAL_S1'
+SQL> 					,'RENTAL_ITEM_S1')) b
+SQL> ON       a.table_name_base =
+SQL> 		SUBSTR( b.sequence_name_base, 1, REGEXP_INSTR(b.sequence_name_base,'_S1') - 1)
+SQL> ORDER BY CASE
+SQL> 		WHEN table_name_base LIKE 'SYSTEM_USER%' THEN 0
+SQL> 		WHEN table_name_base LIKE 'COMMON_LOOKUP%' THEN 1
+SQL> 		WHEN table_name_base LIKE 'MEMBER%' THEN 2
+SQL> 		WHEN table_name_base LIKE 'CONTACT%' THEN 3
+SQL> 		WHEN table_name_base LIKE 'ADDRESS%' THEN 4
+SQL> 		WHEN table_name_base LIKE 'STREET_ADDRESS%' THEN 5
+SQL> 		WHEN table_name_base LIKE 'TELEPHONE%' THEN 6
+SQL> 		WHEN table_name_base LIKE 'ITEM%' THEN 7
+SQL> 		WHEN table_name_base LIKE 'RENTAL%' AND NOT table_name_base LIKE 'RENTAL_ITEM%' THEN 8
+SQL> 		WHEN table_name_base LIKE 'RENTAL_ITEM%' THEN 9
+SQL> 	      END;
+
+Base Tables                    Base Sequences                                                      
+------------------------------ ------------------------------                                      
+SYSTEM_USER                    SYSTEM_USER_S1                                                      
+COMMON_LOOKUP                  COMMON_LOOKUP_S1                                                    
+MEMBER                         MEMBER_S1                                                           
+CONTACT                        CONTACT_S1                                                          
+ADDRESS                        ADDRESS_S1                                                          
+STREET_ADDRESS                 STREET_ADDRESS_S1                                                   
+TELEPHONE                      TELEPHONE_S1                                                        
+ITEM                           ITEM_S1                                                             
+RENTAL                         RENTAL_S1                                                           
+RENTAL_ITEM                    RENTAL_ITEM_S1                                                      
+
+10 rows selected.
+
+SQL> 
+SQL> -- Close log file.
+SQL> SPOOL OFF

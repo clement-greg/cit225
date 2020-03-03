@@ -1,0 +1,328 @@
+SQL> 
+SQL> -- ------------------------------------------------------------------
+SQL> --  Insert record set #1, with one entry in the member table and
+SQL> --  two entries in contact table.
+SQL> -- ------------------------------------------------------------------
+SQL> INSERT INTO member
+SQL> ( member_id
+SQL> , member_type
+SQL> , account_number
+SQL> , credit_card_number
+SQL> , credit_card_type
+SQL> , created_by
+SQL> , creation_date
+SQL> , last_updated_by
+SQL> , last_update_date )
+SQL> VALUES
+SQL> ( member_s1.nextval			       -- member_id
+SQL> , NULL					       -- member_type
+SQL> ,'B293-71445'				       -- account_number
+SQL> ,'1111-2222-3333-4444'			       -- credit_card_number
+SQL> ,(SELECT	common_lookup_id
+SQL>   FROM	common_lookup
+SQL>   WHERE	common_lookup_context = 'MEMBER'
+SQL>   AND	common_lookup_type = 'DISCOVER_CARD')  -- credit_card_type
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- created_by
+SQL> , SYSDATE					       -- creation_date
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- last_updated_by
+SQL> , SYSDATE					       -- last_update_date
+SQL> );
+
+1 row created.
+
+SQL> 
+SQL> -- ------------------------------------------------------------------
+SQL> --  Insert first contact in a group account user.
+SQL> -- ------------------------------------------------------------------
+SQL> INSERT INTO contact
+SQL> ( contact_id
+SQL> , member_id
+SQL> , contact_type
+SQL> , first_name
+SQL> , last_name
+SQL> , created_by
+SQL> , creation_date
+SQL> , last_updated_by
+SQL> , last_update_date )
+SQL> VALUES
+SQL> ( contact_s1.nextval			       -- contact_id
+SQL> , member_s1.currval			       -- member_id
+SQL> ,(SELECT	common_lookup_id
+SQL>   FROM	common_lookup
+SQL>   WHERE	common_lookup_context = 'CONTACT'
+SQL>   AND	common_lookup_type = 'CUSTOMER')       -- contact_type
+SQL> ,'Randi'					       -- first_name
+SQL> ,'Winn'					       -- last_name
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- created_by
+SQL> , SYSDATE					       -- creation_date
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- last_updated_by
+SQL> , SYSDATE					       -- last_update_date
+SQL> );
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO address
+SQL> ( address_id
+SQL> , contact_id
+SQL> , address_type
+SQL> , city
+SQL> , state_province
+SQL> , postal_code
+SQL> , created_by
+SQL> , creation_date
+SQL> , last_updated_by
+SQL> , last_update_date )
+SQL> VALUES
+SQL> ( address_s1.nextval			       -- address_id
+SQL> , contact_s1.currval			       -- contact_id
+SQL> ,(SELECT	common_lookup_id
+SQL>   FROM	common_lookup
+SQL>   WHERE	common_lookup_type = 'HOME')	       -- address_type
+SQL> ,'San Jose'				       -- city
+SQL> ,'CA'					       -- state_province
+SQL> ,'95192'					       -- postal_code
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- created_by
+SQL> , SYSDATE					       -- creation_date
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- last_updated_by
+SQL> , SYSDATE					       -- last_update_date
+SQL> );
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO street_address
+SQL> ( street_address_id
+SQL> , address_id
+SQL> , street_address
+SQL> , created_by
+SQL> , creation_date
+SQL> , last_updated_by
+SQL> , last_update_date )
+SQL>  VALUES
+SQL> ( street_address_s1.nextval		       -- street_address_id
+SQL> , address_s1.currval			       -- address_id
+SQL> ,'10 El Camino Real'			       -- street_address
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- created_by
+SQL> , SYSDATE					       -- creation_date
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- last_updated_by
+SQL> , SYSDATE					       -- last_update_date
+SQL> );
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO telephone
+SQL> ( telephone_id
+SQL> , contact_id
+SQL> , address_id
+SQL> , telephone_type
+SQL> , country_code
+SQL> , area_code
+SQL> , telephone_number
+SQL> , created_by
+SQL> , creation_date
+SQL> , last_updated_by
+SQL> , last_update_date )
+SQL>  VALUES
+SQL> ( telephone_s1.nextval			       -- telephone_id
+SQL> , address_s1.currval			       -- address_id
+SQL> , contact_s1.currval			       -- contact_id
+SQL> ,(SELECT	common_lookup_id
+SQL>   FROM	common_lookup
+SQL>   WHERE	common_lookup_context = 'MULTIPLE'
+SQL>   AND	common_lookup_type = 'HOME')	       -- telephone_type
+SQL> ,'001'					       -- country_code
+SQL> ,'408'					       -- area_code
+SQL> ,'111-1111'				       -- telephone_number
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- created_by
+SQL> , SYSDATE					       -- creation_date
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- last_updated_by
+SQL> , SYSDATE					       -- last_update_date
+SQL> );
+
+1 row created.
+
+SQL> 
+SQL> -- ------------------------------------------------------------------
+SQL> --  Insert second contact in a group account user.
+SQL> -- ------------------------------------------------------------------
+SQL> INSERT INTO contact
+SQL> ( contact_id
+SQL> , member_id
+SQL> , contact_type
+SQL> , first_name
+SQL> , last_name
+SQL> , created_by
+SQL> , creation_date
+SQL> , last_updated_by
+SQL> , last_update_date )
+SQL> VALUES
+SQL> ( contact_s1.nextval			       -- contact_id
+SQL> , member_s1.currval			       -- member_id
+SQL> ,(SELECT	common_lookup_id
+SQL>   FROM	common_lookup
+SQL>   WHERE	common_lookup_context = 'CONTACT'
+SQL>   AND	common_lookup_type = 'CUSTOMER')       -- contact_type
+SQL> ,'Brian'					       -- first_name
+SQL> ,'Winn'					       -- last_name
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- created_by
+SQL> , SYSDATE					       -- creation_date
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- last_updated_by
+SQL> , SYSDATE					       -- last_update_date
+SQL> );
+
+1 row created.
+
+SQL> 
+SQL> 
+SQL> INSERT INTO address
+SQL> ( address_id
+SQL> , contact_id
+SQL> , address_type
+SQL> , city
+SQL> , state_province
+SQL> , postal_code
+SQL> , created_by
+SQL> , creation_date
+SQL> , last_updated_by
+SQL> , last_update_date )
+SQL> VALUES
+SQL> ( address_s1.nextval			       -- address_id
+SQL> , contact_s1.currval			       -- contact_id
+SQL> ,(SELECT	common_lookup_id
+SQL>   FROM	common_lookup
+SQL>   WHERE	common_lookup_type = 'HOME')	       -- address_type
+SQL> ,'San Jose'				       -- city
+SQL> ,'CA'					       -- state_province
+SQL> ,'95192'					       -- postal_code
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- created_by
+SQL> , SYSDATE					       -- creation_date
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- last_updated_by
+SQL> , SYSDATE					       -- last_update_date
+SQL> );
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO street_address
+SQL> ( street_address_id
+SQL> , address_id
+SQL> , street_address
+SQL> , created_by
+SQL> , creation_date
+SQL> , last_updated_by
+SQL> , last_update_date )
+SQL>  VALUES
+SQL> ( street_address_s1.nextval		       -- street_address_id
+SQL> , address_s1.currval			       -- address_id
+SQL> ,'10 El Camino Real'			       -- street_address
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- created_by
+SQL> , SYSDATE					       -- creation_date
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- last_updated_by
+SQL> , SYSDATE					       -- last_update_date
+SQL> );
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO telephone
+SQL> ( telephone_id
+SQL> , contact_id
+SQL> , address_id
+SQL> , telephone_type
+SQL> , country_code
+SQL> , area_code
+SQL> , telephone_number
+SQL> , created_by
+SQL> , creation_date
+SQL> , last_updated_by
+SQL> , last_update_date )
+SQL>  VALUES
+SQL> ( telephone_s1.nextval			       -- telephone_id
+SQL> , address_s1.currval			       -- address_id
+SQL> , contact_s1.currval			       -- contact_id
+SQL> ,(SELECT	common_lookup_id
+SQL>   FROM	common_lookup
+SQL>   WHERE	common_lookup_context = 'MULTIPLE'
+SQL>   AND	common_lookup_type = 'HOME')	       -- telephone_type
+SQL> ,'001'					       -- country_code
+SQL> ,'408'					       -- area_code
+SQL> ,'111-1111'				       -- telephone_number
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- created_by
+SQL> , SYSDATE					       -- creation_date
+SQL> ,(SELECT	system_user_id
+SQL>   FROM	system_user
+SQL>   WHERE	system_user_name = 'SYSADMIN')	       -- last_updated_by
+SQL> , SYSDATE					       -- last_update_date
+SQL> );
+
+1 row created.
+
+SQL> 
+SQL> COL account_number  FORMAT A10  HEADING "Account|Number"
+SQL> COL full_name	 FORMAT A16  HEADING "Name|(Last, First MI)"
+SQL> COL city		 FORMAT A12  HEADING "City"
+SQL> COL state_province  FORMAT A10  HEADING "State"
+SQL> COL telephone	 FORMAT A18  HEADING "Telephone"
+SQL> SELECT   m.account_number
+SQL> ,	      c.last_name || ', ' || c.first_name
+SQL> ||       CASE
+SQL> 		WHEN c.middle_name IS NOT NULL THEN ' ' || c.middle_name
+SQL> 	      END AS full_name
+SQL> ,	      a.city
+SQL> ,	      a.state_province
+SQL> ,	      t.country_code || '-(' || t.area_code || ') ' || t.telephone_number AS telephone
+SQL> FROM     member m INNER JOIN contact c ON m.member_id = c.member_id INNER JOIN
+SQL> 	      address a ON c.contact_id = a.contact_id INNER JOIN
+SQL> 	      street_address sa ON a.address_id = sa.address_id INNER JOIN
+SQL> 	      telephone t ON c.contact_id = t.contact_id AND a.address_id = t.address_id
+SQL> WHERE    c.last_name = 'Winn';
+
+Account    Name                                                                                    
+Number     (Last, First MI) City         State      Telephone                                      
+---------- ---------------- ------------ ---------- ------------------                             
+B293-71445 Winn, Randi      San Jose     CA         001-(408) 111-1111                             
+B293-71445 Winn, Brian      San Jose     CA         001-(408) 111-1111                             
+
+2 rows selected.
+
+SQL> 
+SQL> -- ------------------------------------------------------------------
+SQL> --  Close log file.
+SQL> -- ------------------------------------------------------------------
+SQL> SPOOL OFF

@@ -54,16 +54,34 @@ END;
 --  Step #1 : Create the TRANSACTION table.
 -- ----------------------------------------------------------------------
 -- Create the TRANSACTION table.
-
-
-
+CREATE TABLE transaction
+(
+  transaction_id          NUMBER,
+  transaction_account     VARCHAR2(20)      CONSTRAINT nn_tranaction_1 NOT NULL,
+  transaction_type        NUMBER            CONSTRAINT nn_transaction_2 NOT NULL,
+  transaction_date        DATE              CONSTRAINT nn_transaction_3 NOT NULL,
+  transaction_amount      NUMBER            CONSTRAINT nn_transaction_4 NOT NULL,
+  rental_id               NUMBER            CONSTRAINT nn_transaction_5 NOT NULL,
+  payment_method_type     NUMBER            CONSTRAINT nn_transaction_6 NOT NULL,
+  payment_account_number  VARCHAR2(19)      CONSTRAINT nn_transaction_7 NOT NULL,
+  created_by              NUMBER            CONSTRAINT nn_transaction_8 NOT NULL,
+  creation_date           DATE              CONSTRAINT nn_transaction_9 NOT NULL,
+  last_updated_by         NUMBER            CONSTRAINT nn_transaction_10 NOT NULL,
+  last_update_date        DATE              CONSTRAINT nn_transaction_11 NOT NULL,
+  CONSTRAINT pk_transaction     PRIMARY KEY(transaction_id),
+  CONSTRAINT fk_transaction_1   FOREIGN KEY(transaction_type) REFERENCES common_lookup(common_lookup_id),
+  CONSTRAINT fk_transaction_2   FOREIGN KEY(rental_id) REFERENCES rental(rental_id),
+  CONSTRAINT fl_transaction_3   FOREIGN KEY(payment_method_type) REFERENCES common_lookup(common_lookup_id),
+  CONSTRAINT fk_transaction_4   FOREIGN KEY(created_by) REFERENCES system_user(system_user_id),
+  CONSTRAINT fk_transaction_5   FOREIGN KEY(last_updated_by) REFERENCES system_user(system_user_id)
+);
 
 
 -- ----------------------------------------------------------------------
 --  Step #1 : Create the TRANSACTION sequence.
 -- ----------------------------------------------------------------------
 
-
+CREATE SEQUENCE transaction_s1 START WITH 1 NOCACHE;
 
 
 -- ----------------------------------------------------------------------
@@ -98,6 +116,7 @@ ORDER BY 2;
 --  Step #1 : Create the NATURAL_KEY index on the TRANSACTION table.
 -- ----------------------------------------------------------------------
 
+CREATE UNIQUE INDEX natural_key ON transaction(rental_id, transaction_type, transaction_date, payment_method_type, payment_account_number, transaction_account);
 
 
 
@@ -124,26 +143,56 @@ AND      i.index_name = 'NATURAL_KEY';
 -- ----------------------------------------------------------------------
 --  Step #2 : Insert new rows in COMMON_LOOKUP table.
 -- ----------------------------------------------------------------------
+INSERT INTO common_lookup
+    (common_lookup_id, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date,
+    common_lookup_table, common_lookup_column, common_lookup_code)
+VALUES
+    (common_lookup_s1.nextval, 'CREDIT', 'Credit', 1, SYSDATE, 1, SYSDATE, 'TRANSACTION', 'TRANSACTION_TYPE', 'CR');
+  
+INSERT INTO common_lookup
+    (common_lookup_id, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date,
+    common_lookup_table, common_lookup_column, common_lookup_code)
+VALUES
+    (common_lookup_s1.nextval, 'DEBIT', 'Debit', 1, SYSDATE, 1, SYSDATE, 'TRANSACTION', 'TRANSACTION_TYPE', 'DR');
 
+INSERT INTO common_lookup
+    (common_lookup_id, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date,
+    common_lookup_table, common_lookup_column, common_lookup_code)
+VALUES
+    (common_lookup_s1.nextval, 'DISCOVER_CARD', 'Discover Card', 1, SYSDATE, 1, SYSDATE, 'TRANSACTION', 'PAYMENT_METHOD_TYPE', NULL);
 
+INSERT INTO common_lookup
+    (common_lookup_id, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date,
+    common_lookup_table, common_lookup_column, common_lookup_code)
+VALUES
+    (common_lookup_s1.nextval, 'VISA_CARD', 'Visa Card', 1, SYSDATE, 1, SYSDATE, 'TRANSACTION', 'PAYMENT_METHOD_TYPE', NULL);
 
+INSERT INTO common_lookup
+    (common_lookup_id, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date,
+    common_lookup_table, common_lookup_column, common_lookup_code)
+VALUES
+    (common_lookup_s1.nextval, 'MASTER_CARD', 'Master Card', 1, SYSDATE, 1, SYSDATE, 'TRANSACTION', 'PAYMENT_METHOD_TYPE', NULL);
+
+INSERT INTO common_lookup
+    (common_lookup_id, common_lookup_type, common_lookup_meaning, created_by, creation_date, last_updated_by, last_update_date,
+    common_lookup_table, common_lookup_column, common_lookup_code)
+VALUES
+    (common_lookup_s1.nextval, 'CASH', 'Cash', 1, SYSDATE, 1, SYSDATE, 'TRANSACTION', 'PAYMENT_METHOD_TYPE', NULL);
 
 
 -- ----------------------------------------------------------------------
 --  Verify #2 : Insert new rows in COMMON_LOOKUP table.
 -- ----------------------------------------------------------------------
-COLUMN common_lookup_id     FORMAT 9999 HEADING "Lookup|ID #"
-COLUMN common_lookup_table  FORMAT A18  HEADING "Lookup|Table"
-COLUMN common_lookup_column FORMAT A20  HEADING "Lookup|Column"
-COLUMN common_lookup_type   FORMAT A14  HEADING "Lookup|Type"
-COLUMN common_lookup_code   FORMAT A8   HEADING "Lookup|Code"
-SELECT common_lookup_id
-,      common_lookup_table
-,      common_lookup_column
-,      common_lookup_type
-,      common_lookup_code
-FROM   common_lookup
-WHERE  common_lookup_table IN ('TRANSACTION','RENTAL_ITEM');
+COLUMN common_lookup_table  FORMAT A20 HEADING "COMMON_LOOKUP_TABLE"
+COLUMN common_lookup_column FORMAT A20 HEADING "COMMON_LOOKUP_COLUMN"
+COLUMN common_lookup_type   FORMAT A20 HEADING "COMMON_LOOKUP_TYPE"
+SELECT   common_lookup_table
+,        common_lookup_column
+,        common_lookup_type
+FROM     common_lookup
+WHERE    common_lookup_table = 'TRANSACTION'/*  */
+AND      common_lookup_column IN ('TRANSACTION_TYPE','PAYMENT_METHOD_TYPE')
+ORDER BY 1, 2, 3 DESC;
 
 -- ----------------------------------------------------------------------
 --  Step #3a : Create and seed AIRPORT and ACCOUNT_LIST tables.
@@ -165,7 +214,21 @@ END;
 -- ----------------------------------------------------------------------
 --  Step #3a : Create the AIRPORT table.
 -- ----------------------------------------------------------------------
-
+CREATE TABLE airport
+(
+  airport_id                  NUMBER,
+  airport_code                varchar2(3)       CONSTRAINT nn_airport_1 NOT NULL,
+  airport_city                varchar2(30)      CONSTRAINT nn_airport_2 NOT NULL,
+  city                        varchar2(30)      CONSTRAINT nn_airport_3 NOT NULL,
+  state_province              varchar2(30)      CONSTRAINT nn_airport_4 NOT NULL,
+  created_by                  NUMBER            CONSTRAINT nn_airport_5 NOT NULL,
+  creation_date               DATE              CONSTRAINT nn_airport_6 NOT NULL,
+  last_updated_by             NUMBER            CONSTRAINT nn_airport_7 NOT NULL,
+  last_update_date            DATE              CONSTRAINT nn_airport_8 NOT NULL,
+  CONSTRAINT pk_airport       PRIMARY KEY(airport_id),
+  CONSTRAINT fk_airport_1     FOREIGN KEY(created_by) REFERENCES system_user(system_user_id),
+  CONSTRAINT fk_airport_2     FOREIGN KEY(last_updated_by) REFERENCES system_user(system_user_id)
+);
 
 
 
@@ -173,7 +236,7 @@ END;
 -- ----------------------------------------------------------------------
 --  Step #3a : Create the AIRPORT sequence.
 -- ----------------------------------------------------------------------
-
+CREATE SEQUENCE airport_s1 START WITH 1 NOCACHE;
 
 
 
@@ -205,6 +268,7 @@ ORDER BY 2;
 -- ----------------------------------------------------------------------
 --  Step #3b : Create natural key index on the AIRPORT table.
 -- ----------------------------------------------------------------------
+CREATE UNIQUE INDEX nk_airport ON airport(airport_code, airport_city, city, state_province);
 
 
 
@@ -232,7 +296,35 @@ AND      i.index_name = 'NK_AIRPORT';
 -- ----------------------------------------------------------------------
 --  Step #3c : Insert rows into the AIRPORT table.
 -- ----------------------------------------------------------------------
+INSERT INTO airport
+  (airport_id, airport_code, airport_city, city, state_province, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (airport_s1.NEXTVAL, 'LAX', 'Los Angeles', 'Los Angeles', 'California', 1, SYSDATE, 1, SYSDATE);
 
+INSERT INTO airport
+  (airport_id, airport_code, airport_city, city, state_province, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (airport_s1.NEXTVAL, 'SLC', 'Salt Lake City', 'Provo', 'Utah', 1, SYSDATE, 1, SYSDATE);
+
+INSERT INTO airport
+  (airport_id, airport_code, airport_city, city, state_province, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (airport_s1.NEXTVAL, 'SLC', 'Salt Lake City', 'Spanish Fork', 'Utah', 1, SYSDATE, 1, SYSDATE);
+
+INSERT INTO airport
+  (airport_id, airport_code, airport_city, city, state_province, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (airport_s1.NEXTVAL, 'SFO', 'San Fransico', 'San Fransico', 'California', 1, SYSDATE, 1, SYSDATE);
+
+INSERT INTO airport
+  (airport_id, airport_code, airport_city, city, state_province, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (airport_s1.NEXTVAL, 'SJC', 'San Jose', 'San Jose', 'California', 1, SYSDATE, 1, SYSDATE);
+
+INSERT INTO airport
+  (airport_id, airport_code, airport_city, city, state_province, created_by, creation_date, last_updated_by, last_update_date)
+VALUES
+  (airport_s1.NEXTVAL, 'SJC', 'San Jose', 'San Carlos', 'California', 1, SYSDATE, 1, SYSDATE);
 
 
 
@@ -268,16 +360,25 @@ END;
 -- ----------------------------------------------------------------------
 --  Step #3d : Create the ACCOUNT_LIST table.
 -- ----------------------------------------------------------------------
-
-
-
-
+CREATE TABLE account_list
+(
+  account_list_id               NUMBER,
+  account_number                varchar2(10)      CONSTRAINT nn_account_list_1 NOT NULL,
+  consumed_date                 DATE,
+  consumed_by                   NUMBER,
+  created_by                    NUMBER            CONSTRAINT nn_account_list_2 NOT NULL,
+  creation_date                 DATE              CONSTRAINT nn_account_list_3 NOT NULL,
+  last_updated_by               NUMBER            CONSTRAINT nn_account_list_4 NOT NULL,
+  last_update_date              DATE              CONSTRAINT nn_account_list_5 NOT NULL,
+  CONSTRAINT pk_account_list       PRIMARY KEY(account_list_id),
+  CONSTRAINT fk_account_list_1   FOREIGN KEY(created_by) REFERENCES system_user(system_user_id),
+  CONSTRAINT fk_account_list_2   FOREIGN KEY(last_updated_by) REFERENCES system_user(system_user_id)
+);
 
 -- ----------------------------------------------------------------------
 --  Step #3d : Create the ACCOUNT_LIST sequence.
 -- ----------------------------------------------------------------------
-
-
+CREATE SEQUENCE account_list_s1 START WITH 1 NOCACHE;
 
 
 
@@ -380,7 +481,9 @@ ORDER BY 1;
 -- ----------------------------------------------------------------------
 --  Step #3f : Update the ADDRESS table.
 -- ----------------------------------------------------------------------
-
+UPDATE address
+SET    state_province = 'California'
+WHERE  state_province = 'CA';
 
 
 
@@ -625,7 +728,37 @@ END;
 --  Step #4 : Create Oracle external table.
 -- ----------------------------------------------
 
-
+  CREATE TABLE "STUDENT"."TRANSACTION_UPLOAD"
+   (    "ACCOUNT_NUMBER" VARCHAR2(10),
+        "FIRST_NAME" VARCHAR2(20),
+        "MIDDLE_NAME" VARCHAR2(20),
+        "LAST_NAME" VARCHAR2(20),
+        "CHECK_OUT_DATE" DATE,
+        "RETURN_DATE" DATE,
+        "RENTAL_ITEM_TYPE" VARCHAR2(12),
+        "TRANSACTION_TYPE" VARCHAR2(14),
+        "TRANSACTION_AMOUNT" NUMBER,
+        "TRANSACTION_DATE" DATE,
+        "ITEM_ID" NUMBER,
+        "PAYMENT_METHOD_TYPE" VARCHAR2(14),
+        "PAYMENT_ACCOUNT_NUMBER" VARCHAR2(19)
+   )
+   ORGANIZATION EXTERNAL
+    ( TYPE ORACLE_LOADER
+      DEFAULT DIRECTORY "UPLOAD"
+      ACCESS PARAMETERS
+      ( RECORDS DELIMITED BY NEWLINE CHARACTERSET US7ASCII
+      BADFILE     'UPLOAD':'transaction_upload.bad'
+      DISCARDFILE 'UPLOAD':'transaction_upload.dis'
+      LOGFILE     'UPLOAD':'transaction_upload.log'
+      FIELDS TERMINATED BY ','
+      OPTIONALLY ENCLOSED BY "'"
+      MISSING FIELD VALUES ARE NULL     )
+      LOCATION
+       ( 'transaction_upload.csv'
+       )
+    )
+   REJECT LIMIT UNLIMITED;
 
 
 

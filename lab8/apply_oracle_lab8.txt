@@ -1,0 +1,376 @@
+SQL> 
+SQL> -- Set the page size.
+SQL> SET ECHO ON
+SQL> SET PAGESIZE 999
+SQL> CREATE SEQUENCE price_s START WITH 1001 NOCACHE;
+
+Sequence created.
+
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #1 : Add two columns to the RENTAL_ITEM table.
+SQL> -- ----------------------------------------------------------------------
+SQL> INSERT INTO price
+SQL> ( price_id
+SQL> , item_id
+SQL> , price_type
+SQL> , active_flag
+SQL> , start_date
+SQL> , end_date
+SQL> , amount
+SQL> , created_by
+SQL> , creation_date
+SQL> , last_updated_by
+SQL> , last_updated_date )
+SQL> ( SELECT price_s.NEXTVAL
+SQL> ,	      i.item_id
+SQL> ,	      cl.common_lookup_id AS price_type
+SQL> ,	      af.active_flag
+SQL> ,	      CASE
+SQL> 		WHEN (TRUNC(SYSDATE) - i.release_date) <= 30 OR
+SQL> 		     (TRUNC(SYSDATE) - i.release_date) >  30 AND af.active_flag = 'N' THEN
+SQL> 		  i.release_date
+SQL> 		ELSE
+SQL> 		  i.release_date + 31
+SQL> 	      END AS start_date
+SQL> ,	      CASE
+SQL> 		WHEN (TRUNC(SYSDATE) - i.release_date) > 30 AND af.active_flag = 'N' THEN
+SQL> 		  i.release_date + 30
+SQL> 	      END AS end_date
+SQL> ,	      CASE
+SQL> 		WHEN (TRUNC(SYSDATE) - i.release_date) <= 30 THEN
+SQL> 		  CASE
+SQL> 		    WHEN dr.rental_days = 1 THEN 3
+SQL> 		    WHEN dr.rental_days = 3 THEN 10
+SQL> 		    WHEN dr.rental_days = 5 THEN 15
+SQL> 		  END
+SQL> 		WHEN (TRUNC(SYSDATE) - i.release_date) > 30 AND af.active_flag = 'N' THEN
+SQL> 		  CASE
+SQL> 		    WHEN dr.rental_days = 1 THEN 3
+SQL> 		    WHEN dr.rental_days = 3 THEN 10
+SQL> 		    WHEN dr.rental_days = 5 THEN 15
+SQL> 		  END
+SQL> 		ELSE
+SQL> 		  CASE
+SQL> 		    WHEN dr.rental_days = 1 THEN 1
+SQL> 		    WHEN dr.rental_days = 3 THEN 3
+SQL> 		    WHEN dr.rental_days = 5 THEN 5
+SQL> 		  END
+SQL> 	      END AS amount,
+SQL> 	      1 as created_by,
+SQL> 	      SYSDATE as creation_date,
+SQL> 	      1 as last_updated_by,
+SQL> 	      SYSDATE as last_update_date
+SQL> FROM     item i CROSS JOIN
+SQL> 	     (SELECT 'Y' AS active_flag FROM dual
+SQL> 	      UNION ALL
+SQL> 	      SELECT 'N' AS active_flag FROM dual) af CROSS JOIN
+SQL> 	     (SELECT '1' AS rental_days FROM dual
+SQL> 	      UNION ALL
+SQL> 	      SELECT '3' AS rental_days FROM dual
+SQL> 	      UNION ALL
+SQL> 	      SELECT '5' AS rental_days FROM dual) dr INNER JOIN
+SQL> 	      common_lookup cl ON dr.rental_days = SUBSTR(cl.common_lookup_type,1,1)
+SQL> WHERE cl.common_lookup_table = 'PRICE'
+SQL> AND cl.common_lookup_column = 'PRICE_TYPE'
+SQL> AND NOT	 (af.active_flag = 'N' AND (TRUNC(SYSDATE) - 30) < i.release_date));
+
+135 rows created.
+
+SQL> 
+SQL> -- Query the result.
+SQL> COLUMN type   FORMAT A5   HEADING "Type"
+SQL> COLUMN 1-Day  FORMAT 9999 HEADING "1-Day"
+SQL> COLUMN 3-Day  FORMAT 9999 HEADING "3-Day"
+SQL> COLUMN 5_Day  FORMAT 9999 HEADING "5_Day"
+SQL> COLUMN total  FORMAT 9999 HEADING "Total"
+SQL> SELECT  'OLD Y' AS "Type"
+SQL> ,	      COUNT(CASE WHEN amount = 1 THEN 1 END) AS "1-Day"
+SQL> ,	      COUNT(CASE WHEN amount = 3 THEN 1 END) AS "3-Day"
+SQL> ,	      COUNT(CASE WHEN amount = 5 THEN 1 END) AS "5-Day"
+SQL> ,	      COUNT(*) AS "TOTAL"
+SQL> FROM     price p , item i
+SQL> WHERE    active_flag = 'Y' AND i.item_id = p.item_id
+SQL> AND     (TRUNC(SYSDATE) - TRUNC(i.release_date)) > 30
+SQL> AND      end_date IS NULL
+SQL> UNION ALL
+SQL> SELECT  'OLD N' AS "Type"
+SQL> ,	      COUNT(CASE WHEN amount =	3 THEN 1 END) AS "1-Day"
+SQL> ,	      COUNT(CASE WHEN amount = 10 THEN 1 END) AS "3-Day"
+SQL> ,	      COUNT(CASE WHEN amount = 15 THEN 1 END) AS "5-Day"
+SQL> ,	      COUNT(*) AS "TOTAL"
+SQL> FROM     price p , item i
+SQL> WHERE    active_flag = 'N' AND i.item_id = p.item_id
+SQL> AND     (TRUNC(SYSDATE) - TRUNC(i.release_date)) > 30
+SQL> AND NOT end_date IS NULL
+SQL> UNION ALL
+SQL> SELECT  'NEW Y' AS "Type"
+SQL> ,	      COUNT(CASE WHEN amount =	3 THEN 1 END) AS "1-Day"
+SQL> ,	      COUNT(CASE WHEN amount = 10 THEN 1 END) AS "3-Day"
+SQL> ,	      COUNT(CASE WHEN amount = 15 THEN 1 END) AS "5-Day"
+SQL> ,	      COUNT(*) AS "TOTAL"
+SQL> FROM     price p , item i
+SQL> WHERE    active_flag = 'Y' AND i.item_id = p.item_id
+SQL> AND     (TRUNC(SYSDATE) - TRUNC(i.release_date)) < 31
+SQL> AND      end_date IS NULL
+SQL> UNION ALL
+SQL> SELECT  'NEW N' AS "Type"
+SQL> ,	      COUNT(CASE WHEN amount = 1 THEN 1 END) AS "1-Day"
+SQL> ,	      COUNT(CASE WHEN amount = 3 THEN 1 END) AS "3-Day"
+SQL> ,	      COUNT(CASE WHEN amount = 5 THEN 1 END) AS "5-Day"
+SQL> ,	      COUNT(*) AS "TOTAL"
+SQL> FROM     price p , item i
+SQL> WHERE    active_flag = 'N' AND i.item_id = p.item_id
+SQL> AND     (TRUNC(SYSDATE) - TRUNC(i.release_date)) < 31
+SQL> AND      NOT (end_date IS NULL);
+
+Type  1-Day 3-Day      5-Day Total                                              
+----- ----- ----- ---------- -----                                              
+OLD Y    21    21         21    63                                              
+OLD N    21    21         21    63                                              
+NEW Y     3     3          3     9                                              
+NEW N     0     0          0     0                                              
+
+4 rows selected.
+
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #2 : After inserting the data into the PRICE table, you should
+SQL> -- 	   add the NOT NULL constraint to the PRICE_TYPE column of
+SQL> -- 	   the PRICE table.
+SQL> -- ----------------------------------------------------------------------
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #2 : Add a constraint to PRICE table.
+SQL> -- ----------------------------------------------------------------------
+SQL> ALTER TABLE price MODIFY price_type NOT NULL;
+
+Table altered.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #2 : Verify the constraint is added to the PRICE table.
+SQL> -- ----------------------------------------------------------------------
+SQL> COLUMN CONSTRAINT FORMAT A10
+SQL> SELECT   TABLE_NAME
+SQL> ,	      column_name
+SQL> ,	      CASE
+SQL> 		WHEN NULLABLE = 'N' THEN 'NOT NULL'
+SQL> 		ELSE 'NULLABLE'
+SQL> 	      END AS CONSTRAINT
+SQL> FROM     user_tab_columns
+SQL> WHERE    TABLE_NAME = 'PRICE'
+SQL> AND      column_name = 'PRICE_TYPE';
+
+TABLE NAME   COLUMN NAME        CONSTRAINT                                      
+------------ ------------------ ----------                                      
+PRICE        PRICE_TYPE         NOT NULL                                        
+
+1 row selected.
+
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #3 : After updating the data in the PRICE table with a valid
+SQL> -- 	   PRICE_TYPE column value, and then apply a NOT NULL
+SQL> -- 	   constraint.
+SQL> -- ----------------------------------------------------------------------
+SQL> 
+SQL> COLUMN co_date FORMAT A24 HEADING "Check Out Date"
+SQL> COLUMN today   FORMAT A24 HEADING "Today Date"
+SQL> SELECT TO_CHAR(r.check_out_date,'DD-MON-YYYY HH24:MI:DD') AS co_date
+SQL> ,	    TO_CHAR(TRUNC(sysdate),'DD-MON-YYYY HH24:MI:DD') AS today
+SQL> FROM   rental r;
+
+Check Out Date           Today Date                                             
+------------------------ ------------------------                               
+25-FEB-2020 00:00:25     25-FEB-2020 00:00:25                                   
+25-FEB-2020 00:00:25     25-FEB-2020 00:00:25                                   
+25-FEB-2020 00:00:25     25-FEB-2020 00:00:25                                   
+25-FEB-2020 00:00:25     25-FEB-2020 00:00:25                                   
+25-FEB-2020 00:00:25     25-FEB-2020 00:00:25                                   
+25-FEB-2020 00:00:25     25-FEB-2020 00:00:25                                   
+25-FEB-2020 00:00:25     25-FEB-2020 00:00:25                                   
+25-FEB-2020 00:00:25     25-FEB-2020 00:00:25                                   
+
+8 rows selected.
+
+SQL> 
+SQL> -- Update the RENTAL_ITEM_PRICE column with valid values.
+SQL> -- ----------------------------------------------------------------------
+SQL> --   a. The TRUNC(SYSDATE + 1) value guarantees a range match when
+SQL> --       inputs weren't truncated.
+SQL> --   b. Change all the entries in the RENTAL table to TRUNC(SYSDATE)
+SQL> --      values.
+SQL> -- ----------------------------------------------------------------------
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #3 : Fix the following update statement.
+SQL> -- ----------------------------------------------------------------------
+SQL> UPDATE   rental_item ri
+SQL> SET      rental_item_price =
+SQL> 	       (SELECT	 p.amount
+SQL> 		FROM	 price p INNER JOIN common_lookup cl1
+SQL> 		ON	 p.price_type = cl1.common_lookup_id CROSS JOIN rental r
+SQL> 			 CROSS JOIN common_lookup cl2
+SQL> 		WHERE	 p.item_id = ri.item_id
+SQL> 		AND	 ri.rental_id = r.rental_id
+SQL> 		AND	 ri.rental_item_type = cl2.common_lookup_id
+SQL> 		AND	 cl1.common_lookup_code = cl2.common_lookup_code
+SQL> 		AND	 r.check_out_date
+SQL> 			   BETWEEN p.start_date AND NVL(p.end_date, SYSDATE));
+
+13 rows updated.
+
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Verify #3 : Query the RENTAL_ITEM_PRICE values.
+SQL> -- ----------------------------------------------------------------------
+SQL> 
+SQL> -- Set to extended linesize value.
+SQL> SET LINESIZE 110
+SQL> 
+SQL> -- Format column names.
+SQL> COL customer_name		FORMAT A20  HEADING "Contact|--------|Customer Name"
+SQL> COL contact_id		FORMAT 9999 HEADING "Contact|--------|Contact|ID #"
+SQL> COL customer_id		FORMAT 9999 HEADING "Rental|--------|Customer|ID #"
+SQL> COL r_rental_id		FORMAT 9999 HEADING "Rental|------|Rental|ID #"
+SQL> COL ri_rental_id		FORMAT 9999 HEADING "Rental|Item|------|Rental|ID #"
+SQL> COL rental_item_id 	FORMAT 9999 HEADING "Rental|Item|------||ID #"
+SQL> COL price_item_id		FORMAT 9999 HEADING "Price|------|Item|ID #"
+SQL> COL rental_item_item_id	FORMAT 9999 HEADING "Rental|Item|------|Item|ID #"
+SQL> COL rental_item_price	FORMAT 9999 HEADING "Rental|Item|------||Price"
+SQL> COL amount 		FORMAT 9999 HEADING "Price|------||Amount"
+SQL> COL price_type_code	FORMAT 9999 HEADING "Price|------|Type|Code"
+SQL> COL rental_item_type_code	FORMAT 9999 HEADING "Rental|Item|------|Type|Code"
+SQL> SELECT   c.last_name||', '||c.first_name
+SQL> ||       CASE
+SQL> 		WHEN c.middle_name IS NOT NULL THEN ' '||c.middle_name
+SQL> 	      END AS customer_name
+SQL> ,	      c.contact_id
+SQL> ,	      r.customer_id
+SQL> ,	      r.rental_id AS r_rental_id
+SQL> ,	      ri.rental_id AS ri_rental_id
+SQL> ,	      ri.rental_item_id
+SQL> ,	      p.item_id AS price_item_id
+SQL> ,	      ri.item_id AS rental_item_item_id
+SQL> ,	      ri.rental_item_price
+SQL> ,	      p.amount
+SQL> ,	      TO_NUMBER(cl2.common_lookup_code) AS price_type_code
+SQL> ,	      TO_NUMBER(cl2.common_lookup_code) AS rental_item_type_code
+SQL> FROM     price p INNER JOIN common_lookup cl1
+SQL> ON       p.price_type = cl1.common_lookup_id
+SQL> AND      cl1.common_lookup_table = 'PRICE'
+SQL> AND      cl1.common_lookup_column = 'PRICE_TYPE' FULL JOIN rental_item ri
+SQL> ON       p.item_id = ri.item_id INNER JOIN common_lookup cl2
+SQL> ON       ri.rental_item_type = cl2.common_lookup_id
+SQL> AND      cl2.common_lookup_table = 'RENTAL_ITEM'
+SQL> AND      cl2.common_lookup_column = 'RENTAL_ITEM_TYPE' RIGHT JOIN rental r
+SQL> ON       ri.rental_id = r.rental_id FULL JOIN contact c
+SQL> ON       r.customer_id = c.contact_id
+SQL> WHERE    cl1.common_lookup_code = cl2.common_lookup_code
+SQL> AND      r.check_out_date
+SQL> BETWEEN  p.start_date AND NVL(p.end_date,TRUNC(SYSDATE) + 1)
+SQL> ORDER BY 2, 3;
+
+                                              Rental Rental        Rental Rental               Rental         
+                      Contact   Rental Rental   Item   Item  Price   Item   Item  Price  Price   Item         
+Contact              -------- -------- ------ ------ ------ ------ ------ ------ ------ ------ ------         
+--------              Contact Customer Rental Rental          Item   Item                 Type   Type         
+Customer Name            ID #     ID #   ID #   ID #   ID #   ID #   ID #  Price Amount   Code   Code         
+-------------------- -------- -------- ------ ------ ------ ------ ------ ------ ------ ------ ------         
+Winn, Brian              1002     1002   1005   1005   1008   1007   1007      5      5      5      5         
+Winn, Brian              1002     1002   1005   1005   1009   1001   1001      5      5      5      5         
+Vizquel, Oscar           1003     1003   1001   1001   1003   1005   1005      5      5      5      5         
+Vizquel, Oscar           1003     1003   1001   1001   1002   1004   1004      5      5      5      5         
+Vizquel, Oscar           1003     1003   1001   1001   1001   1002   1002      5      5      5      5         
+Vizquel, Doreen          1004     1004   1002   1002   1005   1021   1021      5      5      5      5         
+Vizquel, Doreen          1004     1004   1002   1002   1004   1016   1016      5      5      5      5         
+Sweeney, Meaghan         1005     1005   1003   1003   1006   1019   1019      5      5      5      5         
+Sweeney, Ian M           1007     1007   1004   1004   1007   1014   1014      5      5      5      5         
+Potter, Harry            1013     1013   1006   1006   1011   1022   1022      3      3      1      1         
+Potter, Harry            1013     1013   1006   1006   1010   1022   1022      3      3      1      1         
+Potter, Ginny            1014     1014   1007   1007   1012   1023   1023     10     10      3      3         
+Potter, Lily Luna        1015     1015   1008   1008   1013   1024   1024     15     15      5      5         
+
+13 rows selected.
+
+SQL> 
+SQL> COL customer_name		FORMAT A20  HEADING "Contact|--------|Customer Name"
+SQL> COL r_rental_id		FORMAT 9999 HEADING "Rental|------|Rental|ID #"
+SQL> COL amount 		FORMAT 9999 HEADING "Price|------||Amount"
+SQL> COL price_type_code	FORMAT 9999 HEADING "Price|------|Type|Code"
+SQL> COL rental_item_type_code	FORMAT 9999 HEADING "Rental|Item|------|Type|Code"
+SQL> COL needle 		FORMAT A11  HEADING "Rental|--------|Check Out|Date"
+SQL> COL low_haystack		FORMAT A11  HEADING "Price|--------|Start|Date"
+SQL> COL high_haystack		FORMAT A11  HEADING "Price|--------|End|Date"
+SQL> SELECT   c.last_name||', '||c.first_name
+SQL> ||       CASE
+SQL> 		WHEN c.middle_name IS NOT NULL THEN ' '||c.middle_name
+SQL> 	      END AS customer_name
+SQL> ,	      ri.rental_id AS ri_rental_id
+SQL> ,	      p.amount
+SQL> ,	      TO_NUMBER(cl2.common_lookup_code) AS price_type_code
+SQL> ,	      TO_NUMBER(cl2.common_lookup_code) AS rental_item_type_code
+SQL> ,	      p.start_date AS low_haystack
+SQL> ,	      r.check_out_date AS needle
+SQL> ,	      NVL(p.end_date,TRUNC(SYSDATE) + 1) AS high_haystack
+SQL> FROM     price p INNER JOIN common_lookup cl1
+SQL> ON       p.price_type = cl1.common_lookup_id
+SQL> AND      cl1.common_lookup_table = 'PRICE'
+SQL> AND      cl1.common_lookup_column = 'PRICE_TYPE' FULL JOIN rental_item ri
+SQL> ON       p.item_id = ri.item_id INNER JOIN common_lookup cl2
+SQL> ON       ri.rental_item_type = cl2.common_lookup_id
+SQL> AND      cl2.common_lookup_table = 'RENTAL_ITEM'
+SQL> AND      cl2.common_lookup_column = 'RENTAL_ITEM_TYPE' RIGHT JOIN rental r
+SQL> ON       ri.rental_id = r.rental_id FULL JOIN contact c
+SQL> ON       r.customer_id = c.contact_id
+SQL> WHERE    cl1.common_lookup_code = cl2.common_lookup_code
+SQL> AND      p.active_flag = 'Y'
+SQL> AND NOT	 r.check_out_date
+SQL> BETWEEN  p.start_date AND NVL(p.end_date,TRUNC(SYSDATE) + 1)
+SQL> ORDER BY 2, 3;
+
+no rows selected
+
+SQL> 
+SQL> -- Reset to default linesize value.
+SQL> SET LINESIZE 80
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #4 : Add NOT NULL constraint on RENTAL_ITEM_PRICE column
+SQL> -- 	   of the RENTAL_ITEM table.
+SQL> -- ----------------------------------------------------------------------
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Step #4 : Alter the RENTAL_ITEM table.
+SQL> -- ----------------------------------------------------------------------
+SQL> 
+SQL> ALTER TABLE rental_item MODIFY rental_item_price NOT NULL;
+
+Table altered.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> --  Verify #4 : Add NOT NULL constraint on RENTAL_ITEM_PRICE column
+SQL> -- 	     of the RENTAL_ITEM table.
+SQL> -- ----------------------------------------------------------------------
+SQL> COLUMN CONSTRAINT FORMAT A10
+SQL> SELECT   TABLE_NAME
+SQL> ,	      column_name
+SQL> ,	      CASE
+SQL> 		WHEN NULLABLE = 'N' THEN 'NOT NULL'
+SQL> 		ELSE 'NULLABLE'
+SQL> 	      END AS CONSTRAINT
+SQL> FROM     user_tab_columns
+SQL> WHERE    TABLE_NAME = 'RENTAL_ITEM'
+SQL> AND      column_name = 'RENTAL_ITEM_PRICE';
+
+TABLE NAME   COLUMN NAME        CONSTRAINT                                      
+------------ ------------------ ----------                                      
+RENTAL_ITEM  RENTAL_ITEM_PRICE  NOT NULL                                        
+
+1 row selected.
+
+SQL> 
+SQL> SPOOL OFF

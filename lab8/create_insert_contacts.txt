@@ -1,0 +1,137 @@
+SQL> 
+SQL> -- Transaction Management Example.
+SQL> CREATE OR REPLACE PROCEDURE contact_insert
+SQL> ( pv_member_type	      VARCHAR2
+SQL> , pv_account_number      VARCHAR2
+SQL> , pv_credit_card_number  VARCHAR2
+SQL> , pv_credit_card_type    VARCHAR2
+SQL> , pv_first_name	      VARCHAR2
+SQL> , pv_middle_name	      VARCHAR2 := ''
+SQL> , pv_last_name	      VARCHAR2
+SQL> , pv_contact_type	      VARCHAR2
+SQL> , pv_address_type	      VARCHAR2
+SQL> , pv_city		      VARCHAR2
+SQL> , pv_state_province      VARCHAR2
+SQL> , pv_postal_code	      VARCHAR2
+SQL> , pv_street_address      VARCHAR2
+SQL> , pv_telephone_type      VARCHAR2
+SQL> , pv_country_code	      VARCHAR2
+SQL> , pv_area_code	      VARCHAR2
+SQL> , pv_telephone_number    VARCHAR2
+SQL> , pv_created_by	      NUMBER   := 1001
+SQL> , pv_creation_date       DATE     := SYSDATE
+SQL> , pv_last_updated_by     NUMBER   := 1001
+SQL> , pv_last_update_date    DATE     := SYSDATE) IS
+SQL> 
+SQL> BEGIN
+SQL> 
+SQL>   /* Create a SAVEPOINT as a starting point. */
+SQL>   SAVEPOINT starting_point;
+SQL> 
+SQL>   /* Insert into the member table. */
+SQL>   INSERT INTO member
+SQL>   ( member_id
+SQL>   , member_type
+SQL>   , account_number
+SQL>   , credit_card_number
+SQL>   , credit_card_type
+SQL>   , created_by
+SQL>   , creation_date
+SQL>   , last_updated_by
+SQL>   , last_update_date )
+SQL>   VALUES
+SQL>   ( member_s1.NEXTVAL
+SQL>   ,(SELECT   common_lookup_id
+SQL> 	 FROM	  common_lookup
+SQL> 	 WHERE	  common_lookup_context = 'MEMBER'
+SQL> 	 AND	  common_lookup_type = pv_member_type)
+SQL>   , pv_account_number
+SQL>   , pv_credit_card_number
+SQL>   ,(SELECT   common_lookup_id
+SQL> 	 FROM	  common_lookup
+SQL> 	 WHERE	  common_lookup_context = 'MEMBER'
+SQL> 	 AND	  common_lookup_type = pv_credit_card_type)
+SQL>   , pv_created_by
+SQL>   , pv_creation_date
+SQL>   , pv_last_updated_by
+SQL>   , pv_last_update_date );
+SQL> 
+SQL>   /* Insert into the contact table. */
+SQL>   INSERT INTO contact
+SQL>   VALUES
+SQL>   ( contact_s1.NEXTVAL
+SQL>   , member_s1.CURRVAL
+SQL>   ,(SELECT   common_lookup_id
+SQL> 	 FROM	  common_lookup
+SQL> 	 WHERE	  common_lookup_context = 'CONTACT'
+SQL> 	 AND	  common_lookup_type = pv_contact_type)
+SQL>   , pv_first_name
+SQL>   , pv_middle_name
+SQL>   , pv_last_name
+SQL>   , pv_created_by
+SQL>   , pv_creation_date
+SQL>   , pv_last_updated_by
+SQL>   , pv_last_update_date );
+SQL> 
+SQL>   /* Insert into the address table. */
+SQL>   INSERT INTO address
+SQL>   VALUES
+SQL>   ( address_s1.NEXTVAL
+SQL>   , contact_s1.CURRVAL
+SQL>   ,(SELECT   common_lookup_id
+SQL> 	 FROM	  common_lookup
+SQL> 	 WHERE	  common_lookup_context = 'MULTIPLE'
+SQL> 	 AND	  common_lookup_type = pv_address_type)
+SQL>   , pv_city
+SQL>   , pv_state_province
+SQL>   , pv_postal_code
+SQL>   , pv_created_by
+SQL>   , pv_creation_date
+SQL>   , pv_last_updated_by
+SQL>   , pv_last_update_date );
+SQL> 
+SQL>   /* Insert into the street_address table. */
+SQL>   INSERT INTO street_address
+SQL>   VALUES
+SQL>   ( street_address_s1.NEXTVAL
+SQL>   , address_s1.CURRVAL
+SQL>   , pv_street_address
+SQL>   , pv_created_by
+SQL>   , pv_creation_date
+SQL>   , pv_last_updated_by
+SQL>   , pv_last_update_date );
+SQL> 
+SQL>   /* Insert into the telephone table. */
+SQL>   INSERT INTO telephone
+SQL>   VALUES
+SQL>   ( telephone_s1.NEXTVAL				   -- TELEPHONE_ID
+SQL>   , contact_s1.CURRVAL				   -- CONTACT_ID
+SQL>   , address_s1.CURRVAL				   -- ADDRESS_ID
+SQL>   ,(SELECT   common_lookup_id			   -- ADDRESS_TYPE
+SQL> 	 FROM	  common_lookup
+SQL> 	 WHERE	  common_lookup_context = 'MULTIPLE'
+SQL> 	 AND	  common_lookup_type = pv_telephone_type)
+SQL>   , pv_country_code				   -- COUNTRY_CODE
+SQL>   , pv_area_code					   -- AREA_CODE
+SQL>   , pv_telephone_number				   -- TELEPHONE_NUMBER
+SQL>   , pv_created_by					   -- CREATED_BY
+SQL>   , pv_creation_date				   -- CREATION_DATE
+SQL>   , pv_last_updated_by				   -- LAST_UPDATED_BY
+SQL>   , pv_last_update_date);				   -- LAST_UPDATE_DATE
+SQL> 
+SQL>   /* Commit the series of inserts. */
+SQL>   COMMIT;
+SQL> EXCEPTION
+SQL>   WHEN OTHERS THEN
+SQL> 	 ROLLBACK TO starting_point;
+SQL> 	 RETURN;
+SQL> END contact_insert;
+SQL> /
+
+Procedure created.
+
+SQL> 
+SQL> -- ------------------------------------------------------------------
+SQL> --  Close log file.
+SQL> -- ------------------------------------------------------------------
+SQL> SPOOL OFF
