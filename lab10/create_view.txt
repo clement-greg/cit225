@@ -1,0 +1,97 @@
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #1
+SQL> --  --------
+SQL> --   Display the rows in the member and contact tables.
+SQL> -- --------------------------------------------------------
+SQL> 
+SQL> COL member_id	     FORMAT 9999  HEADING "Member|ID #"
+SQL> COL members	     FORMAT 9999  HEADING "Member|#"
+SQL> COL common_lookup_type  FORMAT A12   HEADING "Common|Lookup Type"
+SQL> SELECT   m.member_id
+SQL> ,	      COUNT(contact_id) AS MEMBERS
+SQL> ,	      cl.common_lookup_type
+SQL> FROM     member m INNER JOIN contact c
+SQL> ON       m.member_id = c.member_id INNER JOIN common_lookup cl
+SQL> ON       m.member_type = cl.common_lookup_id
+SQL> GROUP BY m.member_id
+SQL> ,	      m.member_type
+SQL> ,	      cl.common_lookup_id
+SQL> ,	      cl.common_lookup_type
+SQL> ORDER BY m.member_id;
+
+Member Member Common                                                                               
+  ID #      # Lookup Type                                                                          
+------ ------ ------------                                                                         
+  1001      2 GROUP                                                                                
+  1002      2 GROUP                                                                                
+  1003      3 GROUP                                                                                
+  1004      1 INDIVIDUAL                                                                           
+  1005      1 INDIVIDUAL                                                                           
+  1006      1 INDIVIDUAL                                                                           
+  1007      1 INDIVIDUAL                                                                           
+  1008      1 INDIVIDUAL                                                                           
+
+8 rows selected.
+
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #2
+SQL> --  --------
+SQL> --   Create a view .
+SQL> -- --------------------------------------------------------
+SQL> CREATE OR REPLACE VIEW current_rental AS
+SQL>   SELECT	m.account_number
+SQL>   ,	c.last_name || ', ' || c.first_name
+SQL>   ||	CASE
+SQL> 		  WHEN c.middle_name IS NOT NULL THEN ' ' || SUBSTR(c.middle_name,1,1)
+SQL> 		END AS full_name
+SQL>   ,	i.item_title AS title
+SQL>   ,	i.item_subtitle AS subtitle
+SQL>   ,	SUBSTR(cl.common_lookup_meaning,1,3) AS product
+SQL>   ,	r.check_out_date
+SQL>   ,	r.return_date
+SQL>   FROM	member m INNER JOIN contact c ON m.member_id = c.member_id INNER JOIN
+SQL> 		rental r ON c.contact_id = r.customer_id INNER JOIN
+SQL> 		rental_item ri ON r.rental_id = ri.rental_id INNER JOIN
+SQL> 		item i ON ri.item_id = i.item_id INNER JOIN
+SQL> 		common_lookup cl ON i.item_id = cl.common_lookup_id
+SQL>   ORDER BY 1, 2, 3;
+
+View created.
+
+SQL> 
+SQL> -- --------------------------------------------------------
+SQL> --  Step #3
+SQL> --  --------
+SQL> --   Display the content of a view .
+SQL> -- --------------------------------------------------------
+SQL> COL full_name	FORMAT A24
+SQL> COL title		FORMAT A30
+SQL> COL subtitlei	FORMAT A4
+SQL> COL product	FORMAT A7
+SQL> COL check_out_date FORMAT A11
+SQL> COL return_date	FORMAT A11
+SQL> SELECT   cr.full_name
+SQL> ,	      cr.title
+SQL> ,	      cr.check_out_date
+SQL> ,	      cr.return_date
+SQL> FROM     current_rental cr;
+
+Name                                                    Check Out   Return                         
+(Last, First MI)         TITLE                          Date        Date                           
+------------------------ ------------------------------ ----------- -----------                    
+Winn, Brian              RoboCop                        06-MAR-20   11-MAR-20                      
+Winn, Brian              The Hunt for Red October       06-MAR-20   11-MAR-20                      
+Vizquel, Oscar           Star Wars I                    06-MAR-20   11-MAR-20                      
+Vizquel, Oscar           Star Wars II                   06-MAR-20   11-MAR-20                      
+Vizquel, Oscar           Star Wars III                  06-MAR-20   11-MAR-20                      
+Sweeney, Ian M           Cars                           06-MAR-20   11-MAR-20                      
+
+6 rows selected.
+
+SQL> 
+SQL> -- ------------------------------------------------------------------
+SQL> --  Close log file.
+SQL> -- ------------------------------------------------------------------
+SQL> SPOOL OFF
